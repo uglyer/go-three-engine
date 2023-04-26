@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_bridge"
+	"log"
 )
 
 func main() {
@@ -14,14 +14,14 @@ func main() {
 		ParentId: "root",
 	})
 	adapter, err := canvas.RequestAdapter(&wgpu_bridge.AdapterDescriptor{
-		PowerPreference: wgpu_bridge.PowerPreference_Default,
+		PowerPreference: wgpu_bridge.PowerPreference_HighPerformance,
 	})
 	if err != nil {
-		fmt.Errorf("获取适配器失败:%v", err)
+		log.Fatalf("获取适配器失败:%v", err)
 	}
 	device, err := adapter.RequestDevice(nil)
 	if err != nil {
-		fmt.Errorf("获取gpu设备失败:%v", err)
+		log.Fatalf("获取gpu设备失败:%v", err)
 	}
 	println(device)
 }

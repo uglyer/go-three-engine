@@ -59,6 +59,7 @@ const (
 type PowerPreference uint32
 
 const (
-	PowerPreference_Default  PowerPreference = 0x00000000
-	PowerPreference_LowPower PowerPreference = 0x00000001
+	PowerPreference_Default         PowerPreference = 0x00000000
+	PowerPreference_LowPower        PowerPreference = 0x00000001
+	PowerPreference_HighPerformance PowerPreference = 0x00000002
 )
