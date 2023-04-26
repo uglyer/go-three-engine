@@ -45,8 +45,8 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 		obj.Set("powerPreference", WasmPowerPreference[descriptor.PowerPreference])
 	}
 	wasm.ConsoleLog("xxx", obj)
-	promise := gpu.Call("requestAdapter", obj)
+	adapter := wasm.Await(gpu.Call("requestAdapter", obj))
 	wasm.ConsoleLog("xxx")
-	wasm.ConsoleLog(promise)
+	wasm.ConsoleLog(adapter)
 	return nil, fmt.Errorf("todo impl RequestAdapter")
 }
