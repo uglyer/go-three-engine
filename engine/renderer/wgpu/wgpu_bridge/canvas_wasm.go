@@ -45,8 +45,11 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 		obj.Set("powerPreference", WasmPowerPreference[descriptor.PowerPreference])
 	}
 	wasm.ConsoleLog("xxx", obj)
-	adapter := wasm.Await(gpu.Call("requestAdapter", obj))
+	adapter, err := wasm.Await(gpu.Call("requestAdapter", obj))
+	if err != nil {
+		return nil, fmt.Errorf("requestAdapter error:%v", err)
+	}
 	wasm.ConsoleLog("xxx")
-	wasm.ConsoleLog(adapter)
+	wasm.ConsoleLog(*adapter)
 	return nil, fmt.Errorf("todo impl RequestAdapter")
 }
