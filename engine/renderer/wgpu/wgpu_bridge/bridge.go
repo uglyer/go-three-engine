@@ -5,17 +5,16 @@ type IDrop interface {
 }
 
 type IBridge interface {
-	IDrop
-	CreateCanvas(width, height int, title string) ICanvas
+	CreateCanvas(descriptor *CanvasDescriptor) ICanvas
 }
 
 type ICanvas interface {
 	IDrop
-	RequestAdapter() IAdapter
+	RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 }
 type IAdapter interface {
 	IDrop
-	RequestDevice(descriptor *DeviceDescriptor) IDevice
+	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
 }
 
 type IDevice interface {

@@ -55,3 +55,10 @@ const (
 	NativeFeature_MULTI_DRAW_INDIRECT_COUNT                FeaturesName = 0x60000004
 	NativeFeature_VERTEX_WRITABLE_STORAGE                  FeaturesName = 0x60000005
 )
+
+type PowerPreference uint32
+
+const (
+	PowerPreference_Default  PowerPreference = 0x00000000
+	PowerPreference_LowPower PowerPreference = 0x00000001
+)
