@@ -35,23 +35,23 @@ type Limits struct {
 	MaxPushConstantSize uint32
 }
 
-type DeviceExtensionName uint32
+type FeaturesName uint32
 
 const (
-	DeviceExtensionName_Undefined                          DeviceExtensionName = 0x00000000
-	DeviceExtensionName_DepthClipControl                   DeviceExtensionName = 0x00000001
-	DeviceExtensionName_Depth32FloatStencil8               DeviceExtensionName = 0x00000002
-	DeviceExtensionName_TimestampQuery                     DeviceExtensionName = 0x00000003
-	DeviceExtensionName_PipelineStatisticsQuery            DeviceExtensionName = 0x00000004
-	DeviceExtensionName_TextureCompressionBC               DeviceExtensionName = 0x00000005
-	DeviceExtensionName_TextureCompressionETC2             DeviceExtensionName = 0x00000006
-	DeviceExtensionName_TextureCompressionASTC             DeviceExtensionName = 0x00000007
-	DeviceExtensionName_IndirectFirstInstance              DeviceExtensionName = 0x00000008
-	DeviceExtensionName_ShaderF16                          DeviceExtensionName = 0x00000009
-	DeviceExtensionName_RG11B10UfloatRenderable            DeviceExtensionName = 0x0000000A
-	NativeFeature_PUSH_CONSTANTS                           DeviceExtensionName = 0x60000001
-	NativeFeature_TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES DeviceExtensionName = 0x60000002
-	NativeFeature_MULTI_DRAW_INDIRECT                      DeviceExtensionName = 0x60000003
-	NativeFeature_MULTI_DRAW_INDIRECT_COUNT                DeviceExtensionName = 0x60000004
-	NativeFeature_VERTEX_WRITABLE_STORAGE                  DeviceExtensionName = 0x60000005
+	DeviceExtensionName_Undefined                          FeaturesName = 0x00000000
+	DeviceExtensionName_DepthClipControl                   FeaturesName = 0x00000001
+	DeviceExtensionName_Depth32FloatStencil8               FeaturesName = 0x00000002
+	DeviceExtensionName_TimestampQuery                     FeaturesName = 0x00000003
+	DeviceExtensionName_PipelineStatisticsQuery            FeaturesName = 0x00000004
+	DeviceExtensionName_TextureCompressionBC               FeaturesName = 0x00000005
+	DeviceExtensionName_TextureCompressionETC2             FeaturesName = 0x00000006
+	DeviceExtensionName_TextureCompressionASTC             FeaturesName = 0x00000007
+	DeviceExtensionName_IndirectFirstInstance              FeaturesName = 0x00000008
+	DeviceExtensionName_ShaderF16                          FeaturesName = 0x00000009
+	DeviceExtensionName_RG11B10UfloatRenderable            FeaturesName = 0x0000000A
+	NativeFeature_PUSH_CONSTANTS                           FeaturesName = 0x60000001
+	NativeFeature_TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES FeaturesName = 0x60000002
+	NativeFeature_MULTI_DRAW_INDIRECT                      FeaturesName = 0x60000003
+	NativeFeature_MULTI_DRAW_INDIRECT_COUNT                FeaturesName = 0x60000004
+	NativeFeature_VERTEX_WRITABLE_STORAGE                  FeaturesName = 0x60000005
 )
