@@ -1,3 +1,5 @@
+//go:build wasm
+
 package wasm
 
 import (
@@ -17,7 +19,7 @@ func ConsoleError(v ...any) {
 }
 
 func IsUndefined(v js.Value) bool {
-	return v.Type() == js.TypeUndefined
+	return v.IsNull() || v.IsUndefined()
 }
 
 func Await(target js.Value) (*js.Value, error) {
