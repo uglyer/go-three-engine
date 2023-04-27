@@ -7,12 +7,15 @@ import (
 
 func main() {
 	bridge := wgpu_bridge.NewBridge()
-	canvas := bridge.CreateCanvas(&wgpu_bridge.CanvasDescriptor{
+	canvas, err := bridge.CreateCanvas(&wgpu_bridge.CanvasDescriptor{
 		Width:    640,
 		Height:   480,
 		Title:    "Test",
 		ParentId: "root",
 	})
+	if err != nil {
+		log.Fatalf("创建画布失败:%v", err)
+	}
 	adapter, err := canvas.RequestAdapter(&wgpu_bridge.AdapterDescriptor{
 		PowerPreference: wgpu_bridge.PowerPreference_HighPerformance,
 	})

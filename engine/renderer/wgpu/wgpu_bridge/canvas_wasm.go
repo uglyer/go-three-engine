@@ -5,15 +5,17 @@ package wgpu_bridge
 import (
 	"fmt"
 	"github.com/uglyer/go-three-engine/engine/wasm"
+	"log"
 	"syscall/js"
 )
 
 type Canvas struct {
-	descriptor *CanvasDescriptor
-	canvas     js.Value
+	descriptor    *CanvasDescriptor
+	canvas        js.Value
+	canvasContext js.Value
 }
 
-func NewCanvas(descriptor *CanvasDescriptor) ICanvas {
+func NewCanvas(descriptor *CanvasDescriptor) (ICanvas, error) {
 	// Create or get WebGlCanvas
 	c := &Canvas{
 		descriptor: descriptor,
@@ -29,10 +31,16 @@ func NewCanvas(descriptor *CanvasDescriptor) ICanvas {
 	if descriptor.ParentId != "" {
 		doc.Call("getElementById", descriptor.ParentId).Call("appendChild", c.canvas)
 	}
-	return c
+	return c, nil
 }
 
 func (c *Canvas) Drop() {
+	log.Println("todo Drop c.canvasContext")
+	parent := c.canvas.Get("parent")
+	if wasm.IsUndefined(parent) {
+		return
+	}
+	parent.Call("removeChild", parent)
 }
 
 func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error) {
@@ -51,5 +59,10 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 	}
 	wasm.ConsoleLog("xxx")
 	wasm.ConsoleLog(*adapter)
+	c.canvasContext = c.canvas.Call("getContext", "webgpu")
+	wasm.ConsoleLog(c.canvasContext)
+	if wasm.IsUndefined(c.canvasContext) {
+		return nil, fmt.Errorf("获取上下文失败(gpupresent)")
+	}
 	return nil, fmt.Errorf("todo impl RequestAdapter")
 }

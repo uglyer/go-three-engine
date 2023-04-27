@@ -5,7 +5,7 @@ type IDrop interface {
 }
 
 type IBridge interface {
-	CreateCanvas(descriptor *CanvasDescriptor) ICanvas
+	CreateCanvas(descriptor *CanvasDescriptor) (ICanvas, error)
 }
 
 type ICanvas interface {
@@ -19,9 +19,9 @@ type IAdapter interface {
 
 type IDevice interface {
 	IDrop
+	CreateSwapChain() (IGpuSwapChain, error)
 	GetQueue() IQueue
 	CreateCommandEncoder() (IGpuCommandEncoder, error)
-	CreateSwapChain() (IGpuSwapChain, error)
 	CreateBuffer() (IGpuBuffer, error)
 	CreateTexture() (IGpuTexture, error)
 	CreateRenderPipeline() (IGpuPipeLine, error)
