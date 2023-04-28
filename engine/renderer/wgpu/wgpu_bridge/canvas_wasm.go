@@ -66,3 +66,16 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 	}
 	return newAdapter(*adapter)
 }
+func (c *Canvas) Configure(descriptor *ConfigureDescriptor) error {
+	device, ok := descriptor.Device.(*Device)
+	if !ok {
+		return fmt.Errorf("device type error")
+	}
+	config := wasm.NewObject()
+	config.Set("format", "bgra8unorm")
+	config.Set("alphaMode", "premultiplied")
+	config.Set("device", device.deviceRef)
+	wasm.ConsoleLog("Configure", config)
+	c.canvasContext.Call("configure", config)
+	return nil
+}

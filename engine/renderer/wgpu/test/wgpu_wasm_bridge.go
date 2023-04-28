@@ -26,5 +26,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("获取gpu设备失败:%v", err)
 	}
-	println(device)
+	err = canvas.Configure(&wgpu_bridge.ConfigureDescriptor{
+		Device: device,
+	})
+	if err != nil {
+		log.Fatalf("配置画布失败:%v", err)
+	}
 }

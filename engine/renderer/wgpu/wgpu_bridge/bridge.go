@@ -11,7 +11,9 @@ type IBridge interface {
 type ICanvas interface {
 	IDrop
 	RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
+	Configure(descriptor *ConfigureDescriptor) error
 }
+
 type IAdapter interface {
 	IDrop
 	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
@@ -19,7 +21,6 @@ type IAdapter interface {
 
 type IDevice interface {
 	IDrop
-	CreateSwapChain() (IGpuSwapChain, error)
 	GetQueue() IQueue
 	CreateCommandEncoder() (IGpuCommandEncoder, error)
 	CreateBuffer() (IGpuBuffer, error)

@@ -7,3 +7,9 @@ type CanvasDescriptor struct {
 	ParentId string
 	CanvasId string
 }
+
+type ConfigureDescriptor struct {
+	Device    IDevice
+	Format    any
+	AlphaMode any
+}
