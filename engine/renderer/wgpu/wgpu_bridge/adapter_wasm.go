@@ -32,5 +32,5 @@ func (a *Adapter) RequestDevice(descriptor *DeviceDescriptor) (IDevice, error) {
 		return nil, fmt.Errorf("call requestDevice error:%v", err)
 	}
 	wasm.ConsoleLog("device", *device)
-	return nil, fmt.Errorf("todo implRequestDevice ")
+	return newDevice(*device)
 }
