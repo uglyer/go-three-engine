@@ -64,5 +64,5 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 	if wasm.IsUndefined(c.canvasContext) {
 		return nil, fmt.Errorf("获取上下文失败(gpupresent)")
 	}
-	return nil, fmt.Errorf("todo impl RequestAdapter")
+	return newAdapter(*adapter)
 }
