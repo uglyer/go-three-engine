@@ -51,7 +51,7 @@ func (c *Canvas) RequestAdapter(descriptor *wgpu_bridge.AdapterDescriptor) (wgpu
 	}
 	obj := wasm.NewObject()
 	if descriptor != nil {
-		obj.Set("powerPreference", WasmPowerPreference[descriptor.PowerPreference])
+		obj.Set("powerPreference", descriptor.PowerPreference.String())
 	}
 	wasm.ConsoleLog("xxx", obj)
 	adapter, err := wasm.Await(gpu.Call("requestAdapter", obj))
