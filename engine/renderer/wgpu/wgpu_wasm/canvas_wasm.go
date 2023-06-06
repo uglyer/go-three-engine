@@ -1,21 +1,22 @@
 //go:build wasm
 
-package wgpu_bridge
+package wgpu_wasm
 
 import (
 	"fmt"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_bridge"
 	"github.com/uglyer/go-three-engine/engine/wasm"
 	"log"
 	"syscall/js"
 )
 
 type Canvas struct {
-	descriptor    *CanvasDescriptor
+	descriptor    *wgpu_bridge.CanvasDescriptor
 	canvas        js.Value
 	canvasContext js.Value
 }
 
-func NewCanvas(descriptor *CanvasDescriptor) (ICanvas, error) {
+func NewCanvas(descriptor *wgpu_bridge.CanvasDescriptor) (wgpu_bridge.ICanvas, error) {
 	// Create or get WebGlCanvas
 	c := &Canvas{
 		descriptor: descriptor,
@@ -43,7 +44,7 @@ func (c *Canvas) Drop() {
 	parent.Call("removeChild", parent)
 }
 
-func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error) {
+func (c *Canvas) RequestAdapter(descriptor *wgpu_bridge.AdapterDescriptor) (wgpu_bridge.IAdapter, error) {
 	gpu := js.Global().Get("navigator").Get("gpu")
 	if wasm.IsUndefined(gpu) {
 		return nil, fmt.Errorf("navigator gpu is null")
@@ -66,7 +67,7 @@ func (c *Canvas) RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
 	}
 	return newAdapter(*adapter)
 }
-func (c *Canvas) Configure(descriptor *ConfigureDescriptor) error {
+func (c *Canvas) Configure(descriptor *wgpu_bridge.ConfigureDescriptor) error {
 	device, ok := descriptor.Device.(*Device)
 	if !ok {
 		return fmt.Errorf("device type error")

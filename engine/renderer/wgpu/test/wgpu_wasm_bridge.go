@@ -2,11 +2,12 @@ package main
 
 import (
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_bridge"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_wasm"
 	"log"
 )
 
 func main() {
-	bridge := wgpu_bridge.NewBridge()
+	bridge := wgpu_wasm.NewBridge()
 	canvas, err := bridge.CreateCanvas(&wgpu_bridge.CanvasDescriptor{
 		Width:    640,
 		Height:   480,
