@@ -8,3 +8,10 @@ type DeviceDescriptor struct {
 	// RequiredLimits 资源限制
 	RequiredLimits Limits
 }
+
+type BufferDescriptor struct {
+	Label            string
+	Usage            BufferUsage
+	Size             uint64
+	MappedAtCreation bool
+}
