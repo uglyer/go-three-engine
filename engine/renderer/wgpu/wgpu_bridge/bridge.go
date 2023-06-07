@@ -8,10 +8,19 @@ type IBridge interface {
 	CreateCanvas(descriptor *CanvasDescriptor) (ICanvas, error)
 }
 
+// ICanvas 暂定等同于 GPUCanvasContext
 type ICanvas interface {
 	IDrop
 	RequestAdapter(descriptor *AdapterDescriptor) (IAdapter, error)
+	// Configure The configure() method of the GPUCanvasContext interface configures the context to use for
+	// rendering with a given GPUDevice. When called the canvas will initially be cleared to transparent black.
 	Configure(descriptor *ConfigureDescriptor) error
+	// UnConfigure The unconfigure() method of the GPUCanvasContext interface removes any previously-set context
+	// configuration, and destroys any textures returned via getCurrentTexture() while the canvas context was configured.
+	UnConfigure()
+	// getCurrentTexture The getCurrentTexture() method of the GPUCanvasContext interface returns the next GPUTexture
+	// to be composited to the document by the canvas context.
+	getCurrentTexture() IGpuTexture
 }
 
 type IAdapter interface {
