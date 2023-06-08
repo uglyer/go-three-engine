@@ -8,6 +8,10 @@ type IGPUSampler interface {
 	IDrop
 }
 
+type IBindGroup interface {
+	IDrop
+}
+
 type GPUBindGroupEntry struct {
 	// Binding A number representing a unique identifier for this resource binding, which matches the binding value
 	// of a corresponding GPUBindGroupLayout entry. In addition, it matches the n index value of the corresponding
