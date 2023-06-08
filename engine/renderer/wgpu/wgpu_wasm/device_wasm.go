@@ -20,7 +20,7 @@ func newDevice(deviceRef js.Value) (wgpu_bridge.IDevice, error) {
 func (d *Device) Drop() {
 
 }
-func (d *Device) GetQueue() wgpu_bridge.IQueue {
+func (d *Device) GetQueue() wgpu_bridge.IGpuQueue {
 	log.Panicln("todo impl GetQueue")
 	return nil
 }

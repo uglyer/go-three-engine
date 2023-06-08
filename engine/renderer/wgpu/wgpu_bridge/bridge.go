@@ -6,14 +6,14 @@ type IDrop interface {
 
 type IBridge interface {
 	CreateCanvas(descriptor *CanvasDescriptor) (ICanvas, error)
-	GetGPU() (IGpu, error)
+	GetGPU() (IGPU, error)
 }
 
-// IGpu navigator.gpu
+// IGPU navigator.gpu
 // The GPU interface of the WebGPU API is the starting point for using WebGPU. It can be used to return a GPUAdapter
 // from which you can request devices, configure features and limits, and more.
 // The GPU object for the current context is accessed via the Navigator.gpu or WorkerNavigator.gpu properties.
-type IGpu interface {
+type IGPU interface {
 	// getPreferredCanvasFormat The getPreferredCanvasFormat() method of the GPU interface returns the optimal canvas
 	// texture format for displaying 8-bit depth, standard dynamic range content on the current system.
 	// This is commonly used to provide a GPUCanvasContext.configure() call with the optimal format value for the
@@ -44,19 +44,26 @@ type ICanvas interface {
 
 type IAdapter interface {
 	IDrop
+	// RequestDevice The requestDevice() method of the GPUAdapter interface returns a Promise that fulfills
+	// with a GPUDevice object, which is the primary interface for communicating with the GPU.
 	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
 }
 
 type IDevice interface {
 	IDrop
-	GetQueue() IQueue
+	// GetQueue A GPUQueue object instance.
+	GetQueue() IGpuQueue
+	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
+	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
+	// resources are used in shader stages.
+	CreateBindGroup(GPUBindGroupDescriptor) (any, error)
 	CreateCommandEncoder() (IGpuCommandEncoder, error)
 	CreateBuffer() (IGpuBuffer, error)
 	CreateTexture() (IGpuTexture, error)
 	CreateRenderPipeline() (IGpuPipeLine, error)
 }
 
-type IQueue interface {
+type IGpuQueue interface {
 	WriteTexture()
 	WriteBuffer()
 	Submit(commandBuffer ...IGpuCommandBuffer)
@@ -81,7 +88,7 @@ type IGpuCommandBuffer interface {
 
 type IGpuSwapChain interface {
 	IDrop
-	GetCurrentTextureView() (IGpuTextureView, error)
+	GetCurrentTextureView() (IGPUTextureView, error)
 	Present()
 }
 
@@ -89,7 +96,7 @@ type IGpuPipeLine interface {
 	IDrop
 }
 
-type IGpuTextureView interface {
+type IGPUTextureView interface {
 	IDrop
 }
 
@@ -98,5 +105,5 @@ type IGpuBuffer interface {
 }
 type IGpuTexture interface {
 	IDrop
-	CreateView() IGpuTextureView
+	CreateView() IGPUTextureView
 }
