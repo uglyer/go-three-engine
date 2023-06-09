@@ -57,6 +57,10 @@ type IDevice interface {
 	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
 	// resources are used in shader stages.
 	CreateBindGroup(GPUBindGroupDescriptor) (IBindGroup, error)
+	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
+	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
+	// and is used as a template when creating GPUBindGroups.
+	CreateBindGroupLayout(GPUBindGroupDescriptor) (any, error)
 	CreateCommandEncoder() (IGpuCommandEncoder, error)
 	CreateBuffer() (IGpuBuffer, error)
 	CreateTexture() (IGpuTexture, error)

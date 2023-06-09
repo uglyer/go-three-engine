@@ -12,6 +12,10 @@ type IBindGroup interface {
 	IDrop
 }
 
+type IBindGroupLayout interface {
+	IDrop
+}
+
 type GPUBindGroupEntry struct {
 	// Binding A number representing a unique identifier for this resource binding, which matches the binding value
 	// of a corresponding GPUBindGroupLayout entry. In addition, it matches the n index value of the corresponding
@@ -32,6 +36,42 @@ type GPUBindGroupDescriptor struct {
 	// There will be one for each corresponding entry described by the GPUBindGroupLayout referenced in layout.
 	// Each entry object has the following properties:
 	Entries []*GPUBindGroupEntry
+}
+
+type BufferBindingLayout struct {
+	Type             BufferBindingType
+	HasDynamicOffset bool
+	MinBindingSize   uint64
+}
+
+type SamplerBindingLayout struct {
+	Type SamplerBindingType
+}
+
+type TextureBindingLayout struct {
+	SampleType    TextureSampleType
+	ViewDimension TextureViewDimension
+	Multisampled  bool
+}
+
+type StorageTextureBindingLayout struct {
+	Access        StorageTextureAccess
+	Format        TextureFormat
+	ViewDimension TextureViewDimension
+}
+
+type BindGroupLayoutEntry struct {
+	Binding        uint32
+	Visibility     ShaderStage
+	Buffer         BufferBindingLayout
+	Sampler        SamplerBindingLayout
+	Texture        TextureBindingLayout
+	StorageTexture StorageTextureBindingLayout
+}
+
+type BindGroupLayoutDescriptor struct {
+	Label   string
+	Entries []BindGroupLayoutEntry
 }
 
 type DeviceDescriptor struct {
