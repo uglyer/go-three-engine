@@ -27,10 +27,10 @@ func (d *Device) GetQueue() wgpu_bridge.IGpuQueue {
 func (d *Device) CreateCommandEncoder() (wgpu_bridge.IGpuCommandEncoder, error) {
 	return nil, fmt.Errorf("todo impl CreateCommandEncoder")
 }
-func (d *Device) CreateBuffer() (wgpu_bridge.IGpuBuffer, error) {
+func (d *Device) CreateBuffer() (wgpu_bridge.IGPUBuffer, error) {
 	return nil, fmt.Errorf("todo impl CreateBuffer")
 }
-func (d *Device) CreateTexture() (wgpu_bridge.IGpuTexture, error) {
+func (d *Device) CreateTexture() (wgpu_bridge.IGPUTexture, error) {
 	return nil, fmt.Errorf("todo impl CreateTexture")
 }
 func (d *Device) CreateRenderPipeline() (wgpu_bridge.IGpuPipeLine, error) {

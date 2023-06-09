@@ -39,7 +39,7 @@ type ICanvas interface {
 	UnConfigure()
 	// getCurrentTexture The getCurrentTexture() method of the GPUCanvasContext interface returns the next GPUTexture
 	// to be composited to the document by the canvas context.
-	getCurrentTexture() IGpuTexture
+	getCurrentTexture() IGPUTexture
 }
 
 type IAdapter interface {
@@ -56,14 +56,16 @@ type IDevice interface {
 	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
 	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
 	// resources are used in shader stages.
-	CreateBindGroup(GPUBindGroupDescriptor) (IBindGroup, error)
+	CreateBindGroup(descriptor *GPUBindGroupDescriptor) (IBindGroup, error)
 	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
 	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
 	// and is used as a template when creating GPUBindGroups.
-	CreateBindGroupLayout(GPUBindGroupDescriptor) (any, error)
+	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (any, error)
+	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
+	// raw data to use in GPU operations.
+	CreateBuffer(descriptor *GPUBufferDescriptor) (IGPUBuffer, error)
 	CreateCommandEncoder() (IGpuCommandEncoder, error)
-	CreateBuffer() (IGpuBuffer, error)
-	CreateTexture() (IGpuTexture, error)
+	CreateTexture() (IGPUTexture, error)
 	CreateRenderPipeline() (IGpuPipeLine, error)
 }
 
@@ -104,10 +106,7 @@ type IGPUTextureView interface {
 	IDrop
 }
 
-type IGpuBuffer interface {
-	IDrop
-}
-type IGpuTexture interface {
+type IGPUTexture interface {
 	IDrop
 	CreateView() IGPUTextureView
 }

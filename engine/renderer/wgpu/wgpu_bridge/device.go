@@ -83,7 +83,7 @@ type DeviceDescriptor struct {
 	RequiredLimits Limits
 }
 
-type BufferDescriptor struct {
+type GPUBufferDescriptor struct {
 	Label            string
 	Usage            BufferUsage
 	Size             uint64
