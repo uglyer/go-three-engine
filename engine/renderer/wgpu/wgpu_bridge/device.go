@@ -1,18 +1,14 @@
 package wgpu_bridge
 
-type IGPUBindGroupLayout interface {
-	IDrop
-}
-
 type IGPUSampler interface {
 	IDrop
 }
 
-type IBindGroup interface {
+type IGPUBindGroup interface {
 	IDrop
 }
 
-type IBindGroupLayout interface {
+type IGPUBindGroupLayout interface {
 	IDrop
 }
 
@@ -88,4 +84,8 @@ type GPUBufferDescriptor struct {
 	Usage            BufferUsage
 	Size             uint64
 	MappedAtCreation bool
+}
+
+type GPUCommandEncoderDescriptor struct {
+	Label string
 }

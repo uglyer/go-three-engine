@@ -24,7 +24,7 @@ func (d *Device) GetQueue() wgpu_bridge.IGpuQueue {
 	log.Panicln("todo impl GetQueue")
 	return nil
 }
-func (d *Device) CreateCommandEncoder() (wgpu_bridge.IGpuCommandEncoder, error) {
+func (d *Device) CreateCommandEncoder() (wgpu_bridge.IGPUCommandEncoder, error) {
 	return nil, fmt.Errorf("todo impl CreateCommandEncoder")
 }
 func (d *Device) CreateBuffer() (wgpu_bridge.IGPUBuffer, error) {

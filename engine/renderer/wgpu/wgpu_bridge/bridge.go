@@ -56,7 +56,7 @@ type IDevice interface {
 	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
 	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
 	// resources are used in shader stages.
-	CreateBindGroup(descriptor *GPUBindGroupDescriptor) (IBindGroup, error)
+	CreateBindGroup(descriptor *GPUBindGroupDescriptor) (IGPUBindGroup, error)
 	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
 	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
 	// and is used as a template when creating GPUBindGroups.
@@ -64,7 +64,9 @@ type IDevice interface {
 	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
 	// raw data to use in GPU operations.
 	CreateBuffer(descriptor *GPUBufferDescriptor) (IGPUBuffer, error)
-	CreateCommandEncoder() (IGpuCommandEncoder, error)
+	// CreateCommandEncoder The createCommandEncoder() method of the GPUDevice interface creates a GPUCommandEncoder,
+	// used to encode commands to be issued to the GPU.
+	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (IGPUCommandEncoder, error)
 	CreateTexture() (IGPUTexture, error)
 	CreateRenderPipeline() (IGpuPipeLine, error)
 }
@@ -75,9 +77,26 @@ type IGpuQueue interface {
 	Submit(commandBuffer ...IGpuCommandBuffer)
 }
 
-type IGpuCommandEncoder interface {
+type IGPUCommandEncoder interface {
+	BeginComputePass(descriptor *GPUComputePassDescriptor) *IGPUComputePassEncoder
 	BeginRenderPass()
 	Finish() IGpuCommandBuffer
+}
+
+type IGPUComputePassEncoder interface {
+	DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32)
+	DispatchWorkgroupsIndirect(indirectBuffer *IGPUBuffer, indirectOffset uint64)
+	End()
+	InsertDebugMarker(markerLabel string)
+	PopDebugGroup()
+	PushDebugGroup(groupLabel string)
+	SetBindGroup(groupIndex uint32, group *IGPUBindGroup, dynamicOffsets []uint32)
+	SetPipeline(pipeline *IGPUComputePipeline)
+}
+
+type IGPUComputePipeline interface {
+	IDrop
+	GetBindGroupLayout(groupIndex uint32) *IGPUBindGroupLayout
 }
 
 type IRenderPass interface {
