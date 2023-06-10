@@ -11,6 +11,10 @@ func NewObject() js.Value {
 	return js.Global().Get("Object").New()
 }
 
+func NewObj(m map[string]any) js.Value {
+	return js.Global().Get("Object").New(m)
+}
+
 func ConsoleLog(v ...any) {
 	js.Global().Get("console").Call("log", v...)
 }
