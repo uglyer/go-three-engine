@@ -90,7 +90,7 @@ type IQueue interface {
 type ICommandEncoder interface {
 	IDrop
 	BeginComputePass(descriptor *ComputePassDescriptor) IComputePassEncoder
-	BeginRenderPass(descriptor *RenderPassDescriptor) RenderPassEncoder
+	BeginRenderPass(descriptor *RenderPassDescriptor) IRenderPassEncoder
 	ClearBuffer(buffer IBuffer, offset uint64, size uint64)
 	CopyBufferToBuffer(source IBuffer, sourceOffset uint64, destination IBuffer, destinatonOffset uint64, size uint64)
 	CopyBufferToTexture(source *ImageCopyBuffer, destination *ImageCopyTexture, copySize *Extent3D)
@@ -113,7 +113,7 @@ type IComputePassEncoder interface {
 	SetPipeline(pipeline *IComputePipeline)
 }
 
-type RenderPassEncoder interface {
+type IRenderPassEncoder interface {
 	IDrop
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32)
@@ -133,13 +133,14 @@ type RenderPassEncoder interface {
 	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
 	SetViewport(x, y, width, height, minDepth, maxDepth float32)
 	SetPushConstants(stages ShaderStage, offset uint32, data []byte)
-	MultiDrawIndirect(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
-	MultiDrawIndexedIndirect(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
-	MultiDrawIndirectCount(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
-	MultiDrawIndexedIndirectCount(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
+	MultiDrawIndirect(encoder IRenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
+	MultiDrawIndexedIndirect(encoder IRenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
+	MultiDrawIndirectCount(encoder IRenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
+	MultiDrawIndexedIndirectCount(encoder IRenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
 }
 
 type IRenderBundleEncoder interface {
+	IDrop
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
 	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
@@ -150,9 +151,8 @@ type IRenderBundleEncoder interface {
 	PushDebugGroup(groupLabel string)
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
 	SetIndexBuffer(buffer IBuffer, format IndexFormat, offset, size uint64)
-	SetPipeline(pipeline *IGPURenderPipeLine)
+	SetPipeline(pipeline IGPURenderPipeLine)
 	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
-	Drop()
 }
 
 type IComputePipeline interface {

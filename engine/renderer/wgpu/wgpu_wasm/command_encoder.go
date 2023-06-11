@@ -13,7 +13,7 @@ func (ce *CommandEncoder) BeginComputePass(descriptor *wgpu.ComputePassDescripto
 	return nil
 }
 
-func (ce *CommandEncoder) BeginRenderPass(descriptor *wgpu.RenderPassDescriptor) wgpu.RenderPassEncoder {
+func (ce *CommandEncoder) BeginRenderPass(descriptor *wgpu.RenderPassDescriptor) wgpu.IRenderPassEncoder {
 	// TODO impl BeginRenderPass
 	return nil
 }
