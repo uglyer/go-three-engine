@@ -33,6 +33,6 @@ func (d *Device) CreateBuffer() (wgpu_bridge.IGPUBuffer, error) {
 func (d *Device) CreateTexture() (wgpu_bridge.IGPUTexture, error) {
 	return nil, fmt.Errorf("todo impl CreateTexture")
 }
-func (d *Device) CreateRenderPipeline() (wgpu_bridge.IGpuPipeLine, error) {
+func (d *Device) CreateRenderPipeline() (wgpu_bridge.IGPURenderPipeLine, error) {
 	return nil, fmt.Errorf("todo impl CreateRenderPipeline")
 }

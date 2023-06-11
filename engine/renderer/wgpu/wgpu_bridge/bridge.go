@@ -72,7 +72,7 @@ type IDevice interface {
 	// used to encode commands to be issued to the GPU.
 	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (IGPUCommandEncoder, error)
 	CreateTexture() (IGPUTexture, error)
-	CreateRenderPipeline() (IGpuPipeLine, error)
+	CreateRenderPipeline() (IGPURenderPipeLine, error)
 	getErr() (err error)
 	storeErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IGPUComputePipeline, error)
@@ -109,8 +109,24 @@ type ComputePassEncoder interface {
 	InsertDebugMarker(markerLabel string)
 	PopDebugGroup()
 	PushDebugGroup(groupLabel string)
-	SetBindGroup(groupIndex uint32, group *IGPUBindGroup, dynamicOffsets []uint32)
+	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
 	SetPipeline(pipeline *IGPUComputePipeline)
+}
+
+type RenderBundleEncoder interface {
+	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
+	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
+	DrawIndexedIndirect(indirectBuffer IGPUBuffer, indirectOffset uint64)
+	DrawIndirect(indirectBuffer IGPUBuffer, indirectOffset uint64)
+	Finish(descriptor *RenderBundleDescriptor) IGPURenderBundle
+	InsertDebugMarker(markerLabel string)
+	PopDebugGroup()
+	PushDebugGroup(groupLabel string)
+	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
+	SetIndexBuffer(buffer IGPUBuffer, format IndexFormat, offset, size uint64)
+	SetPipeline(pipeline *IGPURenderPipeLine)
+	SetVertexBuffer(slot uint32, buffer IGPUBuffer, offset, size uint64)
+	Drop()
 }
 
 type IGPUComputePipeline interface {
@@ -136,7 +152,7 @@ type IGpuSwapChain interface {
 	Present()
 }
 
-type IGpuPipeLine interface {
+type IGPURenderPipeLine interface {
 	IDrop
 }
 
@@ -154,5 +170,9 @@ type IGPUShaderModule interface {
 }
 
 type IGPUPipelineLayout interface {
+	IDrop
+}
+
+type IGPURenderBundle interface {
 	IDrop
 }
