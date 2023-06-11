@@ -1,4 +1,4 @@
-package wgpu_bridge
+package wgpu
 
 type AdapterDescriptor struct {
 	PowerPreference PowerPreference

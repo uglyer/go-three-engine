@@ -1,3 +1,3 @@
-package wgpu_bridge
+package wgpu
 
 type SubmissionIndex uint64

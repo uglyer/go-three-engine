@@ -1,4 +1,4 @@
-package wgpu_bridge
+package wgpu
 
 type IGPUSampler interface {
 	IDrop
@@ -18,8 +18,8 @@ type GPUBindGroupEntry struct {
 	// @binding(n) attribute in the shader (GPUShaderModule) used in the related pipeline.
 	Binding uint32
 	// Resource 开头三选一
-	ResourceBuffer IBuffer
-	Offset         uint64
+	ResourceBuffer      IBuffer
+	Offset              uint64
 	Size                uint64
 	ResourceSampler     *IGPUSampler
 	ResourceTextureView *ITextureView

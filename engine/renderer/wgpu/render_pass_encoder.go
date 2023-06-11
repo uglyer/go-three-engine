@@ -1,4 +1,4 @@
-package wgpu_bridge
+package wgpu
 
 type RenderPassColorAttachment struct {
 	View          ITextureView
@@ -9,8 +9,8 @@ type RenderPassColorAttachment struct {
 }
 
 type RenderPassDepthStencilAttachment struct {
-	View        ITextureView
-	DepthLoadOp LoadOp
+	View              ITextureView
+	DepthLoadOp       LoadOp
 	DepthStoreOp      StoreOp
 	DepthClearValue   float32
 	DepthReadOnly     bool

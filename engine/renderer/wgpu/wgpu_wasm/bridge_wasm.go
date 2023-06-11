@@ -2,15 +2,17 @@
 
 package wgpu_wasm
 
-import "github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_bridge"
+import (
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+)
 
 type Bridge struct {
 }
 
-func NewBridge() wgpu_bridge.IBridge {
+func NewBridge() wgpu.IBridge {
 	return &Bridge{}
 }
 
-func (b *Bridge) CreateCanvas(descriptor *wgpu_bridge.CanvasDescriptor) (wgpu_bridge.ICanvas, error) {
+func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	return NewCanvas(descriptor)
 }
