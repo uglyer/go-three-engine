@@ -39,7 +39,7 @@ type ICanvas interface {
 	UnConfigure()
 	// getCurrentTexture The getCurrentTexture() method of the GPUCanvasContext interface returns the next GPUTexture
 	// to be composited to the document by the canvas context.
-	getCurrentTexture() IGPUTexture
+	getCurrentTexture() ITexture
 }
 
 type IAdapter interface {
@@ -67,32 +67,32 @@ type IDevice interface {
 	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (any, error)
 	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
 	// raw data to use in GPU operations.
-	CreateBuffer(descriptor *GPUBufferDescriptor) (IGPUBuffer, error)
+	CreateBuffer(descriptor *GPUBufferDescriptor) (IBuffer, error)
 	// CreateCommandEncoder The createCommandEncoder() method of the GPUDevice interface creates a GPUCommandEncoder,
 	// used to encode commands to be issued to the GPU.
-	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (IGPUCommandEncoder, error)
-	CreateTexture() (IGPUTexture, error)
+	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (ICommandEncoder, error)
+	CreateTexture() (ITexture, error)
 	CreateRenderPipeline() (IGPURenderPipeLine, error)
 	getErr() (err error)
 	storeErr(typ ErrorType, message string)
-	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IGPUComputePipeline, error)
-	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IGPUPipelineLayout, error)
-	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (*RenderBundleEncoder, error)
+	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
+	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IPipelineLayout, error)
+	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (*IRenderBundleEncoder, error)
 	Poll(wait bool, wrappedSubmissionIndex *WrappedSubmissionIndex) (queueEmpty bool)
 }
 
 type IQueue interface {
 	WriteTexture(destination *ImageCopyTexture, data []byte, dataLayout *TextureDataLayout, writeSize *Extent3D)
-	WriteBuffer(buffer IGPUBuffer, bufferOffset uint64, data []byte)
-	Submit(commands ...IGPUCommandBuffer) (submissionIndex SubmissionIndex)
+	WriteBuffer(buffer IBuffer, bufferOffset uint64, data []byte)
+	Submit(commands ...ICommandBuffer) (submissionIndex SubmissionIndex)
 }
 
-type IGPUCommandEncoder interface {
+type ICommandEncoder interface {
 	IDrop
-	BeginComputePass(descriptor *ComputePassDescriptor) ComputePassEncoder
+	BeginComputePass(descriptor *ComputePassDescriptor) IComputePassEncoder
 	BeginRenderPass(descriptor *RenderPassDescriptor) RenderPassEncoder
-	ClearBuffer(buffer IGPUBuffer, offset uint64, size uint64)
-	CopyBufferToBuffer(source IGPUBuffer, sourceOffset uint64, destination IGPUBuffer, destinatonOffset uint64, size uint64)
+	ClearBuffer(buffer IBuffer, offset uint64, size uint64)
+	CopyBufferToBuffer(source IBuffer, sourceOffset uint64, destination IBuffer, destinatonOffset uint64, size uint64)
 	CopyBufferToTexture(source *ImageCopyBuffer, destination *ImageCopyTexture, copySize *Extent3D)
 	CopyTextureToBuffer(source *ImageCopyTexture, destination *ImageCopyBuffer, copySize *Extent3D)
 	CopyTextureToTexture(source *ImageCopyTexture, destination *ImageCopyTexture, copySize *Extent3D)
@@ -102,34 +102,60 @@ type IGPUCommandEncoder interface {
 	PushDebugGroup(groupLabel string)
 }
 
-type ComputePassEncoder interface {
+type IComputePassEncoder interface {
 	DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32)
-	DispatchWorkgroupsIndirect(indirectBuffer *IGPUBuffer, indirectOffset uint64)
+	DispatchWorkgroupsIndirect(indirectBuffer *IBuffer, indirectOffset uint64)
 	End()
 	InsertDebugMarker(markerLabel string)
 	PopDebugGroup()
 	PushDebugGroup(groupLabel string)
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
-	SetPipeline(pipeline *IGPUComputePipeline)
+	SetPipeline(pipeline *IComputePipeline)
 }
 
-type RenderBundleEncoder interface {
+type RenderPassEncoder interface {
+	IDrop
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
-	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
-	DrawIndexedIndirect(indirectBuffer IGPUBuffer, indirectOffset uint64)
-	DrawIndirect(indirectBuffer IGPUBuffer, indirectOffset uint64)
-	Finish(descriptor *RenderBundleDescriptor) IGPURenderBundle
+	DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32)
+	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
+	DrawIndirect(indirectBuffer IBuffer, indirectOffset uint64)
+	End()
+	ExecuteBundles(bundles ...IRenderBundle)
 	InsertDebugMarker(markerLabel string)
 	PopDebugGroup()
 	PushDebugGroup(groupLabel string)
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
-	SetIndexBuffer(buffer IGPUBuffer, format IndexFormat, offset, size uint64)
+	SetBlendConstant(color *Color)
+	SetIndexBuffer(buffer IBuffer, format IndexFormat, offset, size uint64)
+	SetPipeline(pipeline IGPURenderPipeLine)
+	SetScissorRect(x, y, width, height uint32)
+	SetStencilReference(reference uint32)
+	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
+	SetViewport(x, y, width, height, minDepth, maxDepth float32)
+	SetPushConstants(stages ShaderStage, offset uint32, data []byte)
+	MultiDrawIndirect(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
+	MultiDrawIndexedIndirect(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, count uint32)
+	MultiDrawIndirectCount(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
+	MultiDrawIndexedIndirectCount(encoder *RenderPassEncoder, buffer IBuffer, offset uint64, countBuffer IBuffer, countBufferOffset uint64, maxCount uint32)
+}
+
+type IRenderBundleEncoder interface {
+	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
+	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
+	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
+	DrawIndirect(indirectBuffer IBuffer, indirectOffset uint64)
+	Finish(descriptor *RenderBundleDescriptor) IRenderBundle
+	InsertDebugMarker(markerLabel string)
+	PopDebugGroup()
+	PushDebugGroup(groupLabel string)
+	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
+	SetIndexBuffer(buffer IBuffer, format IndexFormat, offset, size uint64)
 	SetPipeline(pipeline *IGPURenderPipeLine)
-	SetVertexBuffer(slot uint32, buffer IGPUBuffer, offset, size uint64)
+	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
 	Drop()
 }
 
-type IGPUComputePipeline interface {
+type IComputePipeline interface {
 	IDrop
 	GetBindGroupLayout(groupIndex uint32) *IGPUBindGroupLayout
 }
@@ -143,9 +169,9 @@ type IRenderPass interface {
 	EndPass() IRenderPass
 }
 
-type IGpuSwapChain interface {
+type ISwapChain interface {
 	IDrop
-	GetCurrentTextureView() (IGPUTextureView, error)
+	GetCurrentTextureView() (ITextureView, error)
 	Present()
 }
 
@@ -154,27 +180,27 @@ type IGPURenderPipeLine interface {
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
-type IGPUTextureView interface {
+type ITextureView interface {
 	IDrop
 }
 
-type IGPUTexture interface {
+type ITexture interface {
 	IDrop
-	CreateView() IGPUTextureView
+	CreateView() ITextureView
 	Destroy()
 }
 
-type IGPUShaderModule interface {
+type IShaderModule interface {
 	IDrop
 }
 
-type IGPUPipelineLayout interface {
+type IPipelineLayout interface {
 	IDrop
 }
 
-type IGPURenderBundle interface {
+type IRenderBundle interface {
 	IDrop
 }
-type IGPUCommandBuffer interface {
+type ICommandBuffer interface {
 	IDrop
 }

@@ -18,11 +18,11 @@ type GPUBindGroupEntry struct {
 	// @binding(n) attribute in the shader (GPUShaderModule) used in the related pipeline.
 	Binding uint32
 	// Resource 开头三选一
-	ResourceBuffer      IGPUBuffer
-	Offset              uint64
+	ResourceBuffer IBuffer
+	Offset         uint64
 	Size                uint64
 	ResourceSampler     *IGPUSampler
-	ResourceTextureView *IGPUTextureView
+	ResourceTextureView *ITextureView
 }
 
 type GPUBindGroupDescriptor struct {
@@ -91,7 +91,7 @@ type GPUCommandEncoderDescriptor struct {
 }
 
 type ProgrammableStageDescriptor struct {
-	Module     IGPUShaderModule
+	Module     IShaderModule
 	EntryPoint string
 
 	// unused in wgpu
@@ -100,7 +100,7 @@ type ProgrammableStageDescriptor struct {
 
 type ComputePipelineDescriptor struct {
 	Label   string
-	Layout  IGPUPipelineLayout
+	Layout  IPipelineLayout
 	Compute ProgrammableStageDescriptor
 }
 

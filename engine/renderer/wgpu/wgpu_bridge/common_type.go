@@ -46,7 +46,7 @@ type Origin3D struct {
 }
 
 type ImageCopyTexture struct {
-	Texture  *IGPUTexture
+	Texture  *ITexture
 	MipLevel uint32
 	Origin   Origin3D
 	Aspect   TextureAspect
