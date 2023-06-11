@@ -16,7 +16,7 @@ type Canvas struct {
 	canvasContext js.Value
 }
 
-func NewCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
+func newCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	// Create or get WebGlCanvas
 	c := &Canvas{
 		descriptor: descriptor,
@@ -60,5 +60,15 @@ func (c *Canvas) Configure(descriptor *wgpu.ConfigureDescriptor) error {
 	config.Set("device", device.deviceRef)
 	wasm.ConsoleLog("Configure", config)
 	c.canvasContext.Call("configure", config)
+	return nil
+}
+
+func (c *Canvas) UnConfigure() {
+	// todo 实现 UnConfigure
+	return
+}
+
+func (c *Canvas) GetCurrentTexture() wgpu.ITexture {
+	// todo 实现 GetCurrentTexture
 	return nil
 }

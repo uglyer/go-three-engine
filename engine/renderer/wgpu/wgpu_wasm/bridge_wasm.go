@@ -7,15 +7,22 @@ import (
 )
 
 type Bridge struct {
+	gpu wgpu.IGPU
 }
 
-func NewBridge() wgpu.IBridge {
-	return &Bridge{}
+func NewBridge() (wgpu.IBridge, error) {
+	gpu, err := newGPU()
+	if err != nil {
+		return nil, err
+	}
+	return &Bridge{
+		gpu: gpu,
+	}, nil
 }
 
 func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
-	return NewCanvas(descriptor)
+	return newCanvas(descriptor)
 }
-func (b *Bridge) GetGPU() (wgpu.IGPU, error) {
-	return
+func (b *Bridge) GetGPU() wgpu.IGPU {
+	return b.gpu
 }

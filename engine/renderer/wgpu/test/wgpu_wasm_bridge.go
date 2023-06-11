@@ -9,7 +9,10 @@ import (
 func main() {
 
 	//wasm.ConsoleLog(js.Global().Get("Object").New(map[string]any{"x": "xx"}))
-	bridge := wgpu_wasm.NewBridge()
+	bridge, err := wgpu_wasm.NewBridge()
+	if err != nil {
+		log.Fatalf("获取桥接器失败:%v", err)
+	}
 	canvas, err := bridge.CreateCanvas(&wgpu.CanvasDescriptor{
 		Width:    640,
 		Height:   480,
@@ -19,7 +22,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("创建画布失败:%v", err)
 	}
-	adapter, err := canvas.RequestAdapter(&wgpu.AdapterDescriptor{
+	adapter, err := bridge.GetGPU().RequestAdapter(&wgpu.AdapterDescriptor{
 		PowerPreference: wgpu.PowerPreference_HighPerformance,
 	})
 	if err != nil {
@@ -29,7 +32,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("获取gpu设备失败:%v", err)
 	}
-	err = canvas.Configure(&wgpu_bridge.ConfigureDescriptor{
+	err = canvas.Configure(&wgpu.ConfigureDescriptor{
 		Device: device,
 	})
 	if err != nil {

@@ -6,7 +6,7 @@ type IDrop interface {
 
 type IBridge interface {
 	CreateCanvas(descriptor *CanvasDescriptor) (ICanvas, error)
-	GetGPU() (IGPU, error)
+	GetGPU() IGPU
 }
 
 // IGPU navigator.gpu
@@ -37,9 +37,9 @@ type ICanvas interface {
 	// UnConfigure The unconfigure() method of the GPUCanvasContext interface removes any previously-set context
 	// configuration, and destroys any textures returned via getCurrentTexture() while the canvas context was configured.
 	UnConfigure()
-	// getCurrentTexture The getCurrentTexture() method of the GPUCanvasContext interface returns the next GPUTexture
+	// GetCurrentTexture The getCurrentTexture() method of the GPUCanvasContext interface returns the next GPUTexture
 	// to be composited to the document by the canvas context.
-	getCurrentTexture() ITexture
+	GetCurrentTexture() ITexture
 }
 
 type IAdapter interface {
@@ -64,7 +64,7 @@ type IDevice interface {
 	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
 	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
 	// and is used as a template when creating GPUBindGroups.
-	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (any, error)
+	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (IGPUBindGroupLayout, error)
 	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
 	// raw data to use in GPU operations.
 	CreateBuffer(descriptor *GPUBufferDescriptor) (IBuffer, error)
@@ -73,8 +73,8 @@ type IDevice interface {
 	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (ICommandEncoder, error)
 	CreateTexture() (ITexture, error)
 	CreateRenderPipeline() (IGPURenderPipeLine, error)
-	getErr() (err error)
-	storeErr(typ ErrorType, message string)
+	GetErr() (err error)
+	StoreErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
 	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IPipelineLayout, error)
 	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (*IRenderBundleEncoder, error)
