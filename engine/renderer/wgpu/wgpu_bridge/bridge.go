@@ -82,9 +82,9 @@ type IDevice interface {
 }
 
 type IQueue interface {
-	WriteTexture()
-	WriteBuffer()
-	Submit(commandBuffer ...IGpuCommandBuffer)
+	WriteTexture(destination *ImageCopyTexture, data []byte, dataLayout *TextureDataLayout, writeSize *Extent3D)
+	WriteBuffer(buffer IGPUBuffer, bufferOffset uint64, data []byte)
+	Submit(commands ...IGPUCommandBuffer) (submissionIndex SubmissionIndex)
 }
 
 type IGPUCommandEncoder interface {
@@ -143,9 +143,6 @@ type IRenderPass interface {
 	EndPass() IRenderPass
 }
 
-type IGpuCommandBuffer interface {
-}
-
 type IGpuSwapChain interface {
 	IDrop
 	GetCurrentTextureView() (IGPUTextureView, error)
@@ -174,5 +171,8 @@ type IGPUPipelineLayout interface {
 }
 
 type IGPURenderBundle interface {
+	IDrop
+}
+type IGPUCommandBuffer interface {
 	IDrop
 }
