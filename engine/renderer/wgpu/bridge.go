@@ -160,15 +160,6 @@ type IComputePipeline interface {
 	GetBindGroupLayout(groupIndex uint32) *IGPUBindGroupLayout
 }
 
-type IRenderPass interface {
-	SetPipeline() IRenderPass
-	SetBindGroup() IRenderPass
-	SetIndexBuffer() IRenderPass
-	SetVertexBuffer() IRenderPass
-	DrawIndexed() IRenderPass
-	EndPass() IRenderPass
-}
-
 type ISwapChain interface {
 	IDrop
 	GetCurrentTextureView() (ITextureView, error)
