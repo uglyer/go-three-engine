@@ -73,6 +73,12 @@ type IDevice interface {
 	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (IGPUCommandEncoder, error)
 	CreateTexture() (IGPUTexture, error)
 	CreateRenderPipeline() (IGpuPipeLine, error)
+	getErr() (err error)
+	storeErr(typ ErrorType, message string)
+	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IGPUComputePipeline, error)
+	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IGPUPipelineLayout, error)
+	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (*RenderBundleEncoder, error)
+	Poll(wait bool, wrappedSubmissionIndex *WrappedSubmissionIndex) (queueEmpty bool)
 }
 
 type IQueue interface {
@@ -141,4 +147,12 @@ type IGPUTextureView interface {
 type IGPUTexture interface {
 	IDrop
 	CreateView() IGPUTextureView
+}
+
+type IGPUShaderModule interface {
+	IDrop
+}
+
+type IGPUPipelineLayout interface {
+	IDrop
 }

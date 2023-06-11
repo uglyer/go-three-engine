@@ -27,7 +27,7 @@ type GPUBindGroupEntry struct {
 
 type GPUBindGroupDescriptor struct {
 	Label  string
-	Layout *IGPUBindGroupLayout
+	Layout IGPUBindGroupLayout
 	// Entries An array of entry objects describing the resources to expose to the shader.
 	// There will be one for each corresponding entry described by the GPUBindGroupLayout referenced in layout.
 	// Each entry object has the following properties:
@@ -88,4 +88,44 @@ type GPUBufferDescriptor struct {
 
 type GPUCommandEncoderDescriptor struct {
 	Label string
+}
+
+type ProgrammableStageDescriptor struct {
+	Module     IGPUShaderModule
+	EntryPoint string
+
+	// unused in wgpu
+	// Constants  []ConstantEntry
+}
+
+type ComputePipelineDescriptor struct {
+	Label   string
+	Layout  IGPUPipelineLayout
+	Compute ProgrammableStageDescriptor
+}
+
+type PushConstantRange struct {
+	Stages ShaderStage
+	Start  uint32
+	End    uint32
+}
+
+type PipelineLayoutDescriptor struct {
+	Label              string
+	BindGroupLayouts   []IGPUBindGroupLayout
+	PushConstantRanges []PushConstantRange
+}
+
+type RenderBundleEncoderDescriptor struct {
+	Label              string
+	ColorFormats       []TextureFormat
+	DepthStencilFormat TextureFormat
+	SampleCount        uint32
+	DepthReadOnly      bool
+	StencilReadOnly    bool
+}
+
+type WrappedSubmissionIndex struct {
+	Queue           *IQueue
+	SubmissionIndex SubmissionIndex
 }
