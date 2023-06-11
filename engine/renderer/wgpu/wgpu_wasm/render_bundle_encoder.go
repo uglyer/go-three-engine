@@ -55,7 +55,7 @@ func (rbe *RenderBundleEncoder) SetIndexBuffer(buffer wgpu.IBuffer, format wgpu.
 	// TODO impl SetIndexBuffer
 }
 
-func (rbe *RenderBundleEncoder) SetPipeline(pipeline wgpu.IGPURenderPipeLine) {
+func (rbe *RenderBundleEncoder) SetPipeline(pipeline wgpu.IRenderPipeLine) {
 	// TODO impl SetPipeline
 }
 

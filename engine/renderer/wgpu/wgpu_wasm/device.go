@@ -51,7 +51,7 @@ func (d *Device) CreateTexture() (wgpu.ITexture, error) {
 	return nil, errors.New("todo impl CreateTexture")
 }
 
-func (d *Device) CreateRenderPipeline() (wgpu.IGPURenderPipeLine, error) {
+func (d *Device) CreateRenderPipeline() (wgpu.IRenderPipeLine, error) {
 	// TODO impl CreateRenderPipeline
 	return nil, errors.New("todo impl CreateRenderPipeline")
 }

@@ -65,7 +65,7 @@ func (rpe *RenderPassEncoder) SetIndexBuffer(buffer wgpu.IBuffer, format wgpu.In
 	// TODO impl SetIndexBuffer
 }
 
-func (rpe *RenderPassEncoder) SetPipeline(pipeline wgpu.IGPURenderPipeLine) {
+func (rpe *RenderPassEncoder) SetPipeline(pipeline wgpu.IRenderPipeLine) {
 	// TODO impl SetPipeline
 }
 
@@ -103,4 +103,21 @@ func (rpe *RenderPassEncoder) MultiDrawIndirectCount(encoder wgpu.IRenderPassEnc
 
 func (rpe *RenderPassEncoder) MultiDrawIndexedIndirectCount(encoder wgpu.IRenderPassEncoder, buffer wgpu.IBuffer, offset uint64, countBuffer wgpu.IBuffer, countBufferOffset uint64, maxCount uint32) {
 	// TODO impl MultiDrawIndexedIndirectCount
+}
+
+type RenderPipeline struct {
+}
+
+func newRenderPipeline() wgpu.IRenderPipeLine {
+	return &RenderPipeline{}
+}
+
+func (r RenderPipeline) Drop() {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r RenderPipeline) GetBindGroupLayout(groupIndex uint32) wgpu.IGPUBindGroupLayout {
+	//TODO implement me
+	panic("implement me")
 }

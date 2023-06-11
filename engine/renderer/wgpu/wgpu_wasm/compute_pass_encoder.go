@@ -38,6 +38,23 @@ func (ce *ComputePassEncoder) SetBindGroup(groupIndex uint32, group wgpu.IGPUBin
 	// TODO impl SetBindGroup
 }
 
-func (ce *ComputePassEncoder) SetPipeline(pipeline *wgpu.IComputePipeline) {
+func (ce *ComputePassEncoder) SetPipeline(pipeline wgpu.IComputePipeline) {
 	// TODO impl SetPipeline
+}
+
+type ComputePipeline struct {
+}
+
+func newComputePipeline() wgpu.IComputePipeline {
+	return &ComputePipeline{}
+}
+
+func (c *ComputePipeline) Drop() {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (c *ComputePipeline) GetBindGroupLayout(groupIndex uint32) *wgpu.IGPUBindGroupLayout {
+	//TODO implement me
+	panic("implement me")
 }

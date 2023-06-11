@@ -8,6 +8,11 @@ type CommandEncoder struct {
 	// fields for CommandEncoder struct
 }
 
+func (ce *CommandEncoder) Drop() {
+	// TODO impl BeginComputePass
+	return
+}
+
 func (ce *CommandEncoder) BeginComputePass(descriptor *wgpu.ComputePassDescriptor) wgpu.IComputePassEncoder {
 	// TODO impl BeginComputePass
 	return nil

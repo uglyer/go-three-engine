@@ -72,7 +72,7 @@ type IDevice interface {
 	// used to encode commands to be issued to the GPU.
 	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (ICommandEncoder, error)
 	CreateTexture() (ITexture, error)
-	CreateRenderPipeline() (IGPURenderPipeLine, error)
+	CreateRenderPipeline() (IRenderPipeLine, error)
 	GetErr() (err error)
 	StoreErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
@@ -110,7 +110,7 @@ type IComputePassEncoder interface {
 	PopDebugGroup()
 	PushDebugGroup(groupLabel string)
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
-	SetPipeline(pipeline *IComputePipeline)
+	SetPipeline(pipeline IComputePipeline)
 }
 
 type IRenderPassEncoder interface {
@@ -127,7 +127,7 @@ type IRenderPassEncoder interface {
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
 	SetBlendConstant(color *Color)
 	SetIndexBuffer(buffer IBuffer, format IndexFormat, offset, size uint64)
-	SetPipeline(pipeline IGPURenderPipeLine)
+	SetPipeline(pipeline IRenderPipeLine)
 	SetScissorRect(x, y, width, height uint32)
 	SetStencilReference(reference uint32)
 	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
@@ -151,7 +151,7 @@ type IRenderBundleEncoder interface {
 	PushDebugGroup(groupLabel string)
 	SetBindGroup(groupIndex uint32, group IGPUBindGroup, dynamicOffsets []uint32)
 	SetIndexBuffer(buffer IBuffer, format IndexFormat, offset, size uint64)
-	SetPipeline(pipeline IGPURenderPipeLine)
+	SetPipeline(pipeline IRenderPipeLine)
 	SetVertexBuffer(slot uint32, buffer IBuffer, offset, size uint64)
 }
 
@@ -160,13 +160,7 @@ type IComputePipeline interface {
 	GetBindGroupLayout(groupIndex uint32) *IGPUBindGroupLayout
 }
 
-type ISwapChain interface {
-	IDrop
-	GetCurrentTextureView() (ITextureView, error)
-	Present()
-}
-
-type IGPURenderPipeLine interface {
+type IRenderPipeLine interface {
 	IDrop
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
@@ -177,7 +171,7 @@ type ITextureView interface {
 
 type ITexture interface {
 	IDrop
-	CreateView() ITextureView
+	CreateView(descriptor *TextureViewDescriptor) ITextureView
 	Destroy()
 }
 
