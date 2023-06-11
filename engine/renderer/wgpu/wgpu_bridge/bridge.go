@@ -47,6 +47,10 @@ type IAdapter interface {
 	// RequestDevice The requestDevice() method of the GPUAdapter interface returns a Promise that fulfills
 	// with a GPUDevice object, which is the primary interface for communicating with the GPU.
 	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
+	EnumerateFeatures() []FeatureName
+	GetLimits() SupportedLimits
+	GetProperties() AdapterProperties
+	HasFeature(feature FeatureName) bool
 }
 
 type IDevice interface {
