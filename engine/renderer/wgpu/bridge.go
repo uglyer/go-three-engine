@@ -14,12 +14,12 @@ type IBridge interface {
 // from which you can request devices, configure features and limits, and more.
 // The GPU object for the current context is accessed via the Navigator.gpu or WorkerNavigator.gpu properties.
 type IGPU interface {
-	// getPreferredCanvasFormat The getPreferredCanvasFormat() method of the GPU interface returns the optimal canvas
+	// GetPreferredCanvasFormat The getPreferredCanvasFormat() method of the GPU interface returns the optimal canvas
 	// texture format for displaying 8-bit depth, standard dynamic range content on the current system.
 	// This is commonly used to provide a GPUCanvasContext.configure() call with the optimal format value for the
 	// current system. This is recommended — if you don't use the preferred format when configuring the canvas context,
 	// you may incur additional overhead, such as additional texture copies, depending on the platform.
-	getPreferredCanvasFormat() TextureFormat
+	GetPreferredCanvasFormat() TextureFormat
 	// RequestAdapter The requestAdapter() method of the GPU interface returns a Promise that fulfills with a GPUAdapter
 	// object instance. From this you can request a GPUDevice, adapter info, features, and limits.
 	// Note that the user agent chooses whether to return an adapter. If so, it chooses according to the provided

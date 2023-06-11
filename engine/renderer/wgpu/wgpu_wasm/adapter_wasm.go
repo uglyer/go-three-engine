@@ -21,7 +21,7 @@ func newAdapter(adapterRef js.Value) (wgpu.IAdapter, error) {
 }
 
 func (a *Adapter) Drop() {
-
+	// TODO impl adapter drop
 }
 
 func (a *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice, error) {
@@ -34,4 +34,20 @@ func (a *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice
 	}
 	wasm.ConsoleLog("device", *device)
 	return newDevice(*device)
+}
+func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
+	// TODO impl adapter EnumerateFeatures
+	return nil
+}
+func (a *Adapter) GetLimits() wgpu.SupportedLimits {
+	// TODO impl adapter EnumerateFeatures
+	return wgpu.SupportedLimits{}
+}
+func (a *Adapter) GetProperties() wgpu.AdapterProperties {
+	// TODO impl adapter EnumerateFeatures
+	return wgpu.AdapterProperties{}
+}
+func (a *Adapter) HasFeature(feature wgpu.FeatureName) bool {
+	// TODO impl adapter EnumerateFeatures
+	return false
 }

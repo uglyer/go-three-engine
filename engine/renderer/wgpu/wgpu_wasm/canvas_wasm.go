@@ -32,6 +32,11 @@ func NewCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	if descriptor.ParentId != "" {
 		doc.Call("getElementById", descriptor.ParentId).Call("appendChild", c.canvas)
 	}
+	c.canvasContext = c.canvas.Call("getContext", "webgpu")
+	wasm.ConsoleLog(c.canvasContext)
+	if wasm.IsUndefined(c.canvasContext) {
+		return nil, fmt.Errorf("获取上下文失败(gpupresent)")
+	}
 	return c, nil
 }
 
@@ -44,29 +49,6 @@ func (c *Canvas) Drop() {
 	parent.Call("removeChild", parent)
 }
 
-func (c *Canvas) RequestAdapter(descriptor *wgpu.AdapterDescriptor) (wgpu.IAdapter, error) {
-	gpu := js.Global().Get("navigator").Get("gpu")
-	if wasm.IsUndefined(gpu) {
-		return nil, fmt.Errorf("navigator gpu is null")
-	}
-	obj := wasm.NewObject()
-	if descriptor != nil {
-		obj.Set("powerPreference", descriptor.PowerPreference.String())
-	}
-	wasm.ConsoleLog("xxx", obj)
-	adapter, err := wasm.Await(gpu.Call("requestAdapter", obj))
-	if err != nil {
-		return nil, fmt.Errorf("requestAdapter error:%v", err)
-	}
-	wasm.ConsoleLog("xxx")
-	wasm.ConsoleLog(*adapter)
-	c.canvasContext = c.canvas.Call("getContext", "webgpu")
-	wasm.ConsoleLog(c.canvasContext)
-	if wasm.IsUndefined(c.canvasContext) {
-		return nil, fmt.Errorf("获取上下文失败(gpupresent)")
-	}
-	return newAdapter(*adapter)
-}
 func (c *Canvas) Configure(descriptor *wgpu.ConfigureDescriptor) error {
 	device, ok := descriptor.Device.(*Device)
 	if !ok {

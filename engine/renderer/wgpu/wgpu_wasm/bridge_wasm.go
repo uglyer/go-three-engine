@@ -16,3 +16,6 @@ func NewBridge() wgpu.IBridge {
 func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	return NewCanvas(descriptor)
 }
+func (b *Bridge) GetGPU() (wgpu.IGPU, error) {
+	return
+}

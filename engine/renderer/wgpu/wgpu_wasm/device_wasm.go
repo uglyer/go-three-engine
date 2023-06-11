@@ -5,7 +5,6 @@ package wgpu_wasm
 import (
 	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
-	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_bridge"
 	"log"
 	"syscall/js"
 )
@@ -21,7 +20,7 @@ func newDevice(deviceRef js.Value) (wgpu.IDevice, error) {
 func (d *Device) Drop() {
 
 }
-func (d *Device) GetQueue() wgpu_bridge.IGpuQueue {
+func (d *Device) GetQueue() wgpu.IQueue {
 	log.Panicln("todo impl GetQueue")
 	return nil
 }
