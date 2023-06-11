@@ -36,3 +36,30 @@ type Limits struct {
 
 	MaxPushConstantSize uint32
 }
+
+type Color struct {
+	R, G, B, A float64
+}
+
+type Origin3D struct {
+	X, Y, Z uint32
+}
+
+type ImageCopyTexture struct {
+	Texture  *IGPUTexture
+	MipLevel uint32
+	Origin   Origin3D
+	Aspect   TextureAspect
+}
+
+type TextureDataLayout struct {
+	Offset       uint64
+	BytesPerRow  uint32
+	RowsPerImage uint32
+}
+
+type Extent3D struct {
+	Width              uint32
+	Height             uint32
+	DepthOrArrayLayers uint32
+}

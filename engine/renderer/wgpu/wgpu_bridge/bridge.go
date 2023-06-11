@@ -56,7 +56,7 @@ type IAdapter interface {
 type IDevice interface {
 	IDrop
 	// GetQueue A GPUQueue object instance.
-	GetQueue() IGpuQueue
+	GetQueue() IQueue
 	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
 	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
 	// resources are used in shader stages.
@@ -75,19 +75,28 @@ type IDevice interface {
 	CreateRenderPipeline() (IGpuPipeLine, error)
 }
 
-type IGpuQueue interface {
+type IQueue interface {
 	WriteTexture()
 	WriteBuffer()
 	Submit(commandBuffer ...IGpuCommandBuffer)
 }
 
 type IGPUCommandEncoder interface {
-	BeginComputePass(descriptor *GPUComputePassDescriptor) *IGPUComputePassEncoder
-	BeginRenderPass()
-	Finish() IGpuCommandBuffer
+	IDrop
+	BeginComputePass(descriptor *ComputePassDescriptor) ComputePassEncoder
+	BeginRenderPass(descriptor *RenderPassDescriptor) RenderPassEncoder
+	ClearBuffer(buffer IGPUBuffer, offset uint64, size uint64)
+	CopyBufferToBuffer(source IGPUBuffer, sourceOffset uint64, destination IGPUBuffer, destinatonOffset uint64, size uint64)
+	CopyBufferToTexture(source *ImageCopyBuffer, destination *ImageCopyTexture, copySize *Extent3D)
+	CopyTextureToBuffer(source *ImageCopyTexture, destination *ImageCopyBuffer, copySize *Extent3D)
+	CopyTextureToTexture(source *ImageCopyTexture, destination *ImageCopyTexture, copySize *Extent3D)
+	Finish(descriptor *CommandBufferDescriptor) CommandBuffer
+	InsertDebugMarker(markerLabel string)
+	PopDebugGroup()
+	PushDebugGroup(groupLabel string)
 }
 
-type IGPUComputePassEncoder interface {
+type ComputePassEncoder interface {
 	DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32)
 	DispatchWorkgroupsIndirect(indirectBuffer *IGPUBuffer, indirectOffset uint64)
 	End()

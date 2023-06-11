@@ -1,5 +1,6 @@
 package wgpu_bridge
 
-type GPUComputePassDescriptor struct {
-	Label string
+type ImageCopyBuffer struct {
+	Layout TextureDataLayout
+	Buffer *IGPUBuffer
 }
