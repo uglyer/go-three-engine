@@ -79,15 +79,36 @@ type DeviceDescriptor struct {
 	RequiredLimits Limits
 }
 
-type GPUBufferDescriptor struct {
+type BufferDescriptor struct {
 	Label            string
 	Usage            BufferUsage
 	Size             uint64
 	MappedAtCreation bool
 }
 
-type GPUCommandEncoderDescriptor struct {
+type CommandEncoderDescriptor struct {
 	Label string
+}
+
+type ShaderModuleSPIRVDescriptor struct {
+	Code []byte
+}
+
+type ShaderModuleWGSLDescriptor struct {
+	Code string
+}
+
+type ShaderModuleGLSLDescriptor struct {
+	Code        string
+	Defines     map[string]string
+	ShaderStage ShaderStage
+}
+
+type ShaderModuleDescriptor struct {
+	Label           string
+	SPIRVDescriptor *ShaderModuleSPIRVDescriptor
+	WGSLDescriptor  *ShaderModuleWGSLDescriptor
+	GLSLDescriptor  *ShaderModuleGLSLDescriptor
 }
 
 type ProgrammableStageDescriptor struct {

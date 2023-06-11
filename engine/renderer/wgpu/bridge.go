@@ -67,10 +67,11 @@ type IDevice interface {
 	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (IGPUBindGroupLayout, error)
 	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
 	// raw data to use in GPU operations.
-	CreateBuffer(descriptor *GPUBufferDescriptor) (IBuffer, error)
+	CreateBuffer(descriptor *BufferDescriptor) (IBuffer, error)
 	// CreateCommandEncoder The createCommandEncoder() method of the GPUDevice interface creates a GPUCommandEncoder,
 	// used to encode commands to be issued to the GPU.
-	CreateCommandEncoder(descriptor *GPUCommandEncoderDescriptor) (ICommandEncoder, error)
+	CreateCommandEncoder(descriptor *CommandEncoderDescriptor) (ICommandEncoder, error)
+	CreateShaderModule(descriptor *ShaderModuleDescriptor) (IShaderModule, error)
 	CreateTexture() (ITexture, error)
 	CreateRenderPipeline() (IRenderPipeLine, error)
 	GetErr() (err error)

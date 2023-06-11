@@ -36,14 +36,18 @@ func (d *Device) CreateBindGroupLayout(descriptor *wgpu.GPUBindGroupDescriptor) 
 	return nil, errors.New("todo impl CreateBindGroupLayout")
 }
 
-func (d *Device) CreateBuffer(descriptor *wgpu.GPUBufferDescriptor) (wgpu.IBuffer, error) {
+func (d *Device) CreateBuffer(descriptor *wgpu.BufferDescriptor) (wgpu.IBuffer, error) {
 	// TODO impl CreateBuffer
 	return nil, errors.New("todo impl CreateBuffer")
 }
 
-func (d *Device) CreateCommandEncoder(descriptor *wgpu.GPUCommandEncoderDescriptor) (wgpu.ICommandEncoder, error) {
+func (d *Device) CreateCommandEncoder(descriptor *wgpu.CommandEncoderDescriptor) (wgpu.ICommandEncoder, error) {
 	// TODO impl CreateCommandEncoder
 	return nil, errors.New("todo impl CreateCommandEncoder")
+}
+func (d *Device) CreateShaderModule(descriptor *wgpu.ShaderModuleDescriptor) (wgpu.IShaderModule, error) {
+	// TODO impl CreateCommandEncoder
+	return nil, errors.New("todo impl CreateShaderModule")
 }
 
 func (d *Device) CreateTexture() (wgpu.ITexture, error) {
