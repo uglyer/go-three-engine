@@ -151,6 +151,7 @@ type IGpuSwapChain interface {
 
 type IGPURenderPipeLine interface {
 	IDrop
+	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type IGPUTextureView interface {
