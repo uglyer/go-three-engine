@@ -1,15 +1,15 @@
 package wgpu_bridge
 
 type RenderPassColorAttachment struct {
-	View          *IGPUTextureView
-	ResolveTarget *IGPUTextureView
+	View          IGPUTextureView
+	ResolveTarget IGPUTextureView
 	LoadOp        LoadOp
 	StoreOp       StoreOp
 	ClearValue    Color
 }
 
 type RenderPassDepthStencilAttachment struct {
-	View              *IGPUTextureView
+	View              IGPUTextureView
 	DepthLoadOp       LoadOp
 	DepthStoreOp      StoreOp
 	DepthClearValue   float32

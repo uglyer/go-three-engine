@@ -161,6 +161,7 @@ type IGPUTextureView interface {
 type IGPUTexture interface {
 	IDrop
 	CreateView() IGPUTextureView
+	Destroy()
 }
 
 type IGPUShaderModule interface {
