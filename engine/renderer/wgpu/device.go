@@ -150,3 +150,93 @@ type WrappedSubmissionIndex struct {
 	Queue           *IQueue
 	SubmissionIndex SubmissionIndex
 }
+
+type BlendComponent struct {
+	Operation BlendOperation
+	SrcFactor BlendFactor
+	DstFactor BlendFactor
+}
+
+type BlendState struct {
+	Color *BlendComponent
+	Alpha *BlendComponent
+}
+
+type ColorTargetState struct {
+	Format    TextureFormat
+	Blend     *BlendState
+	WriteMask ColorWriteMask
+}
+
+type FragmentState struct {
+	Module     IShaderModule
+	EntryPoint string
+	Targets    []*ColorTargetState
+
+	// unused in wgpu
+	// Constants  []ConstantEntry
+}
+
+type VertexAttribute struct {
+	Format         VertexFormat
+	Offset         uint64
+	ShaderLocation uint32
+}
+
+type VertexBufferLayout struct {
+	ArrayStride uint64
+	StepMode    VertexStepMode
+	Attributes  []*VertexAttribute
+}
+
+type VertexState struct {
+	Module     IShaderModule
+	EntryPoint string
+	Buffers    []VertexBufferLayout
+
+	// unused in wgpu
+	// Constants  []ConstantEntry
+}
+
+type PrimitiveState struct {
+	Topology         PrimitiveTopology
+	StripIndexFormat IndexFormat
+	FrontFace        FrontFace
+	CullMode         CullMode
+}
+
+type StencilFaceState struct {
+	Compare     CompareFunction
+	FailOp      StencilOperation
+	DepthFailOp StencilOperation
+	PassOp      StencilOperation
+}
+
+type DepthStencilState struct {
+	Format              TextureFormat
+	DepthWriteEnabled   bool
+	DepthCompare        CompareFunction
+	StencilFront        *StencilFaceState
+	StencilBack         *StencilFaceState
+	StencilReadMask     uint32
+	StencilWriteMask    uint32
+	DepthBias           int32
+	DepthBiasSlopeScale float32
+	DepthBiasClamp      float32
+}
+
+type MultisampleState struct {
+	Count                  uint32
+	Mask                   uint32
+	AlphaToCoverageEnabled bool
+}
+
+type RenderPipelineDescriptor struct {
+	Label        string
+	Layout       IPipelineLayout
+	Vertex       *VertexState
+	Primitive    *PrimitiveState
+	DepthStencil *DepthStencilState
+	Multisample  *MultisampleState
+	Fragment     *FragmentState
+}

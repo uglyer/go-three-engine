@@ -73,7 +73,7 @@ type IDevice interface {
 	CreateCommandEncoder(descriptor *CommandEncoderDescriptor) (ICommandEncoder, error)
 	CreateShaderModule(descriptor *ShaderModuleDescriptor) (IShaderModule, error)
 	CreateTexture() (ITexture, error)
-	CreateRenderPipeline() (IRenderPipeLine, error)
+	CreateRenderPipeline(descriptor *RenderPipelineDescriptor) (IRenderPipeLine, error)
 	GetErr() (err error)
 	StoreErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
