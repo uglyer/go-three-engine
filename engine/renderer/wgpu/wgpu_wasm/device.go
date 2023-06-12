@@ -50,12 +50,12 @@ func (d *Device) CreateShaderModule(descriptor *wgpu.ShaderModuleDescriptor) (wg
 	return nil, errors.New("todo impl CreateShaderModule")
 }
 
-func (d *Device) CreateTexture() (wgpu.ITexture, error) {
+func (d *Device) CreateTexture(descriptor *wgpu.TextureDescriptor) (wgpu.ITexture, error) {
 	// TODO impl CreateTexture
 	return nil, errors.New("todo impl CreateTexture")
 }
 
-func (d *Device) CreateRenderPipeline() (wgpu.IRenderPipeLine, error) {
+func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor) (wgpu.IRenderPipeLine, error) {
 	// TODO impl CreateRenderPipeline
 	return nil, errors.New("todo impl CreateRenderPipeline")
 }
