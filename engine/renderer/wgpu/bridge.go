@@ -72,7 +72,7 @@ type IDevice interface {
 	// used to encode commands to be issued to the GPU.
 	CreateCommandEncoder(descriptor *CommandEncoderDescriptor) (ICommandEncoder, error)
 	CreateShaderModule(descriptor *ShaderModuleDescriptor) (IShaderModule, error)
-	CreateTexture() (ITexture, error)
+	CreateTexture(descriptor *TextureDescriptor) (ITexture, error)
 	CreateRenderPipeline(descriptor *RenderPipelineDescriptor) (IRenderPipeLine, error)
 	GetErr() (err error)
 	StoreErr(typ ErrorType, message string)
