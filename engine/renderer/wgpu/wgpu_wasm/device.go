@@ -107,13 +107,16 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 
 			desc["vertex"] = vert
 		}
-
-		desc["primitive"] = map[string]any{
-			"topology":         descriptor.Primitive.Topology.String(),
-			"stripIndexFormat": descriptor.Primitive.StripIndexFormat.String(),
-			"frontFace":        descriptor.Primitive.FrontFace.String(),
-			"cullMode":         descriptor.Primitive.CullMode.String(),
+		primitive := map[string]any{
+			"topology":  descriptor.Primitive.Topology.String(),
+			"frontFace": descriptor.Primitive.FrontFace.String(),
+			"cullMode":  descriptor.Primitive.CullMode.String(),
 		}
+		if descriptor.Primitive.StripIndexFormat != wgpu.IndexFormat_Undefined {
+			primitive["stripIndexFormat"] = descriptor.Primitive.StripIndexFormat.String()
+		}
+
+		desc["primitive"] = primitive
 
 		if descriptor.DepthStencil != nil {
 			depthStencil := descriptor.DepthStencil
@@ -172,7 +175,7 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 				for i, v := range fragment.Targets {
 					target := map[string]any{
 						"format":    v.Format.String(),
-						"writeMask": v.WriteMask.String(),
+						"writeMask": uint32(v.WriteMask),
 					}
 					if v.Blend != nil {
 						target["blend"] = map[string]any{

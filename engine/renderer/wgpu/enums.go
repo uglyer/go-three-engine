@@ -457,11 +457,11 @@ const (
 func (v CullMode) String() string {
 	switch v {
 	case CullMode_None:
-		return "None"
+		return "none"
 	case CullMode_Front:
-		return "Front"
+		return "front"
 	case CullMode_Back:
-		return "Back"
+		return "back"
 	default:
 		return ""
 	}
@@ -645,9 +645,9 @@ const (
 func (v FrontFace) String() string {
 	switch v {
 	case FrontFace_CCW:
-		return "CCW"
+		return "ccw"
 	case FrontFace_CW:
-		return "CW"
+		return "cw"
 	default:
 		return ""
 	}
@@ -664,11 +664,11 @@ const (
 func (v IndexFormat) String() string {
 	switch v {
 	case IndexFormat_Undefined:
-		return "Undefined"
+		return "undefined"
 	case IndexFormat_Uint16:
-		return "Uint16"
+		return "uint16"
 	case IndexFormat_Uint32:
-		return "Uint32"
+		return "uint32"
 	default:
 		return ""
 	}
@@ -885,15 +885,15 @@ const (
 func (v PrimitiveTopology) String() string {
 	switch v {
 	case PrimitiveTopology_PointList:
-		return "PointList"
+		return "point-list"
 	case PrimitiveTopology_LineList:
-		return "LineList"
+		return "line-list"
 	case PrimitiveTopology_LineStrip:
-		return "LineStrip"
+		return "line-strip"
 	case PrimitiveTopology_TriangleList:
-		return "TriangleList"
+		return "triangle-list"
 	case PrimitiveTopology_TriangleStrip:
-		return "TriangleStrip"
+		return "triangle-strip"
 	default:
 		return ""
 	}
@@ -1299,85 +1299,85 @@ const (
 func (v TextureFormat) String() string {
 	switch v {
 	case TextureFormat_Undefined:
-		return "Undefined"
+		return "undefined"
 	case TextureFormat_R8Unorm:
-		return "R8Unorm"
+		return "r8unorm"
 	case TextureFormat_R8Snorm:
-		return "R8Snorm"
+		return "r8snorm"
 	case TextureFormat_R8Uint:
-		return "R8Uint"
+		return "r8uint"
 	case TextureFormat_R8Sint:
-		return "R8Sint"
+		return "r8sint"
 	case TextureFormat_R16Uint:
-		return "R16Uint"
+		return "r16uint"
 	case TextureFormat_R16Sint:
-		return "R16Sint"
+		return "r16sint"
 	case TextureFormat_R16Float:
-		return "R16Float"
+		return "r16float"
 	case TextureFormat_RG8Unorm:
-		return "RG8Unorm"
+		return "rg8unorm"
 	case TextureFormat_RG8Snorm:
-		return "RG8Snorm"
+		return "rg8snorm"
 	case TextureFormat_RG8Uint:
-		return "RG8Uint"
+		return "rg8uint"
 	case TextureFormat_RG8Sint:
-		return "RG8Sint"
+		return "rg8sint"
 	case TextureFormat_R32Float:
-		return "R32Float"
+		return "r32float"
 	case TextureFormat_R32Uint:
-		return "R32Uint"
+		return "r32uint"
 	case TextureFormat_R32Sint:
-		return "R32Sint"
+		return "r32sint"
 	case TextureFormat_RG16Uint:
-		return "RG16Uint"
+		return "rg16uint"
 	case TextureFormat_RG16Sint:
-		return "RG16Sint"
+		return "rg16sint"
 	case TextureFormat_RG16Float:
-		return "RG16Float"
+		return "rg16float"
 	case TextureFormat_RGBA8Unorm:
-		return "RGBA8Unorm"
+		return "rgba8unorm"
 	case TextureFormat_RGBA8UnormSrgb:
-		return "RGBA8UnormSrgb"
+		return "rgba8unorm-srgb"
 	case TextureFormat_RGBA8Snorm:
-		return "RGBA8Snorm"
+		return "rgba8snorm"
 	case TextureFormat_RGBA8Uint:
-		return "RGBA8Uint"
+		return "rgba8uint"
 	case TextureFormat_RGBA8Sint:
-		return "RGBA8Sint"
+		return "rgba8sint"
 	case TextureFormat_BGRA8Unorm:
-		return "BGRA8Unorm"
+		return "bgra8unorm"
 	case TextureFormat_BGRA8UnormSrgb:
-		return "BGRA8UnormSrgb"
+		return "bgra8unorm-srgb"
 	case TextureFormat_RGB10A2Unorm:
-		return "RGB10A2Unorm"
+		return "rgb10a2unorm"
 	case TextureFormat_RG11B10Ufloat:
-		return "RG11B10Ufloat"
+		return "rg11b10ufloat"
 	case TextureFormat_RGB9E5Ufloat:
-		return "RGB9E5Ufloat"
+		return "rgb9e5ufloat"
 	case TextureFormat_RG32Float:
-		return "RG32Float"
+		return "rg32float"
 	case TextureFormat_RG32Uint:
-		return "RG32Uint"
+		return "rg32uint"
 	case TextureFormat_RG32Sint:
-		return "RG32Sint"
+		return "rg32sint"
 	case TextureFormat_RGBA16Uint:
-		return "RGBA16Uint"
+		return "rgba16uint"
 	case TextureFormat_RGBA16Sint:
-		return "RGBA16Sint"
+		return "rgba16sint"
 	case TextureFormat_RGBA16Float:
-		return "RGBA16Float"
+		return "rgba16float"
 	case TextureFormat_RGBA32Float:
-		return "RGBA32Float"
+		return "rgba32float"
 	case TextureFormat_RGBA32Uint:
-		return "RGBA32Uint"
+		return "rgba32uint"
 	case TextureFormat_RGBA32Sint:
-		return "RGBA32Sint"
+		return "rgba32sint"
 	case TextureFormat_Stencil8:
-		return "Stencil8"
+		return "stencil8"
 	case TextureFormat_Depth16Unorm:
-		return "Depth16Unorm"
+		return "depth16unorm"
 	case TextureFormat_Depth24Plus:
-		return "Depth24Plus"
+		return "depth24plus"
 	case TextureFormat_Depth24PlusStencil8:
 		return "Depth24PlusStencil8"
 	case TextureFormat_Depth32Float:
