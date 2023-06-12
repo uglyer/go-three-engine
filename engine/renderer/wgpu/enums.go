@@ -1702,11 +1702,11 @@ const (
 func (v VertexStepMode) String() string {
 	switch v {
 	case VertexStepMode_Vertex:
-		return "Vertex"
+		return "vertex"
 	case VertexStepMode_Instance:
-		return "Instance"
+		return "instance"
 	case VertexStepMode_VertexBufferNotUsed:
-		return "VertexBufferNotUsed"
+		return "vertex-buffer-not-used"
 	default:
 		return ""
 	}
