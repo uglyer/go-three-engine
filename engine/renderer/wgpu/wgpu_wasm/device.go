@@ -50,7 +50,22 @@ func (d *Device) CreateCommandEncoder(descriptor *wgpu.CommandEncoderDescriptor)
 func (d *Device) CreateShaderModule(descriptor *wgpu.ShaderModuleDescriptor) (wgpu.IShaderModule, error) {
 	// TODO impl CreateCommandEncoder
 	//return nil, errors.New("todo impl CreateShaderModule")
-	return &ShaderModule{ref: wasm.NewObject()}, nil
+	desc := make(map[string]any)
+	if descriptor != nil {
+		if descriptor.Label != "" {
+			desc["label"] = descriptor.Label
+		}
+		switch {
+		case descriptor.WGSLDescriptor != nil:
+			desc["code"] = descriptor.WGSLDescriptor.Code
+			break
+		case descriptor.SPIRVDescriptor != nil:
+		case descriptor.GLSLDescriptor != nil:
+			panic("暂不支持的类型")
+		}
+	}
+	result := d.ref.Call("createShaderModule", desc)
+	return &ShaderModule{ref: result}, nil
 }
 
 func (d *Device) CreateTexture(descriptor *wgpu.TextureDescriptor) (wgpu.ITexture, error) {
