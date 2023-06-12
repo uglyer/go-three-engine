@@ -67,6 +67,8 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 
 		if descriptor.Layout != nil {
 			desc["layout"] = descriptor.Layout.(*PipelineLayout).ref
+		} else {
+			desc["layout"] = "auto"
 		}
 
 		// vertex
