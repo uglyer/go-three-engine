@@ -11,12 +11,12 @@ import (
 )
 
 type Adapter struct {
-	adapterRef js.Value
+	ref js.Value
 }
 
 func newAdapter(adapterRef js.Value) (wgpu.IAdapter, error) {
 	return &Adapter{
-		adapterRef: adapterRef,
+		ref: adapterRef,
 	}, nil
 }
 
@@ -28,10 +28,11 @@ func (a *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice
 	if descriptor != nil {
 		log.Println("todo RequestDevice with descriptor")
 	}
-	device, err := wasm.Await(a.adapterRef.Call("requestDevice"))
+	device, err := wasm.Await(a.ref.Call("requestDevice"))
 	if err != nil {
 		return nil, fmt.Errorf("call requestDevice error:%v", err)
 	}
+	wasm.ConsoleLog("a.ref", a.ref)
 	wasm.ConsoleLog("device", *device)
 	return newDevice(*device)
 }
