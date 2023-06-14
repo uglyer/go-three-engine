@@ -42,6 +42,7 @@ func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
 }
 func (a *Adapter) GetLimits() wgpu.SupportedLimits {
 	// TODO impl adapter EnumerateFeatures
+	wasm.ConsoleLog("device.GetLimits", a.ref.Get("limits"))
 	return wgpu.SupportedLimits{}
 }
 func (a *Adapter) GetProperties() wgpu.AdapterProperties {

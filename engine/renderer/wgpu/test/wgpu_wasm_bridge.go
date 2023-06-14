@@ -33,6 +33,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("获取适配器失败:%v", err)
 	}
+	adapter.GetLimits()
 	device, err := adapter.RequestDevice(nil)
 	if err != nil {
 		log.Fatalf("获取gpu设备失败:%v", err)
