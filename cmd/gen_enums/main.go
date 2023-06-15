@@ -137,6 +137,27 @@ func main() {
 		}
 		fmt.Fprintf(w, "}\n")
 		fmt.Fprintf(w, "}\n")
+
+		fmt.Fprintf(w, "func StringTo%s(str string) %s {\n", e.Name, e.Name)
+		fmt.Fprintf(w, "switch str {\n")
+		for _, v := range e.Enums {
+			kebab, ok := repalceString[v.Enum]
+			if !ok {
+				words := re2.FindAllString(strings.TrimPrefix(v.Enum, e.Name+"_"), -1)
+				kebab = strings.ToLower(strings.Join(words, "-"))
+			}
+			fmt.Fprintf(w, "case \"%s\":\n", kebab)
+			fmt.Fprintf(w, "return %s\n", v.Enum)
+		}
+		if e.Name == "ErrorType" {
+			fmt.Fprintf(w, "default:\n")
+			fmt.Fprintf(w, "return \"unknown\"\n")
+		} else {
+			fmt.Fprintf(w, "default:\n")
+			fmt.Fprint(w, "panic(fmt.Sprintf(\"%s convert to "+e.Name+" error\", str))\n")
+		}
+		fmt.Fprintf(w, "}\n")
+		fmt.Fprintf(w, "}\n")
 	}
 	out, err := os.Create("./engine/renderer/wgpu/enums.go")
 	if err != nil {
