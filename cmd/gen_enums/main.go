@@ -62,6 +62,9 @@ func main() {
 	mergeTypes := map[string]string{
 		"NativeFeature": "FeatureName",
 	}
+	repalceString := map[string]string{
+		"PowerPreference_Undefined": "default",
+	}
 	re := regexp.MustCompile(`(?m)^\s*(\w+)\s*=\s*(\w+),?$`)
 	matches := re.FindAllStringSubmatch(webgpuCode, -1)
 	for _, match := range matches {
@@ -117,6 +120,10 @@ func main() {
 		fmt.Fprintf(w, "switch v {\n")
 		for _, v := range e.Enums {
 			fmt.Fprintf(w, "case %s:\n", v.Enum)
+			if kebab, ok := repalceString[v.Enum]; ok {
+				fmt.Fprintf(w, "return \"%s\"\n", kebab)
+				continue
+			}
 			words := re2.FindAllString(strings.TrimPrefix(v.Enum, e.Name+"_"), -1)
 			kebab := strings.ToLower(strings.Join(words, "-"))
 			fmt.Fprintf(w, "return \"%s\"\n", kebab)
