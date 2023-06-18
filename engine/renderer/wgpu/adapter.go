@@ -5,7 +5,7 @@ type AdapterDescriptor struct {
 }
 
 type SupportedLimits struct {
-	Limits Limits
+	Limits *Limits
 }
 
 type AdapterProperties struct {
