@@ -20,8 +20,8 @@ type ConfigureDescriptor struct {
 	// you may incur additional overhead, such as additional texture copies, depending on the platform.
 	Format TextureFormat
 
-	// AlphaMode Optional
-	AlphaMode CompositeAlphaMode
+	// AlphaMode Optional TODO AlphaMode
+	//AlphaMode CompositeAlphaMode
 
 	// ViewFormats Optional
 	ViewFormats []TextureFormat
