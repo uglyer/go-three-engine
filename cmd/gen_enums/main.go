@@ -57,8 +57,9 @@ func (e Enums) Add(t string, enum string, value string) Enums {
 func main() {
 	var enums = Enums{}
 	skipTypes := map[string]bool{
-		"SType":       true,
-		"NativeSType": true,
+		"SType":         true,
+		"NativeSType":   true,
+		"NativeFeature": true,
 	}
 	mergeTypes := map[string]string{
 		"NativeFeature": "FeatureName",
@@ -67,7 +68,7 @@ func main() {
 		"PowerPreference_Undefined": "default",
 	}
 	re := regexp.MustCompile(`(?m)^\s*(\w+)\s*=\s*(\w+),?$`)
-	matches := re.FindAllStringSubmatch(webgpuCode, -1)
+	matches := re.FindAllStringSubmatch(webgpuCode+wgpuCode, -1)
 	for _, match := range matches {
 
 		key := match[1]
