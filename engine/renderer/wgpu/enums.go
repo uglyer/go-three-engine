@@ -698,6 +698,54 @@ func StringToCompilationMessageType(str string) CompilationMessageType {
 	}
 }
 
+type CompositeAlphaMode uint32
+
+const (
+	CompositeAlphaMode_Auto           CompositeAlphaMode = 0x00000000
+	CompositeAlphaMode_Opaque         CompositeAlphaMode = 0x00000001
+	CompositeAlphaMode_PreMultiplied  CompositeAlphaMode = 0x00000002
+	CompositeAlphaMode_PostMultiplied CompositeAlphaMode = 0x00000003
+	CompositeAlphaMode_Inherit        CompositeAlphaMode = 0x00000004
+	CompositeAlphaMode_Force32        CompositeAlphaMode = 0x7FFFFFFF
+)
+
+func (v CompositeAlphaMode) String() string {
+	switch v {
+	case CompositeAlphaMode_Auto:
+		return "auto"
+	case CompositeAlphaMode_Opaque:
+		return "opaque"
+	case CompositeAlphaMode_PreMultiplied:
+		return "pre-multiplied"
+	case CompositeAlphaMode_PostMultiplied:
+		return "post-multiplied"
+	case CompositeAlphaMode_Inherit:
+		return "inherit"
+	case CompositeAlphaMode_Force32:
+		return "force32"
+	default:
+		return ""
+	}
+}
+func StringToCompositeAlphaMode(str string) CompositeAlphaMode {
+	switch str {
+	case "auto":
+		return CompositeAlphaMode_Auto
+	case "opaque":
+		return CompositeAlphaMode_Opaque
+	case "pre-multiplied":
+		return CompositeAlphaMode_PreMultiplied
+	case "post-multiplied":
+		return CompositeAlphaMode_PostMultiplied
+	case "inherit":
+		return CompositeAlphaMode_Inherit
+	case "force32":
+		return CompositeAlphaMode_Force32
+	default:
+		panic(fmt.Sprintf("%s convert to CompositeAlphaMode error", str))
+	}
+}
+
 type ComputePassTimestampLocation uint32
 
 const (
@@ -852,6 +900,44 @@ func StringToDeviceLostReason(str string) DeviceLostReason {
 		return DeviceLostReason_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to DeviceLostReason error", str))
+	}
+}
+
+type Dx12Compiler uint32
+
+const (
+	Dx12Compiler_Undefined Dx12Compiler = 0x00000000
+	Dx12Compiler_Fxc       Dx12Compiler = 0x00000001
+	Dx12Compiler_Dxc       Dx12Compiler = 0x00000002
+	Dx12Compiler_Force32   Dx12Compiler = 0x7FFFFFFF
+)
+
+func (v Dx12Compiler) String() string {
+	switch v {
+	case Dx12Compiler_Undefined:
+		return "undefined"
+	case Dx12Compiler_Fxc:
+		return "fxc"
+	case Dx12Compiler_Dxc:
+		return "dxc"
+	case Dx12Compiler_Force32:
+		return "force32"
+	default:
+		return ""
+	}
+}
+func StringToDx12Compiler(str string) Dx12Compiler {
+	switch str {
+	case "undefined":
+		return Dx12Compiler_Undefined
+	case "fxc":
+		return Dx12Compiler_Fxc
+	case "dxc":
+		return Dx12Compiler_Dxc
+	case "force32":
+		return Dx12Compiler_Force32
+	default:
+		panic(fmt.Sprintf("%s convert to Dx12Compiler error", str))
 	}
 }
 
@@ -1133,6 +1219,34 @@ func StringToIndexFormat(str string) IndexFormat {
 	}
 }
 
+type InstanceBackend uint32
+
+const (
+	InstanceBackend_None    InstanceBackend = 0x00000000
+	InstanceBackend_Force32 InstanceBackend = 0x7FFFFFFF
+)
+
+func (v InstanceBackend) String() string {
+	switch v {
+	case InstanceBackend_None:
+		return "none"
+	case InstanceBackend_Force32:
+		return "force32"
+	default:
+		return ""
+	}
+}
+func StringToInstanceBackend(str string) InstanceBackend {
+	switch str {
+	case "none":
+		return InstanceBackend_None
+	case "force32":
+		return InstanceBackend_Force32
+	default:
+		panic(fmt.Sprintf("%s convert to InstanceBackend error", str))
+	}
+}
+
 type LoadOp uint32
 
 const (
@@ -1168,6 +1282,59 @@ func StringToLoadOp(str string) LoadOp {
 		return LoadOp_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to LoadOp error", str))
+	}
+}
+
+type LogLevel uint32
+
+const (
+	LogLevel_Off     LogLevel = 0x00000000
+	LogLevel_Error   LogLevel = 0x00000001
+	LogLevel_Warn    LogLevel = 0x00000002
+	LogLevel_Info    LogLevel = 0x00000003
+	LogLevel_Debug   LogLevel = 0x00000004
+	LogLevel_Trace   LogLevel = 0x00000005
+	LogLevel_Force32 LogLevel = 0x7FFFFFFF
+)
+
+func (v LogLevel) String() string {
+	switch v {
+	case LogLevel_Off:
+		return "off"
+	case LogLevel_Error:
+		return "error"
+	case LogLevel_Warn:
+		return "warn"
+	case LogLevel_Info:
+		return "info"
+	case LogLevel_Debug:
+		return "debug"
+	case LogLevel_Trace:
+		return "trace"
+	case LogLevel_Force32:
+		return "force32"
+	default:
+		return ""
+	}
+}
+func StringToLogLevel(str string) LogLevel {
+	switch str {
+	case "off":
+		return LogLevel_Off
+	case "error":
+		return LogLevel_Error
+	case "warn":
+		return LogLevel_Warn
+	case "info":
+		return LogLevel_Info
+	case "debug":
+		return LogLevel_Debug
+	case "trace":
+		return LogLevel_Trace
+	case "force32":
+		return LogLevel_Force32
+	default:
+		panic(fmt.Sprintf("%s convert to LogLevel error", str))
 	}
 }
 
