@@ -46,3 +46,12 @@ func Await(target js.Value) (*js.Value, error) {
 		return nil, fmt.Errorf("promise error:%s", err.Call("toString"))
 	}
 }
+
+func TryGet(target js.Value, name string) (result js.Value, flag bool) {
+	defer func() {
+		if r := recover(); r != nil {
+			flag = false
+		}
+	}()
+	return target.Get(name), false
+}
