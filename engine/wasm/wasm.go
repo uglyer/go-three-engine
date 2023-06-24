@@ -53,5 +53,5 @@ func TryGet(target js.Value, name string) (result js.Value, flag bool) {
 			flag = false
 		}
 	}()
-	return target.Get(name), false
+	return target.Get(name), true
 }

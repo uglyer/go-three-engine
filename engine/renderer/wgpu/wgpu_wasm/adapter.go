@@ -43,8 +43,6 @@ func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
 	return nil
 }
 func (a *Adapter) GetLimits() wgpu.SupportedLimits {
-	// TODO impl adapter EnumerateFeatures
-	// TODO 反射值更新未成功
 	jsLimits := a.ref.Get("limits")
 	limit := wgpu.Limits{}
 	valueOfLimit := reflect.ValueOf(&limit).Elem()
@@ -61,8 +59,6 @@ func (a *Adapter) GetLimits() wgpu.SupportedLimits {
 		}
 		field.SetUint(uint64(jsV.Int()))
 	}
-	wasm.ConsoleLog("device.GetLimits", uint64(jsLimits.Get("maxBindGroups").Int()))
-	wasm.ConsoleLog("device.GetLimits", int(limit.MaxBindGroups))
 	return wgpu.SupportedLimits{
 		Limits: &limit,
 	}
