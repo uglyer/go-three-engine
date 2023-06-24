@@ -23,10 +23,7 @@ func newGPU() (wgpu.IGPU, error) {
 }
 
 func (g *GPU) GetPreferredCanvasFormat() wgpu.TextureFormat {
-	println("GetPreferredCanvasFormat")
-	v := g.ref.Call("getPreferredCanvasFormat")
-	wasm.ConsoleLog("v", v)
-	return wgpu.StringToTextureFormat(v.String())
+	return wgpu.StringToTextureFormat(g.ref.Call("getPreferredCanvasFormat").String())
 }
 
 func (g *GPU) RequestAdapter(descriptor *wgpu.AdapterDescriptor) (wgpu.IAdapter, error) {
