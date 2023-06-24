@@ -47,7 +47,6 @@ func (a *Adapter) GetLimits() wgpu.SupportedLimits {
 	limit := wgpu.Limits{}
 	valueOfLimit := reflect.ValueOf(&limit).Elem()
 	typeOfLimit := reflect.TypeOf(limit)
-	wasm.ConsoleLog("jsLimits", jsLimits)
 	size := typeOfLimit.NumField()
 	for i := 0; i < size; i++ {
 		name := typeOfLimit.Field(i).Name
