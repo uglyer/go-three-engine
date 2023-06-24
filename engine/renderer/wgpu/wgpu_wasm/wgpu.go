@@ -11,7 +11,8 @@ import (
 )
 
 type GPU struct {
-	ref js.Value
+	ref                   js.Value
+	preferredCanvasFormat wgpu.TextureFormat
 }
 
 func newGPU() (wgpu.IGPU, error) {
@@ -19,11 +20,11 @@ func newGPU() (wgpu.IGPU, error) {
 	if wasm.IsUndefined(gpu) {
 		return nil, fmt.Errorf("navigator gpu is null")
 	}
-	return &GPU{ref: gpu}, nil
+	return &GPU{ref: gpu, preferredCanvasFormat: wgpu.StringToTextureFormat(gpu.Call("getPreferredCanvasFormat").String())}, nil
 }
 
 func (g *GPU) GetPreferredCanvasFormat() wgpu.TextureFormat {
-	return wgpu.StringToTextureFormat(g.ref.Call("getPreferredCanvasFormat").String())
+	return g.preferredCanvasFormat
 }
 
 func (g *GPU) RequestAdapter(descriptor *wgpu.AdapterDescriptor) (wgpu.IAdapter, error) {
