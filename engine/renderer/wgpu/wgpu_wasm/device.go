@@ -11,11 +11,13 @@ import (
 )
 
 type Device struct {
-	ref js.Value
+	ref   js.Value
+	queue wgpu.IQueue
 }
 
 func newDevice(deviceRef js.Value) (wgpu.IDevice, error) {
-	return &Device{ref: deviceRef}, nil
+	queue := newQueue(deviceRef.Get("queue"))
+	return &Device{ref: deviceRef, queue: queue}, nil
 }
 
 func (d *Device) Drop() {
@@ -24,8 +26,7 @@ func (d *Device) Drop() {
 }
 
 func (d *Device) GetQueue() wgpu.IQueue {
-	// TODO impl GetQueue
-	return nil
+	return d.queue
 }
 
 func (d *Device) CreateBindGroup(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.IGPUBindGroup, error) {
