@@ -64,7 +64,7 @@ type IDevice interface {
 	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
 	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
 	// and is used as a template when creating GPUBindGroups.
-	CreateBindGroupLayout(descriptor *GPUBindGroupDescriptor) (IGPUBindGroupLayout, error)
+	CreateBindGroupLayout(descriptor *BindGroupLayoutDescriptor) (IGPUBindGroupLayout, error)
 	// CreateBuffer The createBuffer() method of the GPUDevice interface creates a GPUBuffer in which to store
 	// raw data to use in GPU operations.
 	CreateBuffer(descriptor *BufferDescriptor) (IBuffer, error)

@@ -67,7 +67,7 @@ type BindGroupLayoutEntry struct {
 
 type BindGroupLayoutDescriptor struct {
 	Label   string
-	Entries []BindGroupLayoutEntry
+	Entries []*BindGroupLayoutEntry
 }
 
 type DeviceDescriptor struct {

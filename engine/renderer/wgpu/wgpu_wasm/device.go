@@ -34,7 +34,7 @@ func (d *Device) CreateBindGroup(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.
 	return nil, errors.New("todo impl CreateBindGroup")
 }
 
-func (d *Device) CreateBindGroupLayout(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.IGPUBindGroupLayout, error) {
+func (d *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (wgpu.IGPUBindGroupLayout, error) {
 	// TODO impl CreateBindGroupLayout
 	return nil, errors.New("todo impl CreateBindGroupLayout")
 }
