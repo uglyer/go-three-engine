@@ -17,6 +17,7 @@ type Adapter struct {
 }
 
 func newAdapter(adapterRef js.Value) (wgpu.IAdapter, error) {
+	wasm.ConsoleLog("adapterRef", adapterRef)
 	return &Adapter{
 		ref: adapterRef,
 	}, nil
@@ -39,8 +40,13 @@ func (a *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice
 	return newDevice(*device)
 }
 func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
-	// TODO impl adapter EnumerateFeatures
-	return nil
+	featuresRef := a.ref.Get("features")
+	list := make([]wgpu.FeatureName, 0)
+	featuresRef.Call("forEach", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		list = append(list, wgpu.StringToFeatureName(args[0].String()))
+		return nil
+	}))
+	return list
 }
 func (a *Adapter) GetLimits() wgpu.SupportedLimits {
 	jsLimits := a.ref.Get("limits")
