@@ -78,6 +78,11 @@ func (a *Adapter) GetProperties() wgpu.AdapterProperties {
 	return wgpu.AdapterProperties{}
 }
 func (a *Adapter) HasFeature(feature wgpu.FeatureName) bool {
-	// TODO impl adapter EnumerateFeatures
+	features := a.EnumerateFeatures()
+	for _,it := range features {
+		if it == feature {
+			return true
+		}
+	}
 	return false
 }
