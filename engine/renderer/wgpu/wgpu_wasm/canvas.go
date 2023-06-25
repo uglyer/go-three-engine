@@ -64,8 +64,7 @@ func (c *Canvas) Configure(descriptor *wgpu.ConfigureDescriptor) error {
 }
 
 func (c *Canvas) UnConfigure() {
-	// todo 实现 UnConfigure
-	return
+	c.canvasContext.Call("unConfigure")
 }
 
 func (c *Canvas) GetCurrentTexture() wgpu.ITexture {
