@@ -69,6 +69,6 @@ func (c *Canvas) UnConfigure() {
 }
 
 func (c *Canvas) GetCurrentTexture() wgpu.ITexture {
-	// todo 实现 GetCurrentTexture
-	return nil
+	ref := c.canvasContext.Call("getCurrentTexture")
+	return newTexture(ref)
 }
