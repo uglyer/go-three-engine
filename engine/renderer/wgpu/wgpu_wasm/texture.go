@@ -10,7 +10,7 @@ type Texture struct {
 	ref js.Value
 }
 
-func newTexture(ref js.Value) *Texture {
+func newTexture(ref js.Value) wgpu.ITexture {
 	return &Texture{ref: ref}
 }
 
