@@ -13,7 +13,8 @@ import (
 )
 
 type Adapter struct {
-	ref js.Value
+	ref               js.Value
+	enumerateFeatures []wgpu.FeatureName
 }
 
 func newAdapter(adapterRef js.Value) (wgpu.IAdapter, error) {
@@ -40,13 +41,16 @@ func (a *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice
 	return newDevice(*device)
 }
 func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
-	featuresRef := a.ref.Get("features")
-	list := make([]wgpu.FeatureName, 0)
-	featuresRef.Call("forEach", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		list = append(list, wgpu.StringToFeatureName(args[0].String()))
-		return nil
-	}))
-	return list
+	if a.enumerateFeatures == nil {
+		featuresRef := a.ref.Get("features")
+		list := make([]wgpu.FeatureName, 0)
+		featuresRef.Call("forEach", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			list = append(list, wgpu.StringToFeatureName(args[0].String()))
+			return nil
+		}))
+		a.enumerateFeatures = list
+	}
+	return a.enumerateFeatures
 }
 func (a *Adapter) GetLimits() wgpu.SupportedLimits {
 	jsLimits := a.ref.Get("limits")
