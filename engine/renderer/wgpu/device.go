@@ -21,8 +21,8 @@ type GPUBindGroupEntry struct {
 	ResourceBuffer      IBuffer
 	Offset              uint64
 	Size                uint64
-	ResourceSampler     *IGPUSampler
-	ResourceTextureView *ITextureView
+	ResourceSampler     IGPUSampler
+	ResourceTextureView ITextureView
 }
 
 type GPUBindGroupDescriptor struct {
