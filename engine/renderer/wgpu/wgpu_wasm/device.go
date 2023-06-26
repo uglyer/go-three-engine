@@ -5,6 +5,7 @@ package wgpu_wasm
 import "C"
 import (
 	"errors"
+	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"github.com/uglyer/go-three-engine/engine/wasm"
 	"syscall/js"
@@ -30,8 +31,43 @@ func (d *Device) GetQueue() wgpu.IQueue {
 }
 
 func (d *Device) CreateBindGroup(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.IGPUBindGroup, error) {
-	// TODO impl CreateBindGroup
-	return nil, errors.New("todo impl CreateBindGroup")
+	layout, ok := descriptor.Layout.(*BindGroupLayout)
+	if !ok {
+		return nil, fmt.Errorf("layout type error")
+	}
+	des := map[string]any{
+		"layout": layout.ref,
+	}
+	if descriptor.Label != "" {
+		des["label"] = descriptor.Label
+	}
+	targetCount := len(descriptor.Entries)
+	if targetCount > 0 {
+		entries := make([]any, targetCount)
+		for i, it := range descriptor.Entries {
+			data := map[string]any{
+				"binding": it.Binding,
+			}
+			if it.Size != 0 {
+				data["size"] = it.Size
+			}
+			if it.Offset != 0 {
+				data["offset"] = it.Offset
+			}
+			if it.ResourceBuffer != nil {
+				data["resource"] = it.ResourceBuffer.(*Buffer).ref
+			} else if it.ResourceSampler != nil {
+				data["resource"] = it.ResourceSampler.(*Sampler).ref
+			} else if it.ResourceTextureView != nil {
+				data["resource"] = it.ResourceTextureView.(*Sampler).ref
+			} else {
+				return nil, fmt.Errorf("resource is nil")
+			}
+			entries[i] = data
+		}
+	}
+	ref := d.ref.Call("createBindGroup", des)
+	return &BindGroupLayout{ref: ref}, nil
 }
 
 func (d *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (wgpu.IGPUBindGroupLayout, error) {
