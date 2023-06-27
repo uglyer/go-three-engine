@@ -15,7 +15,7 @@ func (b *Buffer) Drop() {
 }
 
 func (b *Buffer) Destroy() {
-	panic("todo impl Destroy")
+	b.ref.Call("destroy")
 }
 
 func (b *Buffer) MapAsync(mode wgpu.MapMode, offset uint64, size uint64, callback wgpu.BufferMapCallback) {
