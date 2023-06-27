@@ -40,5 +40,5 @@ func (b *Buffer) GetMappedRange(offset, size uint) []byte {
 }
 
 func (b *Buffer) Unmap() {
-	panic("todo impl Unmap")
+	b.ref.Call("unmap")
 }
