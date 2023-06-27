@@ -32,7 +32,11 @@ func (b *Buffer) MapAsync(mode wgpu.MapMode, offset uint64, size uint64, callbac
 }
 
 func (b *Buffer) GetMappedRange(offset, size uint) []byte {
-	panic("todo impl GetMappedRange")
+	arrayBuffer := b.ref.Call("getMappedRange", offset, size)
+	// 声明一个和文件大小一样的切片
+	buffer := make([]byte, arrayBuffer.Length())
+	js.CopyBytesToGo(buffer, arrayBuffer)
+	return buffer
 }
 
 func (b *Buffer) Unmap() {
