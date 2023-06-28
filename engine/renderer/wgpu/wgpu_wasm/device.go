@@ -117,8 +117,14 @@ func (d *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescripto
 }
 
 func (d *Device) CreateBuffer(descriptor *wgpu.BufferDescriptor) (wgpu.IBuffer, error) {
-	// TODO impl CreateBuffer
-	return nil, errors.New("todo impl CreateBuffer")
+	desc := map[string]any{
+		"label":            descriptor.Label,
+		"mappedAtCreation": descriptor.MappedAtCreation,
+		"size":             descriptor.Size,
+		"usage":            int(descriptor.Usage),
+	}
+	ref := d.ref.Call("createBuffer", desc)
+	return &Buffer{ref: ref}, nil
 }
 
 func (d *Device) CreateCommandEncoder(descriptor *wgpu.CommandEncoderDescriptor) (wgpu.ICommandEncoder, error) {
