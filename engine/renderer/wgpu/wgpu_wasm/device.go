@@ -71,8 +71,49 @@ func (d *Device) CreateBindGroup(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.
 }
 
 func (d *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (wgpu.IGPUBindGroupLayout, error) {
-	// TODO impl CreateBindGroupLayout
-	return nil, errors.New("todo impl CreateBindGroupLayout")
+	des := map[string]any{}
+	if descriptor.Label != "" {
+		des["label"] = descriptor.Label
+	}
+	targetCount := len(descriptor.Entries)
+	if targetCount > 0 {
+		entries := make([]any, targetCount)
+		for i, it := range descriptor.Entries {
+			data := map[string]any{
+				"binding":    it.Binding,
+				"visibility": int(it.Visibility),
+			}
+			if it.Buffer != nil {
+				data["buffer"] = map[string]any{
+					"type":             it.Buffer.Type.String(),
+					"hasDynamicOffset": it.Buffer.HasDynamicOffset,
+					"minBindingSize":   it.Buffer.MinBindingSize,
+				}
+			}
+			if it.Texture != nil {
+				data["texture"] = map[string]any{
+					"multisampled":  it.Texture.Multisampled,
+					"sampleType":    it.Texture.SampleType.String(),
+					"viewDimension": it.Texture.ViewDimension.String(),
+				}
+			}
+			if it.StorageTexture != nil {
+				data["storageTexture"] = map[string]any{
+					"access":        it.StorageTexture.Access.String(),
+					"format":        it.StorageTexture.Format.String(),
+					"viewDimension": it.StorageTexture.ViewDimension.String(),
+				}
+			}
+			if it.Sampler != nil {
+				data["sampler"] = map[string]any{
+					"type": it.Sampler.Type.String(),
+				}
+			}
+			entries[i] = data
+		}
+	}
+	ref := d.ref.Call("createBindGroupLayout", des)
+	return &BindGroupLayout{ref: ref}, nil
 }
 
 func (d *Device) CreateBuffer(descriptor *wgpu.BufferDescriptor) (wgpu.IBuffer, error) {

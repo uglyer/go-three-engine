@@ -59,10 +59,10 @@ type StorageTextureBindingLayout struct {
 type BindGroupLayoutEntry struct {
 	Binding        uint32
 	Visibility     ShaderStage
-	Buffer         BufferBindingLayout
-	Sampler        SamplerBindingLayout
-	Texture        TextureBindingLayout
-	StorageTexture StorageTextureBindingLayout
+	Buffer         *BufferBindingLayout
+	Sampler        *SamplerBindingLayout
+	Texture        *TextureBindingLayout
+	StorageTexture *StorageTextureBindingLayout
 }
 
 type BindGroupLayoutDescriptor struct {
