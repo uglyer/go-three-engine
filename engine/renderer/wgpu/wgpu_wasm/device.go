@@ -155,8 +155,24 @@ func (d *Device) CreateShaderModule(descriptor *wgpu.ShaderModuleDescriptor) (wg
 }
 
 func (d *Device) CreateTexture(descriptor *wgpu.TextureDescriptor) (wgpu.ITexture, error) {
-	// TODO impl CreateTexture
-	return nil, errors.New("todo impl CreateTexture")
+	desc := map[string]any{
+		"label":  descriptor.Label,
+		"format": descriptor.Format.String(),
+		"size": map[string]any{
+			"width":              descriptor.Size.Width,
+			"height":             descriptor.Size.Height,
+			"depthOrArrayLayers": descriptor.Size.DepthOrArrayLayers,
+		},
+		"usage": int(descriptor.Usage),
+	}
+	if &descriptor.Dimension != nil {
+		desc["dimension"] = descriptor.Dimension.String()
+	}
+	if &descriptor.MipLevelCount != nil {
+		desc["mipLevelCount"] = descriptor.MipLevelCount
+	}
+	ref := d.ref.Call("createTexture", desc)
+	return &Texture{ref: ref}, nil
 }
 
 func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor) (wgpu.IRenderPipeLine, error) {
