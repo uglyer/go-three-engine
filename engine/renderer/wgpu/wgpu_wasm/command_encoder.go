@@ -2,10 +2,14 @@
 
 package wgpu_wasm
 
-import "github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+import (
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"syscall/js"
+)
 
 type CommandEncoder struct {
 	// fields for CommandEncoder struct
+	ref js.Value
 }
 
 func (ce *CommandEncoder) Drop() {

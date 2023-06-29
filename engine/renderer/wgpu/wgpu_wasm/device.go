@@ -128,12 +128,14 @@ func (d *Device) CreateBuffer(descriptor *wgpu.BufferDescriptor) (wgpu.IBuffer, 
 }
 
 func (d *Device) CreateCommandEncoder(descriptor *wgpu.CommandEncoderDescriptor) (wgpu.ICommandEncoder, error) {
-	// TODO impl CreateCommandEncoder
-	return nil, errors.New("todo impl CreateCommandEncoder")
+	desc := map[string]any{
+		"label": descriptor.Label,
+	}
+	ref := d.ref.Call("createCommandEncoder", desc)
+	return &CommandEncoder{ref: ref}, nil
 }
+
 func (d *Device) CreateShaderModule(descriptor *wgpu.ShaderModuleDescriptor) (wgpu.IShaderModule, error) {
-	// TODO impl CreateCommandEncoder
-	//return nil, errors.New("todo impl CreateShaderModule")
 	desc := make(map[string]any)
 	if descriptor != nil {
 		if descriptor.Label != "" {
