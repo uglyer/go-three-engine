@@ -324,8 +324,26 @@ func (d *Device) StoreErr(typ wgpu.ErrorType, message string) {
 }
 
 func (d *Device) CreateComputePipeline(descriptor *wgpu.ComputePipelineDescriptor) (wgpu.IComputePipeline, error) {
-	// TODO impl CreateComputePipeline
-	return nil, errors.New("todo impl CreateComputePipeline")
+	desc := map[string]any{
+		"label": descriptor.Label,
+	}
+	layout, ok := descriptor.Layout.(*PipelineLayout)
+	if !ok {
+		return nil, fmt.Errorf("layout type error")
+	}
+	desc["layout"] = layout
+	if descriptor.Compute != nil {
+		module, ok := descriptor.Compute.Module.(*ShaderModule)
+		if !ok {
+			return nil, fmt.Errorf("compute.module type error")
+		}
+		desc["compute"] = map[string]any{
+			"module":     module.ref,
+			"entryPoint": descriptor.Compute.EntryPoint,
+		}
+	}
+	ref := d.ref.Call("createComputePipeline", desc)
+	return newComputePipeline(ref), nil
 }
 
 func (d *Device) CreatePipelineLayout(descriptor *wgpu.PipelineLayoutDescriptor) (wgpu.IPipelineLayout, error) {

@@ -122,7 +122,7 @@ type ProgrammableStageDescriptor struct {
 type ComputePipelineDescriptor struct {
 	Label   string
 	Layout  IPipelineLayout
-	Compute ProgrammableStageDescriptor
+	Compute *ProgrammableStageDescriptor
 }
 
 type PushConstantRange struct {

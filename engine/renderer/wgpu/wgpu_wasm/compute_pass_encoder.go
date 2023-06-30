@@ -4,6 +4,7 @@ package wgpu_wasm
 
 import (
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"syscall/js"
 )
 
 type ComputePassEncoder struct {
@@ -43,10 +44,11 @@ func (ce *ComputePassEncoder) SetPipeline(pipeline wgpu.IComputePipeline) {
 }
 
 type ComputePipeline struct {
+	ref js.Value
 }
 
-func newComputePipeline() wgpu.IComputePipeline {
-	return &ComputePipeline{}
+func newComputePipeline(ref js.Value) wgpu.IComputePipeline {
+	return &ComputePipeline{ref: ref}
 }
 
 func (c *ComputePipeline) Drop() {
