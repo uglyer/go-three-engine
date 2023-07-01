@@ -347,8 +347,20 @@ func (d *Device) CreateComputePipeline(descriptor *wgpu.ComputePipelineDescripto
 }
 
 func (d *Device) CreatePipelineLayout(descriptor *wgpu.PipelineLayoutDescriptor) (wgpu.IPipelineLayout, error) {
-	// TODO impl CreatePipelineLayout
-	return nil, errors.New("todo impl CreatePipelineLayout")
+	desc := map[string]any{
+		"label": descriptor.Label,
+	}
+	if len(descriptor.BindGroupLayouts) > 0 {
+		bindGroupLayouts := make([]any, len(descriptor.BindGroupLayouts))
+		for i, it := range descriptor.BindGroupLayouts {
+			bindGroupLayouts[i] = it.(*BindGroupLayout).ref
+		}
+	}
+	if descriptor.PushConstantRanges != nil {
+		return nil, errors.New("PushConstantRanges is not support yet")
+	}
+	ref := d.ref.Call("createPipelineLayout", desc)
+	return &PipelineLayout{ref: ref}, nil
 }
 
 func (d *Device) CreateRenderBundleEncoder(descriptor *wgpu.RenderBundleEncoderDescriptor) (*wgpu.IRenderBundleEncoder, error) {
