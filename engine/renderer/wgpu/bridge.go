@@ -78,7 +78,7 @@ type IDevice interface {
 	StoreErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
 	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IPipelineLayout, error)
-	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (*IRenderBundleEncoder, error)
+	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (IRenderBundleEncoder, error)
 	Poll(wait bool, wrappedSubmissionIndex *WrappedSubmissionIndex) (queueEmpty bool)
 }
 

@@ -1,12 +1,16 @@
 package wgpu_wasm
 
-import "github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+import (
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"syscall/js"
+)
 
 type RenderBundleEncoder struct {
+	ref js.Value
 }
 
-func newRenderBundleEncoder() wgpu.IRenderBundleEncoder {
-	return &RenderBundleEncoder{}
+func newRenderBundleEncoder(ref js.Value) wgpu.IRenderBundleEncoder {
+	return &RenderBundleEncoder{ref: ref}
 }
 
 func (rbe *RenderBundleEncoder) Drop() {

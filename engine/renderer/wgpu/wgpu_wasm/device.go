@@ -364,9 +364,28 @@ func (d *Device) CreatePipelineLayout(descriptor *wgpu.PipelineLayoutDescriptor)
 	return &PipelineLayout{ref: ref}, nil
 }
 
-func (d *Device) CreateRenderBundleEncoder(descriptor *wgpu.RenderBundleEncoderDescriptor) (*wgpu.IRenderBundleEncoder, error) {
-	// TODO impl CreateRenderBundleEncoder
-	return nil, errors.New("todo impl CreateRenderBundleEncoder")
+func (d *Device) CreateRenderBundleEncoder(descriptor *wgpu.RenderBundleEncoderDescriptor) (wgpu.IRenderBundleEncoder, error) {
+	desc := map[string]any{
+		"label":           descriptor.Label,
+		"depthReadOnly":   descriptor.DepthReadOnly,
+		"stencilReadOnly": descriptor.StencilReadOnly,
+	}
+	if &descriptor.SampleCount != nil {
+		desc["sampleCount"] = descriptor.SampleCount
+	}
+	if &descriptor.DepthStencilFormat != nil {
+		desc["depthStencilFormat"] = descriptor.DepthStencilFormat.String()
+	}
+	colorFormatsCount := len(descriptor.ColorFormats)
+	if colorFormatsCount > 0 {
+		colorFormats := make([]any, colorFormatsCount)
+		for i, it := range descriptor.ColorFormats {
+			colorFormats[i] = it.String()
+		}
+		desc["colorFormats"] = colorFormats
+	}
+	ref := d.ref.Call("createPipelineLayout", desc)
+	return newRenderBundleEncoder(ref), nil
 }
 
 func (d *Device) Poll(wait bool, wrappedSubmissionIndex *wgpu.WrappedSubmissionIndex) (queueEmpty bool) {
