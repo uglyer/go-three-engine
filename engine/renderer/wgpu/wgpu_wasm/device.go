@@ -355,6 +355,7 @@ func (d *Device) CreatePipelineLayout(descriptor *wgpu.PipelineLayoutDescriptor)
 		for i, it := range descriptor.BindGroupLayouts {
 			bindGroupLayouts[i] = it.(*BindGroupLayout).ref
 		}
+		desc["bindGroupLayouts"] = bindGroupLayouts
 	}
 	if descriptor.PushConstantRanges != nil {
 		return nil, errors.New("PushConstantRanges is not support yet")
