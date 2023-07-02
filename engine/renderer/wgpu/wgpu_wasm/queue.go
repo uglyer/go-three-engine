@@ -45,7 +45,8 @@ func (q *Queue) WriteTexture(destination *wgpu.ImageCopyTexture, data []byte, da
 }
 
 func (q *Queue) WriteBuffer(buffer wgpu.IBuffer, bufferOffset uint64, data []byte) {
-	// TODO impl WriteBuffer
+	bufferRef := buffer.(*Buffer).ref
+	q.ref.Call("writeBuffer", bufferRef, bufferOffset, wasm.BytesToJsValue(data))
 }
 
 func (q *Queue) Submit(commands ...wgpu.ICommandBuffer) (submissionIndex wgpu.SubmissionIndex) {
