@@ -9,6 +9,11 @@ import (
 
 type ComputePassEncoder struct {
 	// fields for ComputePassEncoder struct
+	ref js.Value
+}
+
+func newComputePassEncoder(ref js.Value) *ComputePassEncoder {
+	return &ComputePassEncoder{ref: ref}
 }
 
 func (ce *ComputePassEncoder) DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32) {

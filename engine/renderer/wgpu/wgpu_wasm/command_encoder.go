@@ -18,8 +18,15 @@ func (ce *CommandEncoder) Drop() {
 }
 
 func (ce *CommandEncoder) BeginComputePass(descriptor *wgpu.ComputePassDescriptor) wgpu.IComputePassEncoder {
-	// TODO impl BeginComputePass
-	return nil
+	if descriptor == nil {
+		ref := ce.ref.Call("beginComputePass")
+		return newComputePassEncoder(ref)
+	}
+	desc := map[string]any{
+		"label": descriptor.Label,
+	}
+	ref := ce.ref.Call("beginComputePass", desc)
+	return newComputePassEncoder(ref)
 }
 
 func (ce *CommandEncoder) BeginRenderPass(descriptor *wgpu.RenderPassDescriptor) wgpu.IRenderPassEncoder {
