@@ -50,6 +50,10 @@ func (q *Queue) WriteBuffer(buffer wgpu.IBuffer, bufferOffset uint64, data []byt
 }
 
 func (q *Queue) Submit(commands ...wgpu.ICommandBuffer) (submissionIndex wgpu.SubmissionIndex) {
-	// TODO impl Submit
-	return 0
+	c := make([]js.Value, len(commands))
+	for i, it := range commands {
+		c[i] = it.(*CommandBuffer).ref
+	}
+	result := q.ref.Call("submit", c)
+	return wgpu.SubmissionIndex(result.Int())
 }
