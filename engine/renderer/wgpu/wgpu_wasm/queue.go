@@ -4,6 +4,7 @@ package wgpu_wasm
 
 import (
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"github.com/uglyer/go-three-engine/engine/wasm"
 	"syscall/js"
 )
 
@@ -16,7 +17,31 @@ func newQueue(ref js.Value) wgpu.IQueue {
 }
 
 func (q *Queue) WriteTexture(destination *wgpu.ImageCopyTexture, data []byte, dataLayout *wgpu.TextureDataLayout, writeSize *wgpu.Extent3D) {
-	// TODO impl WriteTexture
+	dest := map[string]any{
+		"texture": destination.Texture.(*Texture).ref,
+	}
+	if &destination.MipLevel != nil {
+		dest["mipLevel"] = destination.MipLevel
+	}
+	if &destination.Aspect != nil {
+		dest["aspect"] = destination.Aspect.String()
+	}
+	if destination.Origin != nil {
+		dest["origin"] = ConvertOrigin3DToArray(destination.Origin)
+	}
+	dataJsValue := wasm.BytesToJsValue(data)
+	dataLayoutObj := make(map[string]any)
+	if &dataLayout.Offset != nil {
+		dataLayoutObj["offset"] = dataLayout.Offset
+	}
+	if &dataLayout.BytesPerRow != nil {
+		dataLayoutObj["bytesPerRow"] = dataLayout.BytesPerRow
+	}
+	if &dataLayout.RowsPerImage != nil {
+		dataLayoutObj["rowsPerImage"] = dataLayout.RowsPerImage
+	}
+	size := ConvertExtends3DToArray(writeSize)
+	q.ref.Call("writeTexture", dest, dataJsValue, dataLayoutObj, size)
 }
 
 func (q *Queue) WriteBuffer(buffer wgpu.IBuffer, bufferOffset uint64, data []byte) {

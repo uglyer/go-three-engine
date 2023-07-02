@@ -55,3 +55,9 @@ func TryGet(target js.Value, name string) (result js.Value, flag bool) {
 	}()
 	return target.Get(name), true
 }
+
+func BytesToJsValue(buffer []byte) js.Value {
+	array := js.Global().Get("Uint8Array").New(len(buffer))
+	js.CopyBytesToJS(array, buffer)
+	return array
+}
