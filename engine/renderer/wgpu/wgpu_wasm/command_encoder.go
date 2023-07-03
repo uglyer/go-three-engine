@@ -129,5 +129,5 @@ func (ce *CommandEncoder) PopDebugGroup() {
 }
 
 func (ce *CommandEncoder) PushDebugGroup(groupLabel string) {
-	// TODO impl PushDebugGroup
+	ce.ref.Call("pushDebugGroup", groupLabel)
 }
