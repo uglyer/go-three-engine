@@ -93,7 +93,7 @@ func (ce *CommandEncoder) ClearBuffer(buffer wgpu.IBuffer, offset uint64, size u
 }
 
 func (ce *CommandEncoder) CopyBufferToBuffer(source wgpu.IBuffer, sourceOffset uint64, destination wgpu.IBuffer, destinatonOffset uint64, size uint64) {
-	// TODO impl CopyBufferToBuffer
+	ce.ref.Call("copyBufferToBuffer", source.(*Buffer).ref, sourceOffset, destination.(*Buffer).ref, destinatonOffset, size)
 }
 
 func (ce *CommandEncoder) CopyBufferToTexture(source *wgpu.ImageCopyBuffer, destination *wgpu.ImageCopyTexture, copySize *wgpu.Extent3D) {
