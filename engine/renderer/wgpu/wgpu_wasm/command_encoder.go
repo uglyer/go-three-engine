@@ -83,7 +83,13 @@ func (ce *CommandEncoder) BeginRenderPass(descriptor *wgpu.RenderPassDescriptor)
 }
 
 func (ce *CommandEncoder) ClearBuffer(buffer wgpu.IBuffer, offset uint64, size uint64) {
-	// TODO impl ClearBuffer
+	if &offset != nil && &size != nil {
+		ce.ref.Call("clearBuffer", buffer.(*Buffer).ref, offset, size)
+	} else if &offset != nil {
+		ce.ref.Call("clearBuffer", buffer.(*Buffer).ref, offset)
+	} else {
+		ce.ref.Call("clearBuffer", buffer.(*Buffer).ref)
+	}
 }
 
 func (ce *CommandEncoder) CopyBufferToBuffer(source wgpu.IBuffer, sourceOffset uint64, destination wgpu.IBuffer, destinatonOffset uint64, size uint64) {
