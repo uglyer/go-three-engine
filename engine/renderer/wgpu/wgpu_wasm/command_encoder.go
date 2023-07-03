@@ -97,37 +97,11 @@ func (ce *CommandEncoder) CopyBufferToBuffer(source wgpu.IBuffer, sourceOffset u
 }
 
 func (ce *CommandEncoder) CopyBufferToTexture(source *wgpu.ImageCopyBuffer, destination *wgpu.ImageCopyTexture, copySize *wgpu.Extent3D) {
-	sourceMap := map[string]any{
-		"buffer": source.Buffer.(*Buffer).ref,
-	}
-	if source.Layout != nil {
-		if &source.Layout.Offset != nil {
-			sourceMap["offset"] = source.Layout.Offset
-		}
-		if &source.Layout.RowsPerImage != nil {
-			sourceMap["rowsPerImage"] = source.Layout.RowsPerImage
-		}
-		if &source.Layout.BytesPerRow != nil {
-			sourceMap["bytesPerRow"] = source.Layout.BytesPerRow
-		}
-	}
-	destMap := map[string]any{
-		"texture": destination.Texture.(*Texture).ref,
-	}
-	if &destination.Aspect != nil {
-		destMap["aspect"] = destination.Aspect.String()
-	}
-	if &destination.MipLevel != nil {
-		destMap["mipLevel"] = destination.MipLevel
-	}
-	if destination.Origin != nil {
-		destMap["origin"] = ConvertOrigin3DToArray(destination.Origin)
-	}
-	ce.ref.Call("copyBufferToTexture", sourceMap, destMap, ConvertExtends3DToArray(copySize))
+	ce.ref.Call("copyBufferToTexture", ConvertImageCopyBufferToMap(source), ConvertImageImageCopyTexture(destination), ConvertExtends3DToArray(copySize))
 }
 
 func (ce *CommandEncoder) CopyTextureToBuffer(source *wgpu.ImageCopyTexture, destination *wgpu.ImageCopyBuffer, copySize *wgpu.Extent3D) {
-	// TODO impl CopyTextureToBuffer
+	ce.ref.Call("copyTextureToBuffer", ConvertImageImageCopyTexture(source), ConvertImageCopyBufferToMap(destination), ConvertExtends3DToArray(copySize))
 }
 
 func (ce *CommandEncoder) CopyTextureToTexture(source *wgpu.ImageCopyTexture, destination *wgpu.ImageCopyTexture, copySize *wgpu.Extent3D) {

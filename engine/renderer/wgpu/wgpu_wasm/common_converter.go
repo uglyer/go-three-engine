@@ -13,3 +13,37 @@ func ConvertExtends3DToArray(point *wgpu.Extent3D) []uint32 {
 func ConvertColorToArray(point *wgpu.Color) []float64 {
 	return []float64{point.R, point.G, point.B, point.A}
 }
+
+func ConvertImageCopyBufferToMap(source *wgpu.ImageCopyBuffer) map[string]any {
+	sourceMap := map[string]any{
+		"buffer": source.Buffer.(*Buffer).ref,
+	}
+	if source.Layout != nil {
+		if &source.Layout.Offset != nil {
+			sourceMap["offset"] = source.Layout.Offset
+		}
+		if &source.Layout.RowsPerImage != nil {
+			sourceMap["rowsPerImage"] = source.Layout.RowsPerImage
+		}
+		if &source.Layout.BytesPerRow != nil {
+			sourceMap["bytesPerRow"] = source.Layout.BytesPerRow
+		}
+	}
+	return sourceMap
+}
+
+func ConvertImageImageCopyTexture(destination *wgpu.ImageCopyTexture) map[string]any {
+	destMap := map[string]any{
+		"texture": destination.Texture.(*Texture).ref,
+	}
+	if &destination.Aspect != nil {
+		destMap["aspect"] = destination.Aspect.String()
+	}
+	if &destination.MipLevel != nil {
+		destMap["mipLevel"] = destination.MipLevel
+	}
+	if destination.Origin != nil {
+		destMap["origin"] = ConvertOrigin3DToArray(destination.Origin)
+	}
+	return destMap
+}
