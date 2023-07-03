@@ -105,7 +105,7 @@ func (ce *CommandEncoder) CopyTextureToBuffer(source *wgpu.ImageCopyTexture, des
 }
 
 func (ce *CommandEncoder) CopyTextureToTexture(source *wgpu.ImageCopyTexture, destination *wgpu.ImageCopyTexture, copySize *wgpu.Extent3D) {
-	// TODO impl CopyTextureToTexture
+	ce.ref.Call("copyTextureToTexture", ConvertImageImageCopyTexture(source), ConvertImageImageCopyTexture(destination), ConvertExtends3DToArray(copySize))
 }
 
 func (ce *CommandEncoder) Finish(descriptor *wgpu.CommandBufferDescriptor) wgpu.CommandBuffer {
