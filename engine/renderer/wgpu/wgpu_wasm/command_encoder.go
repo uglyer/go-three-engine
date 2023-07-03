@@ -108,9 +108,16 @@ func (ce *CommandEncoder) CopyTextureToTexture(source *wgpu.ImageCopyTexture, de
 	ce.ref.Call("copyTextureToTexture", ConvertImageImageCopyTexture(source), ConvertImageImageCopyTexture(destination), ConvertExtends3DToArray(copySize))
 }
 
-func (ce *CommandEncoder) Finish(descriptor *wgpu.CommandBufferDescriptor) wgpu.CommandBuffer {
-	// TODO impl Finish
-	return nil
+func (ce *CommandEncoder) Finish(descriptor *wgpu.CommandBufferDescriptor) wgpu.ICommandBuffer {
+	if descriptor != nil {
+		desc := map[string]any{
+			"label": descriptor.Label,
+		}
+		ref := ce.ref.Call("finish", desc)
+		return &CommandBuffer{ref: ref}
+	}
+	ref := ce.ref.Call("finish")
+	return &CommandBuffer{ref: ref}
 }
 
 func (ce *CommandEncoder) InsertDebugMarker(markerLabel string) {

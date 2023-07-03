@@ -97,7 +97,7 @@ type ICommandEncoder interface {
 	CopyBufferToTexture(source *ImageCopyBuffer, destination *ImageCopyTexture, copySize *Extent3D)
 	CopyTextureToBuffer(source *ImageCopyTexture, destination *ImageCopyBuffer, copySize *Extent3D)
 	CopyTextureToTexture(source *ImageCopyTexture, destination *ImageCopyTexture, copySize *Extent3D)
-	Finish(descriptor *CommandBufferDescriptor) CommandBuffer
+	Finish(descriptor *CommandBufferDescriptor) ICommandBuffer
 	InsertDebugMarker(markerLabel string)
 	PopDebugGroup()
 	PushDebugGroup(groupLabel string)

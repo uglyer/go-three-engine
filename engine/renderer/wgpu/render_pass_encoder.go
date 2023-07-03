@@ -29,7 +29,3 @@ type RenderPassDescriptor struct {
 type CommandBufferDescriptor struct {
 	Label string
 }
-
-type CommandBuffer interface {
-	Drop()
-}
