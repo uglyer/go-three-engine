@@ -125,7 +125,7 @@ func (ce *CommandEncoder) InsertDebugMarker(markerLabel string) {
 }
 
 func (ce *CommandEncoder) PopDebugGroup() {
-	// TODO impl PopDebugGroup
+	ce.ref.Call("popDebugGroup")
 }
 
 func (ce *CommandEncoder) PushDebugGroup(groupLabel string) {
