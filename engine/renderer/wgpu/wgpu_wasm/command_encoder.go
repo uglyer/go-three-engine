@@ -121,7 +121,7 @@ func (ce *CommandEncoder) Finish(descriptor *wgpu.CommandBufferDescriptor) wgpu.
 }
 
 func (ce *CommandEncoder) InsertDebugMarker(markerLabel string) {
-	// TODO impl InsertDebugMarker
+	ce.ref.Call("insertDebugMarker", markerLabel)
 }
 
 func (ce *CommandEncoder) PopDebugGroup() {
