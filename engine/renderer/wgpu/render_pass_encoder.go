@@ -5,7 +5,7 @@ type RenderPassColorAttachment struct {
 	ResolveTarget ITextureView
 	LoadOp        LoadOp
 	StoreOp       StoreOp
-	ClearValue    Color
+	ClearValue    *Color
 }
 
 type RenderPassDepthStencilAttachment struct {

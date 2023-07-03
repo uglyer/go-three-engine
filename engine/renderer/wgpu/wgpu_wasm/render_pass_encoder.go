@@ -2,14 +2,18 @@
 
 package wgpu_wasm
 
-import "github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+import (
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"syscall/js"
+)
 
 type RenderPassEncoder struct {
 	// fields for IRenderPassEncoder struct
+	ref js.Value
 }
 
-func newRenderPassEncoder() wgpu.IRenderPassEncoder {
-	return &RenderPassEncoder{}
+func newRenderPassEncoder(ref js.Value) wgpu.IRenderPassEncoder {
+	return &RenderPassEncoder{ref: ref}
 }
 
 func (rpe *RenderPassEncoder) Drop() {
