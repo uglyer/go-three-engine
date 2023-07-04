@@ -22,11 +22,11 @@ func (rpe *RenderPassEncoder) Drop() {
 }
 
 func (rpe *RenderPassEncoder) Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32) {
-	rpe.ref.Call("Draw", vertexCount, instanceCount, firstVertex, firstInstance)
+	rpe.ref.Call("draw", vertexCount, instanceCount, firstVertex, firstInstance)
 }
 
 func (rpe *RenderPassEncoder) DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32) {
-	// TODO impl DrawIndexed
+	rpe.ref.Call("drawIndexed", indexCount, instanceCount, firstIndex, baseVertex, firstInstance)
 }
 
 func (rpe *RenderPassEncoder) DrawIndexedIndirect(indirectBuffer wgpu.IBuffer, indirectOffset uint64) {
