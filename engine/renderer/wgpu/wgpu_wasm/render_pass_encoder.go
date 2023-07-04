@@ -30,7 +30,7 @@ func (rpe *RenderPassEncoder) DrawIndexed(indexCount, instanceCount, firstIndex 
 }
 
 func (rpe *RenderPassEncoder) DrawIndexedIndirect(indirectBuffer wgpu.IBuffer, indirectOffset uint64) {
-	// TODO impl DrawIndexedIndirect
+	rpe.ref.Call("drawIndexedIndirect", indirectBuffer.(*Buffer).ref, indirectOffset)
 }
 
 func (rpe *RenderPassEncoder) DrawIndirect(indirectBuffer wgpu.IBuffer, indirectOffset uint64) {
