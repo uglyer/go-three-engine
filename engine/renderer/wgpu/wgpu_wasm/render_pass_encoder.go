@@ -38,7 +38,7 @@ func (rpe *RenderPassEncoder) DrawIndirect(indirectBuffer wgpu.IBuffer, indirect
 }
 
 func (rpe *RenderPassEncoder) End() {
-	// TODO impl End
+	rpe.ref.Call("end")
 }
 
 func (rpe *RenderPassEncoder) ExecuteBundles(bundles ...wgpu.IRenderBundle) {
