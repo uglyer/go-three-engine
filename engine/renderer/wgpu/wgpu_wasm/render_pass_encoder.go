@@ -42,11 +42,14 @@ func (rpe *RenderPassEncoder) End() {
 }
 
 func (rpe *RenderPassEncoder) ExecuteBundles(bundles ...wgpu.IRenderBundle) {
-	// TODO impl ExecuteBundles
+	list := make([]js.Value, len(bundles))
+	for i, it := range bundles {
+		list[i] = it.(*RenderBundle).ref
+	}
 }
 
 func (rpe *RenderPassEncoder) InsertDebugMarker(markerLabel string) {
-	// TODO impl InsertDebugMarker
+	rpe.ref.Call("insertDebugMarker", markerLabel)
 }
 
 func (rpe *RenderPassEncoder) PopDebugGroup() {
