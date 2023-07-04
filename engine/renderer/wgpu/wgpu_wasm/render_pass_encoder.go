@@ -69,7 +69,7 @@ func (rpe *RenderPassEncoder) SetBlendConstant(color *wgpu.Color) {
 }
 
 func (rpe *RenderPassEncoder) SetIndexBuffer(buffer wgpu.IBuffer, format wgpu.IndexFormat, offset, size uint64) {
-	// TODO impl SetIndexBuffer
+	rpe.ref.Call("setBlendConstant", buffer.(*Buffer).ref, format.String(), offset, size)
 }
 
 func (rpe *RenderPassEncoder) SetPipeline(pipeline wgpu.IRenderPipeLine) {
