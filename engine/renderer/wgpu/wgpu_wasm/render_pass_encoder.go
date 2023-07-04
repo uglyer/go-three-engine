@@ -61,7 +61,7 @@ func (rpe *RenderPassEncoder) PushDebugGroup(groupLabel string) {
 }
 
 func (rpe *RenderPassEncoder) SetBindGroup(groupIndex uint32, group wgpu.IGPUBindGroup, dynamicOffsets []uint32) {
-	// TODO impl SetBindGroup
+	rpe.ref.Call("setBindGroup", groupIndex, group.(*BindGroup).ref, dynamicOffsets)
 }
 
 func (rpe *RenderPassEncoder) SetBlendConstant(color *wgpu.Color) {
