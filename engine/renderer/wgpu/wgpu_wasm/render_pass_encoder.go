@@ -22,7 +22,7 @@ func (rpe *RenderPassEncoder) Drop() {
 }
 
 func (rpe *RenderPassEncoder) Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32) {
-	// TODO impl Draw
+	rpe.ref.Call("Draw", vertexCount, instanceCount, firstVertex, firstInstance)
 }
 
 func (rpe *RenderPassEncoder) DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32) {
