@@ -126,6 +126,6 @@ func (r RenderPipeline) Drop() {
 }
 
 func (r RenderPipeline) GetBindGroupLayout(groupIndex uint32) wgpu.IGPUBindGroupLayout {
-	//TODO implement me
-	panic("implement me")
+	ref := r.ref.Call("getBindGroupLayout", groupIndex)
+	return &BindGroupLayout{ref: ref}
 }

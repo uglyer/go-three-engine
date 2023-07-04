@@ -307,11 +307,8 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 		}
 	}
 	obj := wasm.NewObj(desc)
-	wasm.ConsoleLog("CreateRenderPipeline obj", obj)
-	result := d.ref.Call("createRenderPipeline", obj)
-	wasm.ConsoleLog("CreateRenderPipeline result", result)
-	// TODO impl CreateRenderPipeline
-	return nil, errors.New("todo impl CreateRenderPipeline")
+	ref := d.ref.Call("createRenderPipeline", obj)
+	return newRenderPipeline(ref), nil
 }
 
 func (d *Device) GetErr() (err error) {
