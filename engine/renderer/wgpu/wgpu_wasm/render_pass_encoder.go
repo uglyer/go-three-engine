@@ -65,7 +65,7 @@ func (rpe *RenderPassEncoder) SetBindGroup(groupIndex uint32, group wgpu.IGPUBin
 }
 
 func (rpe *RenderPassEncoder) SetBlendConstant(color *wgpu.Color) {
-	// TODO impl SetBlendConstant
+	rpe.ref.Call("setBlendConstant", ConvertColorToArray(color))
 }
 
 func (rpe *RenderPassEncoder) SetIndexBuffer(buffer wgpu.IBuffer, format wgpu.IndexFormat, offset, size uint64) {
