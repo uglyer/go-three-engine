@@ -53,7 +53,7 @@ func (rpe *RenderPassEncoder) InsertDebugMarker(markerLabel string) {
 }
 
 func (rpe *RenderPassEncoder) PopDebugGroup() {
-	// TODO impl PopDebugGroup
+	rpe.ref.Call("popDebugGroup")
 }
 
 func (rpe *RenderPassEncoder) PushDebugGroup(groupLabel string) {
