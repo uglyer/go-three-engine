@@ -85,11 +85,11 @@ func (rpe *RenderPassEncoder) SetStencilReference(reference uint32) {
 }
 
 func (rpe *RenderPassEncoder) SetVertexBuffer(slot uint32, buffer wgpu.IBuffer, offset, size uint64) {
-	// TODO impl SetVertexBuffer
+	rpe.ref.Call("setVertexBuffer", slot, buffer.(*Buffer).ref, offset, size)
 }
 
 func (rpe *RenderPassEncoder) SetViewport(x, y, width, height, minDepth, maxDepth float32) {
-	// TODO impl SetViewport
+	rpe.ref.Call("setViewport", x, y, width, height, minDepth, maxDepth)
 }
 
 func (rpe *RenderPassEncoder) SetPushConstants(stages wgpu.ShaderStage, offset uint32, data []byte) {
