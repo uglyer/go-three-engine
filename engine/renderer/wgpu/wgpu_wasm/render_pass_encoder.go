@@ -81,7 +81,7 @@ func (rpe *RenderPassEncoder) SetScissorRect(x, y, width, height uint32) {
 }
 
 func (rpe *RenderPassEncoder) SetStencilReference(reference uint32) {
-	// TODO impl SetStencilReference
+	rpe.ref.Call("setStencilReference", reference)
 }
 
 func (rpe *RenderPassEncoder) SetVertexBuffer(slot uint32, buffer wgpu.IBuffer, offset, size uint64) {
