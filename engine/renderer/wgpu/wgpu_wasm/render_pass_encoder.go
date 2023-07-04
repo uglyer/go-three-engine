@@ -93,23 +93,23 @@ func (rpe *RenderPassEncoder) SetViewport(x, y, width, height, minDepth, maxDept
 }
 
 func (rpe *RenderPassEncoder) SetPushConstants(stages wgpu.ShaderStage, offset uint32, data []byte) {
-	// TODO impl SetPushConstants
+	panic(wgpu.WASM_NOT_SUPPORT)
 }
 
 func (rpe *RenderPassEncoder) MultiDrawIndirect(encoder wgpu.IRenderPassEncoder, buffer wgpu.IBuffer, offset uint64, count uint32) {
-	// TODO impl MultiDrawIndirect
+	panic(wgpu.WASM_NOT_SUPPORT)
 }
 
 func (rpe *RenderPassEncoder) MultiDrawIndexedIndirect(encoder wgpu.IRenderPassEncoder, buffer wgpu.IBuffer, offset uint64, count uint32) {
-	// TODO impl MultiDrawIndexedIndirect
+	panic(wgpu.WASM_NOT_SUPPORT)
 }
 
 func (rpe *RenderPassEncoder) MultiDrawIndirectCount(encoder wgpu.IRenderPassEncoder, buffer wgpu.IBuffer, offset uint64, countBuffer wgpu.IBuffer, countBufferOffset uint64, maxCount uint32) {
-	// TODO impl MultiDrawIndirectCount
+	panic(wgpu.WASM_NOT_SUPPORT)
 }
 
 func (rpe *RenderPassEncoder) MultiDrawIndexedIndirectCount(encoder wgpu.IRenderPassEncoder, buffer wgpu.IBuffer, offset uint64, countBuffer wgpu.IBuffer, countBufferOffset uint64, maxCount uint32) {
-	// TODO impl MultiDrawIndexedIndirectCount
+	panic(wgpu.WASM_NOT_SUPPORT)
 }
 
 type RenderPipeline struct {
