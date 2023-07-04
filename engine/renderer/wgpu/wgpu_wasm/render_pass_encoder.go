@@ -73,11 +73,11 @@ func (rpe *RenderPassEncoder) SetIndexBuffer(buffer wgpu.IBuffer, format wgpu.In
 }
 
 func (rpe *RenderPassEncoder) SetPipeline(pipeline wgpu.IRenderPipeLine) {
-	// TODO impl SetPipeline
+	rpe.ref.Call("setPipeline", pipeline.(*RenderPipeline).ref)
 }
 
 func (rpe *RenderPassEncoder) SetScissorRect(x, y, width, height uint32) {
-	// TODO impl SetScissorRect
+	rpe.ref.Call("setScissorRect", x, y, width, height)
 }
 
 func (rpe *RenderPassEncoder) SetStencilReference(reference uint32) {
@@ -113,10 +113,11 @@ func (rpe *RenderPassEncoder) MultiDrawIndexedIndirectCount(encoder wgpu.IRender
 }
 
 type RenderPipeline struct {
+	ref js.Value
 }
 
-func newRenderPipeline() wgpu.IRenderPipeLine {
-	return &RenderPipeline{}
+func newRenderPipeline(ref js.Value) wgpu.IRenderPipeLine {
+	return &RenderPipeline{ref: ref}
 }
 
 func (r RenderPipeline) Drop() {
