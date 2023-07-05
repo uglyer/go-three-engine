@@ -25,7 +25,7 @@ func (ce *ComputePassEncoder) DispatchWorkgroupsIndirect(indirectBuffer wgpu.IBu
 }
 
 func (ce *ComputePassEncoder) End() {
-	// TODO impl End
+	ce.ref.Call("end")
 }
 
 func (ce *ComputePassEncoder) InsertDebugMarker(markerLabel string) {
