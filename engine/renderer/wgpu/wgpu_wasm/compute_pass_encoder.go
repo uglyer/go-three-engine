@@ -37,7 +37,7 @@ func (ce *ComputePassEncoder) PopDebugGroup() {
 }
 
 func (ce *ComputePassEncoder) PushDebugGroup(groupLabel string) {
-	// TODO impl PushDebugGroup
+	ce.ref.Call("pushDebugGroup", groupLabel)
 }
 
 func (ce *ComputePassEncoder) SetBindGroup(groupIndex uint32, group wgpu.IGPUBindGroup, dynamicOffsets []uint32) {
