@@ -17,7 +17,7 @@ func newComputePassEncoder(ref js.Value) *ComputePassEncoder {
 }
 
 func (ce *ComputePassEncoder) DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32) {
-	// TODO impl DispatchWorkgroups
+	ce.ref.Call("dispatchWorkgroups", workgroupCountX, workgroupCountY, workgroupCountZ)
 }
 
 func (ce *ComputePassEncoder) DispatchWorkgroupsIndirect(indirectBuffer *wgpu.IBuffer, indirectOffset uint64) {
