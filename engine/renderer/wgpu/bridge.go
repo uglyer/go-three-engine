@@ -105,7 +105,7 @@ type ICommandEncoder interface {
 
 type IComputePassEncoder interface {
 	DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ uint32)
-	DispatchWorkgroupsIndirect(indirectBuffer *IBuffer, indirectOffset uint64)
+	DispatchWorkgroupsIndirect(indirectBuffer IBuffer, indirectOffset uint64)
 	End()
 	InsertDebugMarker(markerLabel string)
 	PopDebugGroup()

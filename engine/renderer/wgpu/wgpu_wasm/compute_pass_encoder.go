@@ -20,8 +20,8 @@ func (ce *ComputePassEncoder) DispatchWorkgroups(workgroupCountX, workgroupCount
 	ce.ref.Call("dispatchWorkgroups", workgroupCountX, workgroupCountY, workgroupCountZ)
 }
 
-func (ce *ComputePassEncoder) DispatchWorkgroupsIndirect(indirectBuffer *wgpu.IBuffer, indirectOffset uint64) {
-	// TODO impl DispatchWorkgroupsIndirect
+func (ce *ComputePassEncoder) DispatchWorkgroupsIndirect(indirectBuffer wgpu.IBuffer, indirectOffset uint64) {
+	ce.ref.Call("dispatchWorkgroupsIndirect", indirectBuffer.(*Buffer).ref, indirectOffset)
 }
 
 func (ce *ComputePassEncoder) End() {
