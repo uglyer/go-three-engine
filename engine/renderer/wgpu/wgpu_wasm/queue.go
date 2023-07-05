@@ -54,6 +54,6 @@ func (q *Queue) Submit(commands ...wgpu.ICommandBuffer) (submissionIndex wgpu.Su
 	for i, it := range commands {
 		c[i] = it.(*CommandBuffer).ref
 	}
-	result := q.ref.Call("submit", c)
-	return wgpu.SubmissionIndex(result.Int())
+	q.ref.Call("submit", wasm.NewArray(c))
+	return
 }

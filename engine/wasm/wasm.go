@@ -15,6 +15,14 @@ func NewObj(m map[string]any) js.Value {
 	return js.Global().Get("Object").New(m)
 }
 
+func NewArray[T any](array []T) js.Value {
+	arr := js.Global().Get("Array").New(len(array))
+	for i, it := range array {
+		arr.SetIndex(i, it)
+	}
+	return arr
+}
+
 func ConsoleLog(v ...any) {
 	js.Global().Get("console").Call("log", v...)
 }
