@@ -204,7 +204,25 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 
 			bufferCount := len(vertex.Buffers)
 			if bufferCount > 0 {
-				// TODO 实现 buffer 处理
+				buffers := make([]any, bufferCount)
+				for i, it := range vertex.Buffers {
+					data := map[string]any{
+						"arrayStride": it.ArrayStride,
+					}
+					attributes := make([]any, len(it.Attributes))
+					for i2, attr := range it.Attributes {
+						attributes[i2] = map[string]any{
+							"format":         attr.Format.String(),
+							"offset":         attr.Offset,
+							"shaderLocation": attr.ShaderLocation,
+						}
+					}
+					data["attributes"] = attributes
+					if &it.StepMode != nil {
+						data["stepMode"] = it.StepMode.String()
+					}
+					buffers[i] = data
+				}
 			}
 
 			desc["vertex"] = vert

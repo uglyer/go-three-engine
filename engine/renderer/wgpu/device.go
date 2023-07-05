@@ -192,7 +192,7 @@ type VertexBufferLayout struct {
 type VertexState struct {
 	Module     IShaderModule
 	EntryPoint string
-	Buffers    []VertexBufferLayout
+	Buffers    []*VertexBufferLayout
 
 	// unused in wgpu
 	// Constants  []ConstantEntry
