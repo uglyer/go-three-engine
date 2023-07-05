@@ -33,7 +33,7 @@ func (ce *ComputePassEncoder) InsertDebugMarker(markerLabel string) {
 }
 
 func (ce *ComputePassEncoder) PopDebugGroup() {
-	// TODO impl PopDebugGroup
+	ce.ref.Call("popDebugGroup")
 }
 
 func (ce *ComputePassEncoder) PushDebugGroup(groupLabel string) {
