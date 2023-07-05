@@ -158,7 +158,7 @@ type IRenderBundleEncoder interface {
 
 type IComputePipeline interface {
 	IDrop
-	GetBindGroupLayout(groupIndex uint32) *IGPUBindGroupLayout
+	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type IRenderPipeLine interface {

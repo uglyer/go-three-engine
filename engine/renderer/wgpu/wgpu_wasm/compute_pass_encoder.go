@@ -61,7 +61,7 @@ func (c *ComputePipeline) Drop() {
 	panic("implement me")
 }
 
-func (c *ComputePipeline) GetBindGroupLayout(groupIndex uint32) *wgpu.IGPUBindGroupLayout {
-	//TODO implement me
-	panic("implement me")
+func (c *ComputePipeline) GetBindGroupLayout(groupIndex uint32) wgpu.IGPUBindGroupLayout {
+	ref := c.ref.Call("getBindGroupLayout", groupIndex)
+	return &BindGroupLayout{ref: ref}
 }
