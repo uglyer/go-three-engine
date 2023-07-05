@@ -29,7 +29,7 @@ func (ce *ComputePassEncoder) End() {
 }
 
 func (ce *ComputePassEncoder) InsertDebugMarker(markerLabel string) {
-	// TODO impl InsertDebugMarker
+	ce.ref.Call("insertDebugMarker", markerLabel)
 }
 
 func (ce *ComputePassEncoder) PopDebugGroup() {
