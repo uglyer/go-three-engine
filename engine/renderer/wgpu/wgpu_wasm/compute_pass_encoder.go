@@ -45,7 +45,7 @@ func (ce *ComputePassEncoder) SetBindGroup(groupIndex uint32, group wgpu.IGPUBin
 }
 
 func (ce *ComputePassEncoder) SetPipeline(pipeline wgpu.IComputePipeline) {
-	// TODO impl SetPipeline
+	ce.ref.Call("pushDebugGroup", pipeline.(*ComputePipeline).ref)
 }
 
 type ComputePipeline struct {
