@@ -65,6 +65,7 @@ func (s *State) Init() error {
 	if err != nil {
 		return fmt.Errorf("获取gpu设备失败:%v", err)
 	}
+	format := s.Bridge.GetGPU().GetPreferredCanvasFormat()
 	s.Config = &wgpu.TextureDescriptor{
 		Size: &wgpu.Extent3D{
 			Width:              640,
@@ -73,7 +74,7 @@ func (s *State) Init() error {
 		},
 		SampleCount: 1,
 		Dimension:   wgpu.TextureDimension_2D,
-		Format:      wgpu.TextureFormat_RGBA8Unorm,
+		Format:      format,
 		Usage:       wgpu.TextureUsage_RenderAttachment,
 	}
 	s.SwapChain, err = s.Device.CreateTexture(s.Config)
@@ -95,7 +96,6 @@ func (s *State) Init() error {
 	if err != nil {
 		log.Fatalf("CreateShaderModule:%v", err)
 	}
-	format := s.Bridge.GetGPU().GetPreferredCanvasFormat()
 	s.Pipeline, err = s.Device.CreateRenderPipeline(&wgpu.RenderPipelineDescriptor{
 		//Layout: 'auto',
 		Vertex: &wgpu.VertexState{
