@@ -168,7 +168,7 @@ func (d *Device) CreateTexture(descriptor *wgpu.TextureDescriptor) (wgpu.ITextur
 	if &descriptor.Dimension != nil {
 		desc["dimension"] = descriptor.Dimension.String()
 	}
-	if &descriptor.MipLevelCount != nil {
+	if descriptor.MipLevelCount != 0 {
 		desc["mipLevelCount"] = descriptor.MipLevelCount
 	}
 	ref := d.ref.Call("createTexture", desc)

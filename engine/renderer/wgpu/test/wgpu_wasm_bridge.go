@@ -72,6 +72,7 @@ func (s *State) Init() error {
 			DepthOrArrayLayers: 1,
 		},
 		SampleCount: 1,
+		Dimension:   wgpu.TextureDimension_2D,
 		Format:      wgpu.TextureFormat_RGBA8Unorm,
 		Usage:       wgpu.TextureUsage_RenderAttachment,
 	}
