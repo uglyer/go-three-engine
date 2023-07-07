@@ -325,7 +325,9 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 		}
 	}
 	obj := wasm.NewObj(desc)
+	wasm.ConsoleLog("createRenderPipeline", obj)
 	ref := d.ref.Call("createRenderPipeline", obj)
+	wasm.ConsoleLog("createRenderPipeline", ref)
 	return newRenderPipeline(ref), nil
 }
 

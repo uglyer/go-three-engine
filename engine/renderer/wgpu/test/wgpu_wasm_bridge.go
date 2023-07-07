@@ -153,7 +153,6 @@ func (s *State) Render() error {
 			},
 		},
 	})
-
 	renderPass.SetPipeline(s.Pipeline)
 	renderPass.Draw(3, 1, 0, 0)
 	renderPass.End()
