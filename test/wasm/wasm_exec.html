@@ -42,6 +42,129 @@ Add the following polyfill for Microsoft Edge 17/18 support:
         await go.run(inst);
         inst = await WebAssembly.instantiate(mod, go.importObject); // reset instance
     }
+
+    async function jsTest(){
+        async function helloTriangle() {
+            if (!navigator.gpu || GPUBufferUsage.COPY_SRC === undefined) {
+                document.body.className = 'error';
+                return;
+            }
+
+            const adapter = await navigator.gpu.requestAdapter();
+            const device = await adapter.requestDevice();
+
+            /*** Vertex Buffer Setup ***/
+
+            /* Vertex Data */
+            const vertexStride = 8 * 4;
+            const vertexDataSize = vertexStride * 3;
+
+            /* GPUBufferDescriptor */
+            const vertexDataBufferDescriptor = {
+                size: vertexDataSize,
+                usage: GPUBufferUsage.VERTEX
+            };
+
+            /* GPUBuffer */
+            const vertexBuffer = device.createBuffer(vertexDataBufferDescriptor);
+
+            /*** Shader Setup ***/
+            const wgslSource = `
+                     struct Vertex {
+                         @builtin(position) Position: vec4<f32>,
+                         @location(0) color: vec4<f32>,
+                     }
+
+                    @vertex
+                    fn vsmain(@builtin(vertex_index) in_vertex_index: u32) -> @builtin(position) vec4<f32> {
+                        let x = f32(i32(in_vertex_index) - 1);
+                        let y = f32(i32(in_vertex_index & 1u) * 2 - 1);
+                        return vec4<f32>(x, y, 0.0, 1.0);
+                    }
+
+                    @fragment
+                    fn fsmain() -> @location(0) vec4<f32> {
+                        return vec4<f32>(1.0, 0.0, 0.0, 1.0);
+                    }
+    `;
+            const shaderModule = device.createShaderModule({ code: wgslSource });
+
+            /* GPUPipelineStageDescriptors */
+            const vertexStageDescriptor = { module: shaderModule, entryPoint: "vsmain" };
+
+            const fragmentStageDescriptor = { module: shaderModule, entryPoint: "fsmain", targets: [ {format: "bgra8unorm" }, ],  };
+
+            /* GPURenderPipelineDescriptor */
+
+            const renderPipelineDescriptor = {
+                layout: 'auto',
+                vertex: vertexStageDescriptor,
+                fragment: fragmentStageDescriptor,
+                primitive: {topology: "triangle-list","frontFace":"ccw","cullMode":"none" },
+            };
+            /* GPURenderPipeline */
+            const renderPipeline = device.createRenderPipeline(renderPipelineDescriptor);
+
+            /*** Swap Chain Setup ***/
+
+            const canvas = document.createElement("canvas");
+            document.body.appendChild(canvas);
+            canvas.width = 600;
+            canvas.height = 600;
+
+            const gpuContext = canvas.getContext("webgpu");
+
+            /* GPUCanvasConfiguration */
+            const canvasConfiguration = { device: device, format: "bgra8unorm" };
+            gpuContext.configure(canvasConfiguration);
+            /* GPUTexture */
+            const currentTexture = gpuContext.getCurrentTexture();
+
+            /*** Render Pass Setup ***/
+
+            /* Acquire Texture To Render To */
+
+            /* GPUTextureView */
+            const renderAttachment = currentTexture.createView();
+
+            /* GPUColor */
+            const darkBlue = { r: 0.15, g: 0.15, b: 0.5, a: 1 };
+
+            /* GPURenderPassColorATtachmentDescriptor */
+            const colorAttachmentDescriptor = {
+                view: renderAttachment,
+                loadOp: "clear",
+                storeOp: "store",
+                clearColor: darkBlue
+            };
+
+            /* GPURenderPassDescriptor */
+            const renderPassDescriptor = { colorAttachments: [colorAttachmentDescriptor] };
+
+            /*** Rendering ***/
+
+            /* GPUCommandEncoder */
+            const commandEncoder = device.createCommandEncoder();
+            /* GPURenderPassEncoder */
+            const renderPassEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+
+            renderPassEncoder.setPipeline(renderPipeline);
+            const vertexBufferSlot = 0;
+            // renderPassEncoder.setVertexBuffer(vertexBufferSlot, vertexBuffer, 0);
+            renderPassEncoder.draw(3, 1, 0, 0); // 3 vertices, 1 instance, 0th vertex, 0th instance.
+            renderPassEncoder.end();
+
+            /* GPUComamndBuffer */
+            const commandBuffer = commandEncoder.finish();
+
+            /* GPUQueue */
+            const queue = device.queue;
+            queue.submit([commandBuffer]);
+        }
+
+        window.addEventListener("DOMContentLoaded", helloTriangle);
+    }
+    jsTest()
 </script>
 
 <button onClick="run();" id="runButton" disabled>Run</button>
