@@ -36,13 +36,12 @@ func main() {
 }
 
 type State struct {
-	Bridge    wgpu.IBridge
-	Canvas    wgpu.ICanvas
-	Device    wgpu.IDevice
-	Adapter   wgpu.IAdapter
-	Pipeline  wgpu.IRenderPipeLine
-	Config    *wgpu.TextureDescriptor
-	SwapChain wgpu.ITexture
+	Bridge   wgpu.IBridge
+	Canvas   wgpu.ICanvas
+	Device   wgpu.IDevice
+	Adapter  wgpu.IAdapter
+	Pipeline wgpu.IRenderPipeLine
+	Config   *wgpu.TextureDescriptor
 }
 
 func (s *State) Init() error {
@@ -55,6 +54,7 @@ func (s *State) Init() error {
 	if err != nil {
 		return fmt.Errorf("创建画布失败:%v", err)
 	}
+	s.Canvas = canvas
 	s.Adapter, err = s.Bridge.GetGPU().RequestAdapter(&wgpu.AdapterDescriptor{
 		PowerPreference: wgpu.PowerPreference_HighPerformance,
 	})
@@ -76,10 +76,6 @@ func (s *State) Init() error {
 		Dimension:   wgpu.TextureDimension_2D,
 		Format:      format,
 		Usage:       wgpu.TextureUsage_RenderAttachment,
-	}
-	s.SwapChain, err = s.Device.CreateTexture(s.Config)
-	if err != nil {
-		return err
 	}
 	err = canvas.Configure(&wgpu.ConfigureDescriptor{
 		Device: s.Device,
@@ -134,7 +130,8 @@ func (s *State) Resize(width, height int) error {
 }
 
 func (s *State) Render() error {
-	nextTexture := s.SwapChain.CreateView(nil)
+	currentTexture := s.Canvas.GetCurrentTexture()
+	nextTexture := currentTexture.CreateView(nil)
 
 	encoder, err := s.Device.CreateCommandEncoder(&wgpu.CommandEncoderDescriptor{
 		Label: "Command Encoder",

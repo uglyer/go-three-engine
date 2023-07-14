@@ -56,7 +56,7 @@ func (c *Canvas) Configure(descriptor *wgpu.ConfigureDescriptor) error {
 	}
 	config := wasm.NewObject()
 	config.Set("format", "bgra8unorm")
-	config.Set("alphaMode", "premultiplied")
+	//config.Set("alphaMode", "premultiplied")
 	config.Set("device", device.ref)
 	wasm.ConsoleLog("Configure", config)
 	c.canvasContext.Call("configure", config)
