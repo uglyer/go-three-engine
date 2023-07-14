@@ -102,6 +102,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
                 fragment: fragmentStageDescriptor,
                 primitive: {topology: "triangle-list","frontFace":"ccw","cullMode":"none" },
             };
+            console.log("js renderPipelineDescriptor",renderPipelineDescriptor)
             /* GPURenderPipeline */
             const renderPipeline = device.createRenderPipeline(renderPipelineDescriptor);
 

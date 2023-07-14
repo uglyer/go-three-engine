@@ -268,10 +268,12 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 			desc["depthStencil"] = ds
 		}
 
-		desc["multisample"] = map[string]any{
-			"count":                  descriptor.Multisample.Count,
-			"mask":                   descriptor.Multisample.Mask,
-			"alphaToCoverageEnabled": descriptor.Multisample.AlphaToCoverageEnabled,
+		if descriptor.Multisample != nil {
+			desc["multisample"] = map[string]any{
+				"count":                  descriptor.Multisample.Count,
+				"mask":                   descriptor.Multisample.Mask,
+				"alphaToCoverageEnabled": descriptor.Multisample.AlphaToCoverageEnabled,
+			}
 		}
 
 		if descriptor.Fragment != nil {
@@ -279,7 +281,7 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 
 			frag := make(map[string]any)
 
-			frag["nextInChain"] = nil
+			//frag["nextInChain"] = nil
 			if fragment.EntryPoint != "" {
 				frag["entryPoint"] = fragment.EntryPoint
 			}
@@ -294,8 +296,10 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 
 				for i, v := range fragment.Targets {
 					target := map[string]any{
-						"format":    v.Format.String(),
-						"writeMask": uint32(v.WriteMask),
+						"format": v.Format.String(),
+					}
+					if &v.WriteMask != nil {
+						target["writeMask"] = uint32(v.WriteMask)
 					}
 					if v.Blend != nil {
 						target["blend"] = map[string]any{
