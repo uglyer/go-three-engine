@@ -42,12 +42,15 @@ type State struct {
 	Adapter  wgpu.IAdapter
 	Pipeline wgpu.IRenderPipeLine
 	Config   *wgpu.TextureDescriptor
+	View     wgpu.ITexture
 }
 
 func (s *State) Init() error {
+	width := 640
+	height := 480
 	canvas, err := s.Bridge.CreateCanvas(&wgpu.CanvasDescriptor{
-		Width:    640,
-		Height:   480,
+		Width:    width,
+		Height:   height,
 		Title:    "Test",
 		ParentId: "root",
 	})
@@ -68,20 +71,32 @@ func (s *State) Init() error {
 	format := s.Bridge.GetGPU().GetPreferredCanvasFormat()
 	s.Config = &wgpu.TextureDescriptor{
 		Size: &wgpu.Extent3D{
-			Width:              640,
-			Height:             480,
+			Width:              uint32(width),
+			Height:             uint32(height),
 			DepthOrArrayLayers: 1,
 		},
-		SampleCount: 1,
+		SampleCount: 4,
 		Dimension:   wgpu.TextureDimension_2D,
 		Format:      format,
 		Usage:       wgpu.TextureUsage_RenderAttachment,
 	}
 	err = canvas.Configure(&wgpu.ConfigureDescriptor{
-		Device: s.Device,
+		Device:    s.Device,
+		Format:    format,
+		AlphaMode: wgpu.CompositeAlphaMode_PreMultiplied,
 	})
 	if err != nil {
 		return fmt.Errorf("配置画布失败:%v", err)
+	}
+	//{
+	//size: [canvas.width, canvas.height],
+	//sampleCount: 4,
+	//format: presentationFormat,
+	//usage: GPUTextureUsage.RENDER_ATTACHMENT,
+	//}
+	s.View, err = s.Device.CreateTexture(s.Config)
+	if err != nil {
+		return fmt.Errorf("创建纹理失败:%v", err)
 	}
 	shaderModule, err := s.Device.CreateShaderModule(&wgpu.ShaderModuleDescriptor{
 		Label: "draw.wgsl",
@@ -114,7 +129,7 @@ func (s *State) Init() error {
 			FrontFace: wgpu.FrontFace_CCW,
 		},
 		Multisample: &wgpu.MultisampleState{
-			Count:                  1,
+			Count:                  4,
 			Mask:                   0xFFFFFFFF,
 			AlphaToCoverageEnabled: false,
 		},
@@ -130,8 +145,8 @@ func (s *State) Resize(width, height int) error {
 }
 
 func (s *State) Render() error {
-	currentTexture := s.Canvas.GetCurrentTexture()
-	nextTexture := currentTexture.CreateView(nil)
+	currentTexture := s.Canvas.GetCurrentTexture().CreateView(nil)
+	renderAttachment := s.View.CreateView(nil)
 
 	encoder, err := s.Device.CreateCommandEncoder(&wgpu.CommandEncoderDescriptor{
 		Label: "Command Encoder",
@@ -141,12 +156,13 @@ func (s *State) Render() error {
 	}
 
 	renderPass := encoder.BeginRenderPass(&wgpu.RenderPassDescriptor{
-		ColorAttachments: []wgpu.RenderPassColorAttachment{
+		ColorAttachments: []*wgpu.RenderPassColorAttachment{
 			{
-				View:       nextTexture,
-				LoadOp:     wgpu.LoadOp_Clear,
-				StoreOp:    wgpu.StoreOp_Store,
-				ClearValue: &wgpu.Color{R: 0.15, G: 0.15, B: 0.15, A: 1},
+				View:          renderAttachment,
+				ResolveTarget: currentTexture,
+				LoadOp:        wgpu.LoadOp_Clear,
+				StoreOp:       wgpu.StoreOp_Store,
+				ClearValue:    &wgpu.Color{R: 0.15, G: 0.15, B: 0.15, A: 1},
 			},
 		},
 	})

@@ -22,7 +22,7 @@ type RenderPassDepthStencilAttachment struct {
 
 type RenderPassDescriptor struct {
 	Label                  string
-	ColorAttachments       []RenderPassColorAttachment
+	ColorAttachments       []*RenderPassColorAttachment
 	DepthStencilAttachment *RenderPassDepthStencilAttachment
 }
 

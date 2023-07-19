@@ -171,6 +171,9 @@ func (d *Device) CreateTexture(descriptor *wgpu.TextureDescriptor) (wgpu.ITextur
 	if descriptor.MipLevelCount != 0 {
 		desc["mipLevelCount"] = descriptor.MipLevelCount
 	}
+	if descriptor.SampleCount != 0 {
+		desc["sampleCount"] = descriptor.SampleCount
+	}
 	ref := d.ref.Call("createTexture", desc)
 	return &Texture{ref: ref}, nil
 }
