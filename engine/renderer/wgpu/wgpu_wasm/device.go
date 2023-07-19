@@ -298,7 +298,7 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 					target := map[string]any{
 						"format": v.Format.String(),
 					}
-					if &v.WriteMask != nil {
+					if v.WriteMask != 0 {
 						target["writeMask"] = uint32(v.WriteMask)
 					}
 					if v.Blend != nil {
@@ -329,9 +329,8 @@ func (d *Device) CreateRenderPipeline(descriptor *wgpu.RenderPipelineDescriptor)
 		}
 	}
 	obj := wasm.NewObj(desc)
-	wasm.ConsoleLog("createRenderPipeline", obj)
 	ref := d.ref.Call("createRenderPipeline", obj)
-	wasm.ConsoleLog("createRenderPipeline", ref)
+	js.Global().Set("pipeline", ref)
 	return newRenderPipeline(ref), nil
 }
 

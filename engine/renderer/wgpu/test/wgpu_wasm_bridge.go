@@ -105,7 +105,7 @@ func (s *State) Init() error {
 				{
 					Format: format,
 					//Blend:  nil,
-					//WriteMask: wgpu.ColorWriteMask_All,
+					WriteMask: wgpu.ColorWriteMask_All,
 				},
 			},
 		},
@@ -113,11 +113,11 @@ func (s *State) Init() error {
 			Topology:  wgpu.PrimitiveTopology_TriangleList,
 			FrontFace: wgpu.FrontFace_CCW,
 		},
-		//Multisample: &wgpu.MultisampleState{
-		//	Count:                  1,
-		//	Mask:                   0xFFFFFFFF,
-		//	AlphaToCoverageEnabled: false,
-		//},
+		Multisample: &wgpu.MultisampleState{
+			Count:                  1,
+			Mask:                   0xFFFFFFFF,
+			AlphaToCoverageEnabled: false,
+		},
 	})
 	if err != nil {
 		return fmt.Errorf("CreateShaderModule:%v", err)
