@@ -43,7 +43,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
         inst = await WebAssembly.instantiate(mod, go.importObject); // reset instance
     }
 
-    async function jsTest(){
+    async function jsTest() {
         async function helloTriangle() {
             if (!navigator.gpu || GPUBufferUsage.COPY_SRC === undefined) {
                 document.body.className = 'error';
@@ -87,12 +87,18 @@ Add the following polyfill for Microsoft Edge 17/18 support:
                         return vec4<f32>(1.0, 0.0, 0.0, 1.0);
                     }
     `;
-            const shaderModule = device.createShaderModule({ code: wgslSource });
+            const shaderModule = device.createShaderModule({code: wgslSource});
+            const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+            console.log("presentationFormat",presentationFormat)
 
             /* GPUPipelineStageDescriptors */
-            const vertexStageDescriptor = { module: shaderModule, entryPoint: "vsmain" };
+            const vertexStageDescriptor = {module: shaderModule, entryPoint: "vsmain"};
 
-            const fragmentStageDescriptor = { module: shaderModule, entryPoint: "fsmain", targets: [ {format: "bgra8unorm" }, ],  };
+            const fragmentStageDescriptor = {
+                module: shaderModule,
+                entryPoint: "fsmain",
+                targets: [{format: presentationFormat},],
+            };
 
             /* GPURenderPipelineDescriptor */
 
@@ -100,9 +106,10 @@ Add the following polyfill for Microsoft Edge 17/18 support:
                 layout: 'auto',
                 vertex: vertexStageDescriptor,
                 fragment: fragmentStageDescriptor,
-                primitive: {topology: "triangle-list","frontFace":"ccw","cullMode":"none" },
+                primitive: {topology: "triangle-list", "frontFace": "ccw", "cullMode": "none"},
+                multisample:{count:4}
             };
-            console.log("js renderPipelineDescriptor",renderPipelineDescriptor)
+            console.log("js renderPipelineDescriptor", renderPipelineDescriptor)
             /* GPURenderPipeline */
             const renderPipeline = device.createRenderPipeline(renderPipelineDescriptor);
 
@@ -116,10 +123,15 @@ Add the following polyfill for Microsoft Edge 17/18 support:
             const gpuContext = canvas.getContext("webgpu");
 
             /* GPUCanvasConfiguration */
-            const canvasConfiguration = { device: device, format: "bgra8unorm" };
+            const canvasConfiguration = {device: device, format: presentationFormat,alphaMode: 'premultiplied',};
             gpuContext.configure(canvasConfiguration);
             /* GPUTexture */
-            const currentTexture = gpuContext.getCurrentTexture();
+            const currentTexture = device.createTexture({
+                size: [canvas.width, canvas.height],
+                sampleCount: 4,
+                format: presentationFormat,
+                usage: GPUTextureUsage.RENDER_ATTACHMENT,
+            });
 
             /*** Render Pass Setup ***/
 
@@ -129,18 +141,19 @@ Add the following polyfill for Microsoft Edge 17/18 support:
             const renderAttachment = currentTexture.createView();
 
             /* GPUColor */
-            const darkBlue = { r: 0.15, g: 0.15, b: 0.5, a: 1 };
+            const darkBlue = {r: 0.15, g: 0.15, b: 0.5, a: 1};
 
             /* GPURenderPassColorATtachmentDescriptor */
             const colorAttachmentDescriptor = {
                 view: renderAttachment,
+                resolveTarget: gpuContext.getCurrentTexture().createView(),
                 loadOp: "clear",
-                storeOp: "store",
+                storeOp: "discard",
                 clearColor: darkBlue
             };
 
             /* GPURenderPassDescriptor */
-            const renderPassDescriptor = { colorAttachments: [colorAttachmentDescriptor] };
+            const renderPassDescriptor = {colorAttachments: [colorAttachmentDescriptor]};
 
             /*** Rendering ***/
 
@@ -165,6 +178,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
 
         window.addEventListener("DOMContentLoaded", helloTriangle);
     }
+
     jsTest()
 </script>
 
