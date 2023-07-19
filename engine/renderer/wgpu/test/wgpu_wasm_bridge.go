@@ -146,7 +146,7 @@ func (s *State) Render() error {
 				View:       nextTexture,
 				LoadOp:     wgpu.LoadOp_Clear,
 				StoreOp:    wgpu.StoreOp_Store,
-				ClearValue: &wgpu.Color{G: 1, A: 1},
+				ClearValue: &wgpu.Color{R: 0.15, G: 0.15, B: 0.15, A: 1},
 			},
 		},
 	})
