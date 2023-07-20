@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_wasm"
+	"github.com/uglyer/go-three-engine/engine/wasm"
 	"log"
-	"time"
 )
 
 //go:embed shader.wgsl
@@ -26,13 +26,17 @@ func main() {
 	if err != nil {
 		log.Fatalf("初始化失败:%v", err)
 	}
-	for {
+	var renderFunc func()
+	renderFunc = func() {
+		// TODO RequestAnimationFrame
+		wasm.ConsoleLog("xxx")
+		bridge.RequestAnimationFrame(renderFunc)
 		err = state.Render()
 		if err != nil {
 			log.Fatalf("渲染异常:%v", err)
 		}
-		time.Sleep(16 * time.Millisecond)
 	}
+	renderFunc()
 }
 
 type State struct {

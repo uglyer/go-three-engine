@@ -6,6 +6,7 @@ type IDrop interface {
 
 type IBridge interface {
 	CreateCanvas(descriptor *CanvasDescriptor) (ICanvas, error)
+	RequestAnimationFrame(fn func())
 	GetGPU() IGPU
 }
 

@@ -4,6 +4,7 @@ package wgpu_wasm
 
 import (
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+	"syscall/js"
 )
 
 type Bridge struct {
@@ -23,6 +24,14 @@ func NewBridge() (wgpu.IBridge, error) {
 func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	return newCanvas(descriptor)
 }
+
+func (b *Bridge) RequestAnimationFrame(fn func()) {
+	js.Global().Call("requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		fn()
+		return nil
+	}))
+}
+
 func (b *Bridge) GetGPU() wgpu.IGPU {
 	return b.gpu
 }
