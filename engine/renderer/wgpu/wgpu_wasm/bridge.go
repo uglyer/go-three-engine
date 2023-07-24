@@ -26,7 +26,7 @@ func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, 
 }
 
 func (b *Bridge) RequestAnimationFrame(fn func()) {
-	js.Global().Call("requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+	js.Global().Call("_requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		fn()
 		return nil
 	}))

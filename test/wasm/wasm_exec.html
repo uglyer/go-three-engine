@@ -38,6 +38,15 @@ Add the following polyfill for Microsoft Edge 17/18 support:
     });
 
     async function run() {
+        window['_requestAnimationFrame'] = function () {
+            const animationFunc = () => {
+                // requestAnimationFrame(animationFunc);
+                arguments[0]();
+            }
+            // arguments[0]();
+            requestAnimationFrame(animationFunc)
+            // console.log("_requestAnimationFrame", arguments[0]())
+        }
         console.clear();
         await go.run(inst);
         inst = await WebAssembly.instantiate(mod, go.importObject); // reset instance
@@ -89,7 +98,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
     `;
             const shaderModule = device.createShaderModule({code: wgslSource});
             const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-            console.log("presentationFormat",presentationFormat)
+            console.log("presentationFormat", presentationFormat)
 
             /* GPUPipelineStageDescriptors */
             const vertexStageDescriptor = {module: shaderModule, entryPoint: "vsmain"};
@@ -107,7 +116,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
                 vertex: vertexStageDescriptor,
                 fragment: fragmentStageDescriptor,
                 primitive: {topology: "triangle-list", "frontFace": "ccw", "cullMode": "none"},
-                multisample:{count:4}
+                multisample: {count: 4}
             };
             console.log("js renderPipelineDescriptor", renderPipelineDescriptor)
             /* GPURenderPipeline */
@@ -123,7 +132,7 @@ Add the following polyfill for Microsoft Edge 17/18 support:
             const gpuContext = canvas.getContext("webgpu");
 
             /* GPUCanvasConfiguration */
-            const canvasConfiguration = {device: device, format: presentationFormat,alphaMode: 'premultiplied',};
+            const canvasConfiguration = {device: device, format: presentationFormat, alphaMode: 'premultiplied',};
             gpuContext.configure(canvasConfiguration);
             /* GPUTexture */
             const currentTexture = device.createTexture({

@@ -7,6 +7,7 @@ import (
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_wasm"
 	"github.com/uglyer/go-three-engine/engine/wasm"
 	"log"
+	"syscall/js"
 )
 
 //go:embed shader.wgsl
@@ -26,17 +27,23 @@ func main() {
 	if err != nil {
 		log.Fatalf("初始化失败:%v", err)
 	}
-	var renderFunc func()
-	renderFunc = func() {
+	renderFunc := func() {
 		// TODO RequestAnimationFrame
 		wasm.ConsoleLog("xxx")
-		bridge.RequestAnimationFrame(renderFunc)
 		err = state.Render()
 		if err != nil {
 			log.Fatalf("渲染异常:%v", err)
 		}
 	}
-	renderFunc()
+	bridge.RequestAnimationFrame(renderFunc)
+	//js.Global().Call("setTimeout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+	//	wasm.ConsoleLog("xxxxx")
+	//	return nil
+	//}))
+	js.Global().Call("_requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		wasm.ConsoleLog("111")
+		return nil
+	}))
 }
 
 type State struct {
