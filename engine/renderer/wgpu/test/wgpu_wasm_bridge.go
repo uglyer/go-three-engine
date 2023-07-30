@@ -36,10 +36,10 @@ func main() {
 		}
 	}
 	bridge.RequestAnimationFrame(renderFunc)
-	//js.Global().Call("setTimeout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-	//	wasm.ConsoleLog("xxxxx")
-	//	return nil
-	//}))
+	js.Global().Call("setTimeout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		wasm.ConsoleLog("xxxxx")
+		return nil
+	}))
 	js.Global().Call("_requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		wasm.ConsoleLog("111")
 		return nil
