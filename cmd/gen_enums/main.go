@@ -4,6 +4,8 @@ import (
 	"bytes"
 	_ "embed"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"regexp"
 	"sort"
@@ -11,11 +13,6 @@ import (
 	"unicode"
 )
 
-//go:embed webgpu.h
-var webgpuCode string
-
-//go:embed wgpu.h
-var wgpuCode string
 
 type Pair struct {
 	Enum  string
@@ -54,6 +51,20 @@ func (e Enums) Add(t string, enum string, value string) Enums {
 	return e
 }
 
+func get(url string) string {
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if resp.StatusCode != 200 {
+		fmt.Println("请求失败")
+	}
+	return string(body)
+}
+
 func main() {
 	var enums = Enums{}
 	skipTypes := map[string]bool{
@@ -68,6 +79,8 @@ func main() {
 		"PowerPreference_Undefined": "default",
 	}
 	re := regexp.MustCompile(`(?m)^\s*(\w+)\s*=\s*(\w+),?$`)
+	webgpuCode := get("https://raw.githubusercontent.com/webgpu-native/webgpu-headers/048341380f41c0d67e66998b3def7b5868380080/webgpu.h")
+	wgpuCode := get("https://raw.githubusercontent.com/gfx-rs/wgpu-native/6f95ce3fc1cd8829f23401e98967112f00f940c2/ffi/wgpu.h")
 	matches := re.FindAllStringSubmatch(webgpuCode+wgpuCode, -1)
 	for _, match := range matches {
 
