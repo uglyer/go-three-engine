@@ -174,7 +174,6 @@ type ITextureView interface {
 type ITexture interface {
 	IDrop
 	CreateView(descriptor *TextureViewDescriptor) ITextureView
-	Destroy()
 }
 
 type IShaderModule interface {

@@ -14,10 +14,6 @@ func (b *Buffer) Drop() {
 	panic("todo impl Drop")
 }
 
-func (b *Buffer) Destroy() {
-	b.ref.Call("destroy")
-}
-
 func (b *Buffer) MapAsync(mode wgpu.MapMode, offset uint64, size uint64, callback wgpu.BufferMapCallback) {
 	promise := b.ref.Call("mapAsync", int(mode), offset, size)
 	go func() {

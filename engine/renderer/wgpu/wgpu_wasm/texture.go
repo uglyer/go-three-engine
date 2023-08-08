@@ -44,10 +44,6 @@ func (p *Texture) CreateView(descriptor *wgpu.TextureViewDescriptor) wgpu.ITextu
 	return &TextureView{ref: ref}
 }
 
-func (p *Texture) Destroy() {
-	panic("todo impl Destroy")
-}
-
 func (p *Texture) Drop() {
 	panic("todo impl Drop")
 }
