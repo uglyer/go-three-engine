@@ -17,6 +17,8 @@ func NewPlane(normal *Vector3, constant float64) *Plane {
 	p := new(Plane)
 	if normal != nil {
 		p.normal = normal.Clone()
+	} else {
+		p.normal = NewVec3()
 	}
 	p.constant = constant
 	return p
@@ -106,8 +108,8 @@ func (p *Plane) DistanceToSphere(sphere *Sphere) float64 {
 // IsIntersectionLine returns the line intersects this plane.
 func (p *Plane) IsIntersectionLine(line *Line3) bool {
 
-	startSign := p.DistanceToPoint(&line.start)
-	endSign := p.DistanceToPoint(&line.end)
+	startSign := p.DistanceToPoint(line.start)
+	endSign := p.DistanceToPoint(line.end)
 	return (startSign < 0 && endSign > 0) || (endSign < 0 && startSign > 0)
 }
 
@@ -128,18 +130,18 @@ func (p *Plane) IntersectLine(line *Line3, optionalTarget *Vector3) *Vector3 {
 	denominator := p.normal.Dot(direction)
 	if denominator == 0 {
 		// line is coplanar, return origin
-		if p.DistanceToPoint(&line.start) == 0 {
-			return result.Copy(&line.start)
+		if p.DistanceToPoint(line.start) == 0 {
+			return result.Copy(line.start)
 		}
 		// Unsure if this is the correct method to handle this case.
 		return nil
 	}
 
-	var t = -(line.start.Dot(&p.normal) + p.constant) / denominator
+	var t = -(line.start.Dot(p.normal) + p.constant) / denominator
 	if t < 0 || t > 1 {
 		return nil
 	}
-	return result.Copy(direction).MultiplyScalar(t).Add(&line.start)
+	return result.Copy(direction).MultiplyScalar(t).Add(line.start)
 }
 
 // CoplanarPoint sets the optionalTarget to a point in the plane and also returns it.
@@ -152,25 +154,25 @@ func (p *Plane) CoplanarPoint(optionalTarget *Vector3) *Vector3 {
 	} else {
 		result = optionalTarget
 	}
-	return result.Copy(&p.normal).MultiplyScalar(-p.constant)
+	return result.Copy(p.normal).MultiplyScalar(-p.constant)
 }
 
 // Translate translates this plane in the direction of its normal by offset.
 // Returns pointer to this updated plane.
 func (p *Plane) Translate(offset *Vector3) *Plane {
 
-	p.constant = p.constant - offset.Dot(&p.normal)
+	p.constant = p.constant - offset.Dot(p.normal)
 	return p
 }
 
 // Equals returns if this plane is equal to other
 func (p *Plane) Equals(other *Plane) bool {
 
-	return other.normal.Equals(&p.normal) && (other.constant == p.constant)
+	return other.normal.Equals(p.normal) && (other.constant == p.constant)
 }
 
 // Clone creates and returns a pointer to a copy of this plane.
-func (p *Plane) Clone(plane *Plane) *Plane {
+func (p *Plane) Clone() *Plane {
 
-	return NewPlane(&plane.normal, plane.constant)
+	return NewPlane(p.normal, p.constant)
 }
