@@ -35,5 +35,7 @@ type INode interface {
 
 	Rotation() *math64.Vector3
 
+	Quaternion() *math64.Quaternion
+
 	Scale() *math64.Vector3
 }
