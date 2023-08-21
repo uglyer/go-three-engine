@@ -3,6 +3,8 @@ package core
 import "github.com/uglyer/go-three-engine/engine/math64"
 
 type IEventDispatcher interface {
+	// UUID 获取当前对象的 UUID
+	UUID() string
 	AddEventListener(eventType string, listener func(Event)) int
 	RemoveEventListener(eventType string, eventId int)
 	DispatchEvent(eventType string, data interface{})

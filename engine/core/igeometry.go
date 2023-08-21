@@ -4,6 +4,7 @@ import "github.com/uglyer/go-three-engine/engine/math64"
 
 // IGeometry 几何体的接口定义
 type IGeometry interface {
+	IEventDispatcher
 	// BoundingBox 获取几何体的包围盒（始终为最新值, 内部按需触发自动计算）
 	BoundingBox() *math64.Box3
 	// BoundingSphere 获取几何体的包围球体（始终为最新值, 内部按需触发自动计算）
