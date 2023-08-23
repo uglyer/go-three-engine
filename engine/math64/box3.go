@@ -132,6 +132,30 @@ func (b *Box3) ExpandByPoint(point *Vector3) *Box3 {
 	return b
 }
 
+// ExpandByPointXYZ may expand this bounding box to include the specified point.
+// Returns pointer to this updated bounding box.
+func (b *Box3) ExpandByPointXYZ(x, y, z float64) *Box3 {
+	if b.Min.X > x {
+		b.Min.X = x
+	}
+	if b.Min.Y > y {
+		b.Min.Y = y
+	}
+	if b.Min.Z > z {
+		b.Min.Z = z
+	}
+	if b.Max.X < x {
+		b.Max.X = x
+	}
+	if b.Max.Y < y {
+		b.Max.Y = y
+	}
+	if b.Max.Z < z {
+		b.Max.Z = z
+	}
+	return b
+}
+
 // ExpandByVector expands this bounding box by the specified vector.
 // Returns pointer to this updated bounding box.
 func (b *Box3) ExpandByVector(vector *Vector3) *Box3 {

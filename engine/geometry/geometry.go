@@ -3,39 +3,72 @@ package geometry
 import (
 	"github.com/uglyer/go-three-engine/engine/core"
 	"github.com/uglyer/go-three-engine/engine/math64"
+	"sync"
 )
 
 type Geometry struct {
+	mtx            sync.Mutex
+	attributeMap   map[string]*core.BufferAttribute
+	boundingBox    *math64.Box3
+	boundingSphere *math64.Sphere
 }
 
 // BoundingBox 获取几何体的包围盒（始终为最新值, 内部按需触发自动计算）
 func (g *Geometry) BoundingBox() *math64.Box3 {
-	panic("BoundingBox")
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	if g.boundingBox == nil {
+		g.boundingBox = math64.NewBox3Infinity()
+	} else {
+		g.boundingBox.MakeEmpty()
+	}
+	positionAttr := g.attributeMap["position"]
+	for i := 0; i < positionAttr.Count; i += positionAttr.ItemSize {
+		g.boundingBox.ExpandByPointXYZ(positionAttr.Array[i], positionAttr.Array[i+1], positionAttr.Array[i+2])
+	}
+	return g.boundingBox
 }
 
 // BoundingSphere 获取几何体的包围球体（始终为最新值, 内部按需触发自动计算）
 func (g *Geometry) BoundingSphere() *math64.Sphere {
-	panic("BoundingSphere")
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	if g.boundingSphere == nil {
+		g.boundingSphere = math64.NewSphere(math64.NewVec3(), 0)
+	} else {
+		g.boundingSphere.Center.Set(0, 0, 0)
+		g.boundingSphere.Radius = 0
+	}
+	return g.boundingSphere.SetFromBox3(g.boundingBox)
 }
 
 // GetAttribute 通过名称获取指定的缓冲区属性
 func (g *Geometry) GetAttribute(name string) *core.BufferAttribute {
-	panic("GetAttribute")
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	return g.attributeMap[name]
 }
 
 // SetAttribute 通过名称设置指定的缓冲区属性
 func (g *Geometry) SetAttribute(name string, attr *core.BufferAttribute) {
-	panic("GetAttribute")
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	g.attributeMap[name] = attr
 }
 
 // DeleteAttribute 通过名称删除指定的缓冲区属性
 func (g *Geometry) DeleteAttribute(name string) {
-	panic("DeleteAttribute")
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	delete(g.attributeMap, name)
 }
 
 // HasAttribute 通过名称校验是否有指定的缓冲区属性
-func (g *Geometry) HasAttribute(name string) bool {
-	panic("HasAttribute")
+func (g *Geometry) HasAttribute(name string) (ok bool) {
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	_, ok = g.attributeMap[name]
+	return
 }
 
 // ApplyMatrix4 应用指定的矩阵

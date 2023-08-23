@@ -31,7 +31,7 @@ func (s *Sphere) Set(center *Vector3, radius float64) *Sphere {
 
 // SetFromPoints sets this sphere from the specified points array and optional center.
 // Returns pointer to this update sphere.
-func (s *Sphere) SetFromPoints(points []Vector3, optionalCenter *Vector3) *Sphere {
+func (s *Sphere) SetFromPoints(points []*Vector3, optionalCenter *Vector3) *Sphere {
 
 	box := NewBox3(nil, nil)
 
@@ -42,8 +42,17 @@ func (s *Sphere) SetFromPoints(points []Vector3, optionalCenter *Vector3) *Spher
 	}
 	var maxRadiusSq float64
 	for i := 0; i < len(points); i++ {
-		maxRadiusSq = Max(maxRadiusSq, s.Center.DistanceToSquared(&points[i]))
+		maxRadiusSq = Max(maxRadiusSq, s.Center.DistanceToSquared(points[i]))
 	}
+	s.Radius = Sqrt(maxRadiusSq)
+	return s
+}
+
+// SetFromBox3 sets this sphere from the box3.
+// Returns pointer to this update sphere.
+func (s *Sphere) SetFromBox3(box *Box3) *Sphere {
+	box.Center(s.Center)
+	var maxRadiusSq = Max(s.Center.DistanceToSquared(box.Max), s.Center.DistanceToSquared(box.Min))
 	s.Radius = Sqrt(maxRadiusSq)
 	return s
 }
