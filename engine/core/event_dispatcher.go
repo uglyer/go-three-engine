@@ -1,6 +1,7 @@
 package core
 
 import (
+	"github.com/google/uuid"
 	"sync"
 	"sync/atomic"
 )
@@ -8,12 +9,24 @@ import (
 type EventDispatcher struct {
 	listeners map[string]map[int]func(Event)
 	mu        sync.Mutex
+	uuid      string
 }
 
 type Event struct {
 	Type   string
 	Target *EventDispatcher
 	Data   interface{}
+}
+
+func NewEventDispatcher() *EventDispatcher {
+	return &EventDispatcher{
+		uuid:      uuid.New().String(),
+		listeners: make(map[string]map[int]func(Event)),
+	}
+}
+
+func (ed *EventDispatcher) UUID() string {
+	return ed.uuid
 }
 
 func (ed *EventDispatcher) AddEventListener(eventType string, listener func(Event)) int {
