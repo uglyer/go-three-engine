@@ -7,28 +7,33 @@ import (
 
 type Node struct {
 	core.IEventDispatcher
+	// NodeName 当前节点的名称（业务名称）, 可不唯一
+	NodeName string
+	// Visible 当前节点是否可见
+	Visible bool
 }
 
 func NewNode() *Node {
 	return &Node{
 		IEventDispatcher: core.NewEventDispatcher(),
+		Visible:          true,
 	}
 }
 
 func (n *Node) IsVisible() bool {
-	panic("IsVisible")
+	return n.Visible
 }
 
 func (n *Node) SetIsVisible(state bool) {
-	panic("SetIsVisible")
+	n.Visible = state
 }
 
 func (n *Node) Name() string {
-	panic("Name")
+	return n.NodeName
 }
 
-func (n *Node) SetName(string) {
-	panic("SetName")
+func (n *Node) SetName(name string) {
+	n.NodeName = name
 }
 
 func (n *Node) Parent() core.INode {
