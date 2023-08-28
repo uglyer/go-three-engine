@@ -25,6 +25,10 @@ type INode interface {
 
 	Children() []INode
 
+	AddChild(node INode)
+
+	RemoveInParent()
+
 	IsAncestorOf(INode) bool
 
 	UpdateMatrixWorld()

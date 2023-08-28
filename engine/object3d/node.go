@@ -48,6 +48,14 @@ func (n *Node) IsAncestorOf(core.INode) bool {
 	panic("IsAncestorOf")
 }
 
+func (n *Node) AddChild(node core.INode) {
+	panic("AddChild")
+}
+
+func (n *Node) RemoveInParent() {
+	panic("AddChild")
+}
+
 func (n *Node) UpdateMatrixWorld() {
 	panic("UpdateMatrixWorld")
 }
