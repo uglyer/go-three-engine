@@ -11,6 +11,10 @@ type Node struct {
 	NodeName string
 	// Visible 当前节点是否可见
 	Visible bool
+	// ParentNode 父节点
+	ParentNode core.INode
+	// ChildrenNodes 子节点
+	ChildrenNodes []core.INode
 }
 
 func NewNode() *Node {
@@ -37,11 +41,11 @@ func (n *Node) SetName(name string) {
 }
 
 func (n *Node) Parent() core.INode {
-	panic("Parent")
+	return n.ParentNode
 }
 
 func (n *Node) Children() []core.INode {
-	panic("Children")
+	return n.ChildrenNodes
 }
 
 func (n *Node) IsAncestorOf(core.INode) bool {
@@ -50,6 +54,10 @@ func (n *Node) IsAncestorOf(core.INode) bool {
 
 func (n *Node) AddChild(node core.INode) {
 	panic("AddChild")
+}
+
+func (n *Node) Remove(node core.INode) {
+	panic("Remove")
 }
 
 func (n *Node) RemoveInParent() {

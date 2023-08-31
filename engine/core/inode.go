@@ -27,6 +27,8 @@ type INode interface {
 
 	AddChild(node INode)
 
+	Remove(node INode)
+
 	RemoveInParent()
 
 	IsAncestorOf(INode) bool
