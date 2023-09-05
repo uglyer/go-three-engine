@@ -16,10 +16,10 @@ type Node struct {
 	// ChildrenNodes 子节点
 	ChildrenNodes []core.INode
 	position      *math64.Vector3
-	// TODO 四元数与欧拉角相互绑定
-	quaternion *math64.Quaternion
-	rotation   *math64.Vector3
-	scale      *math64.Vector3
+	quaternion    *math64.Quaternion
+	// rotation 欧拉角为缓存对象, 以四元数为准
+	rotation *math64.Vector3
+	scale    *math64.Vector3
 }
 
 func NewNode() *Node {
@@ -85,7 +85,8 @@ func (n *Node) Position() *math64.Vector3 {
 	return n.position
 }
 
-func (n *Node) Rotation() *math64.Vector3 {
+func (n *Node) RotationReadonly() *math64.Vector3 {
+	n.rotation.SetFromQuaternion(n.quaternion)
 	return n.rotation
 }
 

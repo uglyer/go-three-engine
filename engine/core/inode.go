@@ -41,7 +41,8 @@ type INode interface {
 
 	Position() *math64.Vector3
 
-	Rotation() *math64.Vector3
+	// RotationReadonly 注意获取到的欧拉角仅为只读, 更新操作无效
+	RotationReadonly() *math64.Vector3
 
 	Quaternion() *math64.Quaternion
 
