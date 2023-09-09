@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_wasm"
-	"github.com/uglyer/go-three-engine/engine/wasm"
 	"log"
-	"syscall/js"
 )
 
 //go:embed shader.wgsl
@@ -27,23 +25,27 @@ func main() {
 	if err != nil {
 		log.Fatalf("初始化失败:%v", err)
 	}
-	renderFunc := func() {
-		// TODO RequestAnimationFrame
-		wasm.ConsoleLog("xxx")
+	var renderFunc func()
+	renderFunc = func() {
+		// RequestAnimationFrame
+		bridge.RequestAnimationFrame(renderFunc)
+		//wasm.ConsoleLog("xxx")
 		err = state.Render()
 		if err != nil {
 			log.Fatalf("渲染异常:%v", err)
 		}
 	}
 	bridge.RequestAnimationFrame(renderFunc)
-	js.Global().Call("setTimeout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		wasm.ConsoleLog("xxxxx")
-		return nil
-	}))
-	js.Global().Call("_requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		wasm.ConsoleLog("111")
-		return nil
-	}))
+	//js.Global().Call("setTimeout", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+	//	wasm.ConsoleLog("xxxxx")
+	//	return nil
+	//}))
+	//js.Global().Call("_requestAnimationFrame", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+	//	wasm.ConsoleLog("111")
+	//	return nil
+	//}))
+	// 避免主线程退出内容被销毁
+	select {}
 }
 
 type State struct {
