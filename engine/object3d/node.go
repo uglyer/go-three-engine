@@ -78,7 +78,7 @@ func (n *Node) BoundingBox() *math64.Box3 {
 }
 
 func (n *Node) Dispose() {
-	panic("Dispose")
+	n.DispatchEvent("dispose", nil)
 }
 
 func (n *Node) Position() *math64.Vector3 {
