@@ -16,7 +16,7 @@ const Pi = float32(math.Pi)
 const degreeToRadiansFactor = float32(math.Pi / 180)
 const radianToDegreesFactor = float32(180.0 / math.Pi)
 
-var Infinity = math.Inf(1)
+var Infinity = float32(math.Inf(1))
 
 // DegToRad converts a number from degrees to radians
 func DegToRad(degrees float32) float32 {
