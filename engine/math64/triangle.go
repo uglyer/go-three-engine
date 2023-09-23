@@ -6,9 +6,9 @@ package math64
 
 // Triangle represents a triangle made of three vertices.
 type Triangle struct {
-	a Vector3
-	b Vector3
-	c Vector3
+	a *Vector3
+	b *Vector3
+	c *Vector3
 }
 
 // NewTriangle returns a pointer to a new Triangle object.
@@ -16,13 +16,19 @@ func NewTriangle(a, b, c *Vector3) *Triangle {
 
 	t := new(Triangle)
 	if a != nil {
-		t.a = *a
+		t.a = a.Clone()
+	} else {
+		t.a = NewVec3()
 	}
 	if b != nil {
-		t.b = *b
+		t.b = b.Clone()
+	} else {
+		t.b = NewVec3()
 	}
 	if c != nil {
-		t.c = *c
+		t.c = c.Clone()
+	} else {
+		t.c = NewVec3()
 	}
 	return t
 }
@@ -103,25 +109,27 @@ func ContainsPoint(point, a, b, c *Vector3) bool {
 // Set sets the triangle's three vertices.
 func (t *Triangle) Set(a, b, c *Vector3) *Triangle {
 
-	t.a = *a
-	t.b = *b
-	t.c = *c
+	t.a.Copy(a)
+	t.b.Copy(b)
+	t.c.Copy(c)
 	return t
 }
 
 // SetFromPointsAndIndices sets the triangle's vertices based on the specified points and indices.
 func (t *Triangle) SetFromPointsAndIndices(points []*Vector3, i0, i1, i2 int) *Triangle {
 
-	t.a = *points[i0]
-	t.b = *points[i1]
-	t.c = *points[i2]
+	t.a.Copy(points[i0])
+	t.b.Copy(points[i1])
+	t.c.Copy(points[i2])
 	return t
 }
 
 // Copy modifies the receiver triangle to match the provided triangle.
 func (t *Triangle) Copy(triangle *Triangle) *Triangle {
 
-	*t = *triangle
+	t.a.Copy(triangle.a)
+	t.b.Copy(triangle.b)
+	t.c.Copy(triangle.c)
 	return t
 }
 
@@ -131,8 +139,8 @@ func (t *Triangle) Area() float64 {
 	var v0 Vector3
 	var v1 Vector3
 
-	v0.SubVectors(&t.c, &t.b)
-	v1.SubVectors(&t.a, &t.b)
+	v0.SubVectors(t.c, t.b)
+	v1.SubVectors(t.a, t.b)
 	return v0.Cross(&v1).Length() * 0.5
 }
 
@@ -145,13 +153,13 @@ func (t *Triangle) Midpoint(optionalTarget *Vector3) *Vector3 {
 	} else {
 		result = NewVector3(0, 0, 0)
 	}
-	return result.AddVectors(&t.a, &t.b).Add(&t.c).MultiplyScalar(1 / 3)
+	return result.AddVectors(t.a, t.b).Add(t.c).MultiplyScalar(1 / 3)
 }
 
 // Normal returns the triangle's normal.
 func (t *Triangle) Normal(optionalTarget *Vector3) *Vector3 {
 
-	return Normal(&t.a, &t.b, &t.c, optionalTarget)
+	return Normal(t.a, t.b, t.c, optionalTarget)
 }
 
 // Plane returns a Plane object aligned with the triangle.
@@ -163,25 +171,25 @@ func (t *Triangle) Plane(optionalTarget *Plane) *Plane {
 	} else {
 		result = NewPlane(nil, 0)
 	}
-	return result.SetFromCoplanarPoints(&t.a, &t.b, &t.c)
+	return result.SetFromCoplanarPoints(t.a, t.b, t.c)
 }
 
 // BarycoordFromPoint returns the barycentric coordinates for the specified point.
 func (t *Triangle) BarycoordFromPoint(point, optionalTarget *Vector3) *Vector3 {
 
-	return BarycoordFromPoint(point, &t.a, &t.b, &t.c, optionalTarget)
+	return BarycoordFromPoint(point, t.a, t.b, t.c, optionalTarget)
 }
 
 // ContainsPoint returns whether the triangle contains a point.
 func (t *Triangle) ContainsPoint(point *Vector3) bool {
 
-	return ContainsPoint(point, &t.a, &t.b, &t.c)
+	return ContainsPoint(point, t.a, t.b, t.c)
 }
 
 // Equals returns whether the triangles are equal in all their vertices.
 func (t *Triangle) Equals(triangle *Triangle) bool {
 
-	return triangle.a.Equals(&t.a) && triangle.b.Equals(&t.b) && triangle.c.Equals(&t.c)
+	return triangle.a.Equals(t.a) && triangle.b.Equals(t.b) && triangle.c.Equals(t.c)
 }
 
 // Clone clones a triangle.
