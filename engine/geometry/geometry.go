@@ -2,23 +2,23 @@ package geometry
 
 import (
 	"github.com/uglyer/go-three-engine/engine/core"
-	"github.com/uglyer/go-three-engine/engine/math64"
+	"github.com/uglyer/go-three-engine/engine/math32"
 	"sync"
 )
 
 type Geometry struct {
 	mtx            sync.Mutex
 	attributeMap   map[string]*core.BufferAttribute
-	boundingBox    *math64.Box3
-	boundingSphere *math64.Sphere
+	boundingBox    *math32.Box3
+	boundingSphere *math32.Sphere
 }
 
 // BoundingBox 获取几何体的包围盒（始终为最新值, 内部按需触发自动计算）
-func (g *Geometry) BoundingBox() *math64.Box3 {
+func (g *Geometry) BoundingBox() *math32.Box3 {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
 	if g.boundingBox == nil {
-		g.boundingBox = math64.NewBox3Infinity()
+		g.boundingBox = math32.NewBox3Infinity()
 	} else {
 		g.boundingBox.MakeEmpty()
 	}
@@ -30,11 +30,11 @@ func (g *Geometry) BoundingBox() *math64.Box3 {
 }
 
 // BoundingSphere 获取几何体的包围球体（始终为最新值, 内部按需触发自动计算）
-func (g *Geometry) BoundingSphere() *math64.Sphere {
+func (g *Geometry) BoundingSphere() *math32.Sphere {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
 	if g.boundingSphere == nil {
-		g.boundingSphere = math64.NewSphere(math64.NewVec3(), 0)
+		g.boundingSphere = math32.NewSphere(math32.NewVec3(), 0)
 	} else {
 		g.boundingSphere.Center.Set(0, 0, 0)
 		g.boundingSphere.Radius = 0
@@ -72,8 +72,14 @@ func (g *Geometry) HasAttribute(name string) (ok bool) {
 }
 
 // ApplyMatrix4 应用指定的矩阵
-func (g *Geometry) ApplyMatrix4(mat4 *math64.Matrix4) {
-	panic("ApplyMatrix4")
+func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
+	position := g.GetAttribute("position")
+	if position != nil {
+		position.OperateOnVector3(func(vertex *math32.Vector3) bool {
+			vertex.ApplyMatrix4(mat4)
+			return false
+		})
+	}
 }
 
 // MakeCenter 使得几何体居中
