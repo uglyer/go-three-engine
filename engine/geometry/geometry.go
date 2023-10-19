@@ -7,16 +7,20 @@ import (
 )
 
 type Geometry struct {
-	mtx            sync.Mutex
-	attributeMap   map[string]*core.BufferAttribute
-	boundingBox    *math32.Box3
-	boundingSphere *math32.Sphere
+	mtx                   sync.Mutex
+	attributeMap          map[string]*core.BufferAttribute
+	boundingBoxNeedUpdate bool
+	boundingBox           *math32.Box3
+	boundingSphere        *math32.Sphere
 }
 
 // BoundingBox 获取几何体的包围盒（始终为最新值, 内部按需触发自动计算）
 func (g *Geometry) BoundingBox() *math32.Box3 {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
+	if g.boundingBox != nil && !g.boundingBoxNeedUpdate {
+		return g.boundingBox
+	}
 	if g.boundingBox == nil {
 		g.boundingBox = math32.NewBox3Infinity()
 	} else {
@@ -26,6 +30,7 @@ func (g *Geometry) BoundingBox() *math32.Box3 {
 	for i := 0; i < positionAttr.Count; i += positionAttr.ItemSize {
 		g.boundingBox.ExpandByPointXYZ(positionAttr.Array[i], positionAttr.Array[i+1], positionAttr.Array[i+2])
 	}
+	g.boundingBoxNeedUpdate = false
 	return g.boundingBox
 }
 
