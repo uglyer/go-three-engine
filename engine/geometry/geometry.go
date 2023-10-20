@@ -87,6 +87,12 @@ func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
 	}
 }
 
+// Scale 使得几何体居中
+func (g *Geometry) Scale(x, y, z float32) {
+	m := math32.NewMatrix4().MakeScale(x, y, z)
+	g.ApplyMatrix4(m)
+}
+
 // MakeCenter 使得几何体居中
 func (g *Geometry) MakeCenter() {
 	panic("MakeCenter")
