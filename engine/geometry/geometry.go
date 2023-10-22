@@ -87,8 +87,14 @@ func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
 	}
 }
 
-// Scale 使得几何体居中
+// Scale 缩放几何体
 func (g *Geometry) Scale(x, y, z float32) {
+	m := math32.NewMatrix4().MakeScale(x, y, z)
+	g.ApplyMatrix4(m)
+}
+
+// Translate 平移几何体
+func (g *Geometry) Translate(x, y, z float32) {
 	m := math32.NewMatrix4().MakeScale(x, y, z)
 	g.ApplyMatrix4(m)
 }
