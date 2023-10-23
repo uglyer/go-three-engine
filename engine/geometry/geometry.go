@@ -91,12 +91,14 @@ func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
 func (g *Geometry) Scale(x, y, z float32) {
 	m := math32.NewMatrix4().MakeScale(x, y, z)
 	g.ApplyMatrix4(m)
+	g.boundingBoxNeedUpdate = true
 }
 
 // Translate 平移几何体
 func (g *Geometry) Translate(x, y, z float32) {
 	m := math32.NewMatrix4().MakeScale(x, y, z)
 	g.ApplyMatrix4(m)
+	g.boundingBoxNeedUpdate = true
 }
 
 // MakeCenter 使得几何体居中
