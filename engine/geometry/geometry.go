@@ -38,6 +38,9 @@ func (g *Geometry) BoundingBox() *math32.Box3 {
 func (g *Geometry) BoundingSphere() *math32.Sphere {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
+	if g.boundingSphere != nil && !g.boundingBoxNeedUpdate {
+		return g.boundingSphere
+	}
 	if g.boundingSphere == nil {
 		g.boundingSphere = math32.NewSphere(math32.NewVec3(), 0)
 	} else {
