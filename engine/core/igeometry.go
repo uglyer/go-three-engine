@@ -1,6 +1,8 @@
 package core
 
-import "github.com/uglyer/go-three-engine/engine/math64"
+import (
+	"github.com/uglyer/go-three-engine/engine/math64"
+)
 
 // IGeometry 几何体的接口定义
 type IGeometry interface {
@@ -19,10 +21,14 @@ type IGeometry interface {
 	HasAttribute(name string) bool
 	// ApplyMatrix4 应用指定的矩阵
 	ApplyMatrix4(mat4 *math64.Matrix4)
+	// Scale 缩放几何体
+	Scale(x, y, z float32)
+	// Translate 平移几何体
+	Translate(x, y, z float32)
 	// MakeCenter 使得几何体居中
 	MakeCenter()
 	// Clone 克隆一个几何体对象
-	Clone() *IGeometry
+	Clone() IGeometry
 	// Copy 拷贝目标的几何体对象到当前
 	Copy(target *IGeometry)
 }

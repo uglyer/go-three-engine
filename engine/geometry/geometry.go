@@ -110,7 +110,7 @@ func (g *Geometry) MakeCenter() {
 }
 
 // Clone 克隆一个几何体对象
-func (g *Geometry) Clone() *core.IGeometry {
+func (g *Geometry) Clone() core.IGeometry {
 	panic("Clone")
 }
 
