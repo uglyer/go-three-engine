@@ -106,7 +106,9 @@ func (g *Geometry) Translate(x, y, z float32) {
 
 // MakeCenter 使得几何体居中
 func (g *Geometry) MakeCenter() {
-	panic("MakeCenter")
+	box := g.BoundingBox()
+	center := box.Center(math32.NewVec3()).Negate()
+	g.Translate(center.X, center.Y, center.Z)
 }
 
 // Clone 克隆一个几何体对象
