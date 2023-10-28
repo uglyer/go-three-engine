@@ -79,6 +79,22 @@ func (g *Geometry) HasAttribute(name string) (ok bool) {
 	return
 }
 
+// ComputeNormal 重新计算法向量
+func (g *Geometry) ComputeNormal() {
+	g.mtx.Lock()
+	defer g.mtx.Unlock()
+	position := g.GetAttribute("position")
+	a, b, c := math32.NewVec3(), math32.NewVec3(), math32.NewVec3()
+	for index := 0; index < position.Count; index += 9 {
+		a.Set(position.Array[index*position.ItemSize], position.Array[index*position.ItemSize+1], position.Array[index*position.ItemSize+2])
+		b.Set(position.Array[index*position.ItemSize+3], position.Array[index*position.ItemSize+4], position.Array[index*position.ItemSize+5])
+		c.Set(position.Array[index*position.ItemSize+6], position.Array[index*position.ItemSize+7], position.Array[index*position.ItemSize+8])
+		normal := b.Clone().Sub(a).Cross(c.Clone().Sub(a)).Normalize()
+		// TODO 设置法向量
+	}
+	return
+}
+
 // ApplyMatrix4 应用指定的矩阵
 func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
 	position := g.GetAttribute("position")
