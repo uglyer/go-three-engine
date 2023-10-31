@@ -84,14 +84,26 @@ func (g *Geometry) ComputeNormal() {
 	g.mtx.Lock()
 	defer g.mtx.Unlock()
 	position := g.GetAttribute("position")
+	normal := g.GetAttribute("normal")
+	if normal != nil {
+		// TODO 释放
+	}
+	normal = &core.BufferAttribute{
+		Array:    make([]float32, len(position.Array)),
+		ItemSize: 3,
+		Count:    position.Count,
+	}
 	a, b, c := math32.NewVec3(), math32.NewVec3(), math32.NewVec3()
 	for index := 0; index < position.Count; index += 9 {
 		a.Set(position.Array[index*position.ItemSize], position.Array[index*position.ItemSize+1], position.Array[index*position.ItemSize+2])
 		b.Set(position.Array[index*position.ItemSize+3], position.Array[index*position.ItemSize+4], position.Array[index*position.ItemSize+5])
 		c.Set(position.Array[index*position.ItemSize+6], position.Array[index*position.ItemSize+7], position.Array[index*position.ItemSize+8])
-		normal := b.Clone().Sub(a).Cross(c.Clone().Sub(a)).Normalize()
-		// TODO 设置法向量
+		v := b.Clone().Sub(a).Cross(c.Clone().Sub(a)).Normalize()
+		normal.Array[index*position.ItemSize], normal.Array[index*position.ItemSize+1], normal.Array[index*position.ItemSize+2] = v.X, v.Y, v.Z
+		normal.Array[index*position.ItemSize+3], normal.Array[index*position.ItemSize+4], normal.Array[index*position.ItemSize+5] = v.X, v.Y, v.Z
+		normal.Array[index*position.ItemSize+6], normal.Array[index*position.ItemSize+6], normal.Array[index*position.ItemSize+6] = v.X, v.Y, v.Z
 	}
+	g.SetAttribute("normal", normal)
 	return
 }
 
