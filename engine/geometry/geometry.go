@@ -107,6 +107,20 @@ func (g *Geometry) ComputeNormal() {
 	return
 }
 
+// setFromPoints 通过顶点列表更新 position
+func (g *Geometry) setFromPoints(points []*math32.Vector3) {
+	// TODO 释放旧数据
+	position := &core.BufferAttribute{
+		Array:    make([]float32, len(points)*3),
+		ItemSize: 3,
+		Count:    len(points),
+	}
+	for index, v := range points {
+		position.Array[index*position.ItemSize], position.Array[index*position.ItemSize+1], position.Array[index*position.ItemSize+2] = v.X, v.Y, v.Z
+	}
+	g.SetAttribute("position", position)
+}
+
 // ApplyMatrix4 应用指定的矩阵
 func (g *Geometry) ApplyMatrix4(mat4 *math32.Matrix4) {
 	position := g.GetAttribute("position")
