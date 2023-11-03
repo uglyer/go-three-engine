@@ -28,7 +28,11 @@ type Camera struct {
 	// fov 水平朝向视角
 	fov float32
 	// zoom 缩放值
-	zoom float32
+	zoom   float32
+	left   float32
+	right  float32
+	top    float32
+	bottom float32
 	// projChanged 投影变更事件
 	projChanged bool
 	// projMatrix 相机投影矩阵
@@ -39,6 +43,19 @@ type Camera struct {
 
 // updateProjectionMatrix 更新投影矩阵
 func (c *Camera) updateProjectionMatrix() {
-	c.projectionMatrix.MakePerspective(c.fov, c.aspect, c.near, c.far)
+	if c.cameraType == Orthographic {
+		dx := (c.right - c.left) / (2 * c.zoom)
+		dy := (c.top - c.bottom) / (2 * c.zoom)
+		cx := (c.right + c.left) / 2
+		cy := (c.top + c.bottom) / 2
+
+		left := cx - dx
+		right := cx + dx
+		top := cy + dy
+		bottom := cy - dy
+		c.projectionMatrix.MakeOrthographic(left, right, top, bottom, c.near, c.far)
+	} else {
+		c.projectionMatrix.MakePerspective(c.fov, c.aspect, c.near, c.far)
+	}
 	c.projectionMatrixInverse.GetInverse(c.projectionMatrix)
 }
