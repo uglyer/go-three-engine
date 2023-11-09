@@ -72,3 +72,26 @@ type Material struct {
 	blendSrcAlpha uint32 // separate blending func source Alpha
 	blendDstAlpha uint32 // separate blending func dest Alpha
 }
+
+// Init initializes the material.
+func (mat *Material) Init() *Material {
+
+	mat.refCount = 1
+	mat.useLights = UseLightAll
+	mat.side = SideFront
+	mat.transparent = false
+	mat.wireframe = false
+	mat.depthMask = true
+	//mat.depthFunc = gls.LEQUAL
+	mat.depthTest = true
+	mat.blending = BlendNormal
+	mat.lineWidth = 1.0
+	mat.polyOffsetFactor = 0
+	mat.polyOffsetUnits = 0
+	//mat.textures = make([]*texture.Texture2D, 0)
+
+	// Setup shader defines and add default values
+	//mat.ShaderDefines = *gls.NewShaderDefines()
+
+	return mat
+}
