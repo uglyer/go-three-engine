@@ -58,7 +58,8 @@ func (n *Node) IsAncestorOf(core.INode) bool {
 }
 
 func (n *Node) AddChild(node core.INode) {
-	panic("AddChild")
+	n.ChildrenNodes = append(n.ChildrenNodes, node)
+	// TODO 更新父节点
 }
 
 func (n *Node) Remove(node core.INode) {

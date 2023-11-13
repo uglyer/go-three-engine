@@ -159,6 +159,10 @@ func (g *Geometry) Clone() core.IGeometry {
 }
 
 // Copy 拷贝目标的几何体对象到当前
-func (g *Geometry) Copy(target *core.IGeometry) {
-	panic("Copy")
+func (g *Geometry) Copy(target *Geometry) {
+	g.boundingSphere.Copy(target.boundingSphere)
+	g.boundingBox.Copy(target.boundingBox)
+	for k, v := range target.attributeMap {
+		g.attributeMap[k] = v
+	}
 }
