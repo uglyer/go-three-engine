@@ -24,7 +24,7 @@ func newAdapter(adapterRef js.Value) (wgpu.IAdapter, error) {
 	}, nil
 }
 
-func (a *Adapter) Drop() {
+func (a *Adapter) Release() {
 	// TODO impl adapter drop
 }
 
@@ -79,7 +79,7 @@ func (a *Adapter) GetProperties() wgpu.AdapterProperties {
 }
 func (a *Adapter) HasFeature(feature wgpu.FeatureName) bool {
 	features := a.EnumerateFeatures()
-	for _,it := range features {
+	for _, it := range features {
 		if it == feature {
 			return true
 		}

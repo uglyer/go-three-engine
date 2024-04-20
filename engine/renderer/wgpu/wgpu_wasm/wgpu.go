@@ -51,12 +51,12 @@ type (
 	TextureView     struct{ ref js.Value }
 )
 
-func (p *BindGroup) Drop()       { panic("todo impl Drop") }
-func (p *BindGroupLayout) Drop() { panic("todo impl Drop") }
-func (p *CommandBuffer) Drop()   { panic("todo impl Drop") }
-func (p *PipelineLayout) Drop()  { panic("todo impl Drop") }
-func (p *QuerySet) Drop()        { panic("todo impl Drop") }
-func (p *RenderBundle) Drop()    { panic("todo impl Drop") }
-func (p *Sampler) Drop()         { panic("todo impl Drop") }
-func (p *ShaderModule) Drop()    { panic("todo impl Drop") }
-func (p *TextureView) Drop()     { panic("todo impl Drop") }
+func (p *BindGroup) Release()       { panic("todo impl Release") }
+func (p *BindGroupLayout) Release() { panic("todo impl Release") }
+func (p *CommandBuffer) Release()   { panic("todo impl Release") }
+func (p *PipelineLayout) Release()  { panic("todo impl Release") }
+func (p *QuerySet) Release()        { panic("todo impl Release") }
+func (p *RenderBundle) Release()    { panic("todo impl Release") }
+func (p *Sampler) Release()         { panic("todo impl Release") }
+func (p *ShaderModule) Release()    { panic("todo impl Release") }
+func (p *TextureView) Release()     { panic("todo impl Release") }

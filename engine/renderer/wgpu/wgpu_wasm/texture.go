@@ -44,6 +44,6 @@ func (p *Texture) CreateView(descriptor *wgpu.TextureViewDescriptor) wgpu.ITextu
 	return &TextureView{ref: ref}
 }
 
-func (p *Texture) Drop() {
-	panic("todo impl Drop")
+func (p *Texture) Release() {
+	panic("todo impl Release")
 }

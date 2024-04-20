@@ -10,8 +10,8 @@ type Buffer struct {
 	ref js.Value
 }
 
-func (b *Buffer) Drop() {
-	panic("todo impl Drop")
+func (b *Buffer) Release() {
+	panic("todo impl Release")
 }
 
 func (b *Buffer) MapAsync(mode wgpu.MapMode, offset uint64, size uint64, callback wgpu.BufferMapCallback) {

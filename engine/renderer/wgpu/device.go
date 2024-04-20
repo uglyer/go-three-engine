@@ -1,15 +1,15 @@
 package wgpu
 
 type IGPUSampler interface {
-	IDrop
+	IRelease
 }
 
 type IGPUBindGroup interface {
-	IDrop
+	IRelease
 }
 
 type IGPUBindGroupLayout interface {
-	IDrop
+	IRelease
 }
 
 type GPUBindGroupEntry struct {

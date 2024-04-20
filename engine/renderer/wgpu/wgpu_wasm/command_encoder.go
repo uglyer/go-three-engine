@@ -12,7 +12,7 @@ type CommandEncoder struct {
 	ref js.Value
 }
 
-func (ce *CommandEncoder) Drop() {
+func (ce *CommandEncoder) Release() {
 	// TODO impl BeginComputePass
 	return
 }

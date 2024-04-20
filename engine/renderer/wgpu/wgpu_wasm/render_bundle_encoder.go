@@ -13,7 +13,7 @@ func newRenderBundleEncoder(ref js.Value) wgpu.IRenderBundleEncoder {
 	return &RenderBundleEncoder{ref: ref}
 }
 
-func (rbe *RenderBundleEncoder) Drop() {
+func (rbe *RenderBundleEncoder) Release() {
 	//TODO implement me
 	panic("implement me")
 }

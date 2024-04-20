@@ -56,7 +56,7 @@ func newComputePipeline(ref js.Value) wgpu.IComputePipeline {
 	return &ComputePipeline{ref: ref}
 }
 
-func (c *ComputePipeline) Drop() {
+func (c *ComputePipeline) Release() {
 	//TODO implement me
 	panic("implement me")
 }

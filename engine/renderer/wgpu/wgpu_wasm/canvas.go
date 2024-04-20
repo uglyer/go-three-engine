@@ -40,8 +40,8 @@ func newCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
 	return c, nil
 }
 
-func (c *Canvas) Drop() {
-	log.Println("todo Drop c.canvasContext")
+func (c *Canvas) Release() {
+	log.Println("todo Release c.canvasContext")
 	parent := c.canvas.Get("parent")
 	if wasm.IsUndefined(parent) {
 		return

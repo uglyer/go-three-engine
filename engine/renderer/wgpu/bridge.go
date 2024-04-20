@@ -1,7 +1,7 @@
 package wgpu
 
-type IDrop interface {
-	Drop()
+type IRelease interface {
+	Release()
 }
 
 type IBridge interface {
@@ -31,7 +31,7 @@ type IGPU interface {
 
 // ICanvas 暂定等同于 GPUCanvasContext
 type ICanvas interface {
-	IDrop
+	IRelease
 	// Configure The configure() method of the GPUCanvasContext interface configures the context to use for
 	// rendering with a given GPUDevice. When called the canvas will initially be cleared to transparent black.
 	Configure(descriptor *ConfigureDescriptor) error
@@ -44,7 +44,7 @@ type ICanvas interface {
 }
 
 type IAdapter interface {
-	IDrop
+	IRelease
 	// RequestDevice The requestDevice() method of the GPUAdapter interface returns a Promise that fulfills
 	// with a GPUDevice object, which is the primary interface for communicating with the GPU.
 	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
@@ -55,7 +55,7 @@ type IAdapter interface {
 }
 
 type IDevice interface {
-	IDrop
+	IRelease
 	// GetQueue A GPUQueue object instance.
 	GetQueue() IQueue
 	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
@@ -90,7 +90,7 @@ type IQueue interface {
 }
 
 type ICommandEncoder interface {
-	IDrop
+	IRelease
 	BeginComputePass(descriptor *ComputePassDescriptor) IComputePassEncoder
 	BeginRenderPass(descriptor *RenderPassDescriptor) IRenderPassEncoder
 	ClearBuffer(buffer IBuffer, offset uint64, size uint64)
@@ -116,7 +116,7 @@ type IComputePassEncoder interface {
 }
 
 type IRenderPassEncoder interface {
-	IDrop
+	IRelease
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32)
 	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
@@ -142,7 +142,7 @@ type IRenderPassEncoder interface {
 }
 
 type IRenderBundleEncoder interface {
-	IDrop
+	IRelease
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
 	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
@@ -158,35 +158,35 @@ type IRenderBundleEncoder interface {
 }
 
 type IComputePipeline interface {
-	IDrop
+	IRelease
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type IRenderPipeLine interface {
-	IDrop
+	IRelease
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type ITextureView interface {
-	IDrop
+	IRelease
 }
 
 type ITexture interface {
-	IDrop
+	IRelease
 	CreateView(descriptor *TextureViewDescriptor) ITextureView
 }
 
 type IShaderModule interface {
-	IDrop
+	IRelease
 }
 
 type IPipelineLayout interface {
-	IDrop
+	IRelease
 }
 
 type IRenderBundle interface {
-	IDrop
+	IRelease
 }
 type ICommandBuffer interface {
-	IDrop
+	IRelease
 }

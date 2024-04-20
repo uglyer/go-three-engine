@@ -16,7 +16,7 @@ func newRenderPassEncoder(ref js.Value) wgpu.IRenderPassEncoder {
 	return &RenderPassEncoder{ref: ref}
 }
 
-func (rpe *RenderPassEncoder) Drop() {
+func (rpe *RenderPassEncoder) Release() {
 	//TODO implement me
 	panic("implement me")
 }
@@ -120,7 +120,7 @@ func newRenderPipeline(ref js.Value) wgpu.IRenderPipeLine {
 	return &RenderPipeline{ref: ref}
 }
 
-func (r RenderPipeline) Drop() {
+func (r RenderPipeline) Release() {
 	//TODO implement me
 	panic("implement me")
 }

@@ -21,7 +21,7 @@ func newDevice(deviceRef js.Value) (wgpu.IDevice, error) {
 	return &Device{ref: deviceRef, queue: queue}, nil
 }
 
-func (d *Device) Drop() {
+func (d *Device) Release() {
 	// TODO impl GetQueue
 	return
 }
