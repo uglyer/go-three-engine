@@ -1,4 +1,6 @@
-package wgpu
+//go:build !wasm
+
+package wgpu_native
 
 func (p *Texture) AsImageCopy() *ImageCopyTexture {
 	return &ImageCopyTexture{

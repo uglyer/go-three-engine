@@ -1,4 +1,6 @@
-package wgpu
+//go:build !wasm
+
+package wgpu_native
 
 func DefaultLimits() Limits {
 	return Limits{

@@ -1,4 +1,6 @@
-package wgpu
+//go:build !wasm
+
+package wgpu_native
 
 const (
 	// Buffer-Texture copies must have `TextureDataLayout.BytesPerRow` aligned to this number.
