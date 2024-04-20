@@ -23,7 +23,7 @@
 2. 克隆项目仓库：
 
    ```bash
-   git clone https://github.com/yourusername/go-three-engine.git
+   git clone https://github.com/uglyer/go-three-engine.git
    ``` 
 ## 文档
 
