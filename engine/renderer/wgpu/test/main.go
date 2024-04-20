@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
-	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_wasm"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu/wgpu_common"
 	"log"
 )
 
@@ -14,7 +14,7 @@ var shader string
 func main() {
 
 	//wasm.ConsoleLog(js.Global().Get("Object").New(map[string]any{"x": "xx"}))
-	bridge, err := wgpu_wasm.NewBridge()
+	bridge, err := wgpu_common.NewBridge()
 	if err != nil {
 		log.Fatalf("获取桥接器失败:%v", err)
 	}
