@@ -223,7 +223,7 @@ type TextureBindingLayout struct {
 
 type StorageTextureBindingLayout struct {
 	Access        StorageTextureAccess
-	Format        TextureFormat
+	Format        wgpu.TextureFormat
 	ViewDimension TextureViewDimension
 }
 
@@ -605,8 +605,8 @@ func (p *Device) CreateQuerySet(descriptor *QuerySetDescriptor) (*QuerySet, erro
 
 type RenderBundleEncoderDescriptor struct {
 	Label              string
-	ColorFormats       []TextureFormat
-	DepthStencilFormat TextureFormat
+	ColorFormats       []wgpu.TextureFormat
+	DepthStencilFormat wgpu.TextureFormat
 	SampleCount        uint32
 	DepthReadOnly      bool
 	StencilReadOnly    bool
@@ -627,7 +627,7 @@ func (p *Device) CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescri
 			colorFormats := C.malloc(C.size_t(colorFormatsCount) * C.size_t(unsafe.Sizeof(C.WGPUTextureFormat(0))))
 			defer C.free(colorFormats)
 
-			colorFormatsSlice := unsafe.Slice((*TextureFormat)(colorFormats), colorFormatsCount)
+			colorFormatsSlice := unsafe.Slice((*wgpu.TextureFormat)(colorFormats), colorFormatsCount)
 			copy(colorFormatsSlice, descriptor.ColorFormats)
 
 			desc.colorFormatsCount = C.size_t(colorFormatsCount)

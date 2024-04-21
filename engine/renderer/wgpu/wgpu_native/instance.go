@@ -13,6 +13,7 @@ extern void gowebgpu_request_adapter_callback_c(WGPURequestAdapterStatus status,
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -206,7 +207,7 @@ func gowebgpu_request_adapter_callback_go(status C.WGPURequestAdapterStatus, ada
 
 type RequestAdapterOptions struct {
 	CompatibleSurface    *Surface
-	PowerPreference      PowerPreference
+	PowerPreference      wgpu.PowerPreference
 	ForceFallbackAdapter bool
 	BackendType          BackendType
 }

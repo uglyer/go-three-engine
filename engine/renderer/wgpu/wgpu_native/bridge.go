@@ -8,6 +8,7 @@ import (
 
 type Bridge struct {
 	instance *Instance
+	format   wgpu.TextureFormat
 }
 
 func NewBridge() (wgpu.IBridge, error) {
@@ -18,7 +19,12 @@ func NewBridge() (wgpu.IBridge, error) {
 }
 
 func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
-	return NewCanvas(b.instance, descriptor)
+	canvas, err := NewCanvas(b.instance, descriptor)
+	if err != nil {
+		return nil, err
+	}
+	b.format = canvas.config.Format
+	return canvas, nil
 }
 
 func (b *Bridge) RequestAnimationFrame(fn func()) {
@@ -26,5 +32,16 @@ func (b *Bridge) RequestAnimationFrame(fn func()) {
 }
 
 func (b *Bridge) GetGPU() wgpu.IGPU {
-	return b.instance
+	return b
+}
+
+func (b *Bridge) GetPreferredCanvasFormat() wgpu.TextureFormat {
+	return b.format
+}
+
+func (b *Bridge) RequestAdapter(descriptor *wgpu.AdapterDescriptor) (wgpu.IAdapter, error) {
+	// TODO 支持其他参数转发
+	return b.instance.RequestAdapter(&RequestAdapterOptions{
+		PowerPreference: descriptor.PowerPreference,
+	})
 }
