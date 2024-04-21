@@ -10,6 +10,7 @@ package wgpu_native
 */
 import "C"
 import (
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"unsafe"
 )
 
@@ -23,9 +24,9 @@ func (p *Surface) GetPreferredFormat(adapter *Adapter) TextureFormat {
 }
 
 type SurfaceCapabilities struct {
-	Formats      []TextureFormat
-	PresentModes []PresentMode
-	AlphaModes   []CompositeAlphaMode
+	Formats      []wgpu.TextureFormat
+	PresentModes []wgpu.PresentMode
+	AlphaModes   []wgpu.CompositeAlphaMode
 }
 
 func (p *Surface) GetCapabilities(adapter *Adapter) (ret SurfaceCapabilities) {
@@ -51,18 +52,18 @@ func (p *Surface) GetCapabilities(adapter *Adapter) (ret SurfaceCapabilities) {
 	C.wgpuSurfaceGetCapabilities(p.ref, adapter.ref, &caps)
 
 	if caps.formatCount > 0 {
-		formatsTmp := unsafe.Slice((*TextureFormat)(caps.formats), caps.formatCount)
-		ret.Formats = make([]TextureFormat, caps.formatCount)
+		formatsTmp := unsafe.Slice((*wgpu.TextureFormat)(caps.formats), caps.formatCount)
+		ret.Formats = make([]wgpu.TextureFormat, caps.formatCount)
 		copy(ret.Formats, formatsTmp)
 	}
 	if caps.presentModeCount > 0 {
-		presentModesTmp := unsafe.Slice((*PresentMode)(caps.presentModes), caps.presentModeCount)
-		ret.PresentModes = make([]PresentMode, caps.presentModeCount)
+		presentModesTmp := unsafe.Slice((*wgpu.PresentMode)(caps.presentModes), caps.presentModeCount)
+		ret.PresentModes = make([]wgpu.PresentMode, caps.presentModeCount)
 		copy(ret.PresentModes, presentModesTmp)
 	}
 	if caps.alphaModeCount > 0 {
-		alphaModesTmp := unsafe.Slice((*CompositeAlphaMode)(caps.alphaModes), caps.alphaModeCount)
-		ret.AlphaModes = make([]CompositeAlphaMode, caps.alphaModeCount)
+		alphaModesTmp := unsafe.Slice((*wgpu.CompositeAlphaMode)(caps.alphaModes), caps.alphaModeCount)
+		ret.AlphaModes = make([]wgpu.CompositeAlphaMode, caps.alphaModeCount)
 		copy(ret.AlphaModes, alphaModesTmp)
 	}
 

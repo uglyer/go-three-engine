@@ -3,7 +3,6 @@
 package wgpu_native
 
 import (
-	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 )
 
@@ -19,13 +18,7 @@ func NewBridge() (wgpu.IBridge, error) {
 }
 
 func (b *Bridge) CreateCanvas(descriptor *wgpu.CanvasDescriptor) (wgpu.ICanvas, error) {
-	window, err := glfw.CreateWindow(descriptor.Width, descriptor.Width, descriptor.Title, nil, nil)
-	if err != nil {
-		panic(err)
-	}
-	surface := b.instance.CreateSurface(GetSurfaceDescriptor(window))
-
-	panic("TODO impl createCanvas")
+	return NewCanvas(b.instance, descriptor)
 }
 
 func (b *Bridge) RequestAnimationFrame(fn func()) {

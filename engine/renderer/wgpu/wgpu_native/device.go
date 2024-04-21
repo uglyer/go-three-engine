@@ -101,6 +101,7 @@ static inline WGPUTexture gowebgpu_device_create_texture(WGPUDevice device, WGPU
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -1136,13 +1137,13 @@ func (p *Device) CreateShaderModule(descriptor *ShaderModuleDescriptor) (*Shader
 }
 
 type SwapChainDescriptor struct {
-	Usage       TextureUsage
-	Format      TextureFormat
+	Usage       wgpu.TextureUsage
+	Format      wgpu.TextureFormat
 	Width       uint32
 	Height      uint32
-	PresentMode PresentMode
-	AlphaMode   CompositeAlphaMode
-	ViewFormats []TextureFormat
+	PresentMode wgpu.PresentMode
+	AlphaMode   wgpu.CompositeAlphaMode
+	ViewFormats []wgpu.TextureFormat
 }
 
 func (p *Device) CreateSwapChain(surface *Surface, descriptor *SwapChainDescriptor) (*SwapChain, error) {
