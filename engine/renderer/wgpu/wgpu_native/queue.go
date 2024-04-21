@@ -31,6 +31,7 @@ static inline void gowebgpu_queue_release(WGPUQueue queue, WGPUDevice device) {
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -84,7 +85,7 @@ func (p *Queue) Submit(commands ...*CommandBuffer) (submissionIndex SubmissionIn
 	return SubmissionIndex(r)
 }
 
-func (p *Queue) WriteBuffer(buffer *Buffer, bufferOffset uint64, data []byte) (err error) {
+func (p *Queue) WriteBuffer(buffer wgpu.IBuffer, bufferOffset uint64, data []byte) (err error) {
 	var cb errorCallback = func(_ ErrorType, message string) {
 		err = errors.New("wgpu.(*Queue).WriteBuffer(): " + message)
 	}
@@ -92,10 +93,11 @@ func (p *Queue) WriteBuffer(buffer *Buffer, bufferOffset uint64, data []byte) (e
 	defer errorCallbackHandle.Delete()
 
 	size := len(data)
+	b := buffer.(any).(*Buffer)
 	if size == 0 {
 		C.gowebgpu_queue_write_buffer(
 			p.ref,
-			buffer.ref,
+			b.ref,
 			C.uint64_t(bufferOffset),
 			nil,
 			0,
@@ -107,7 +109,7 @@ func (p *Queue) WriteBuffer(buffer *Buffer, bufferOffset uint64, data []byte) (e
 
 	C.gowebgpu_queue_write_buffer(
 		p.ref,
-		buffer.ref,
+		b.ref,
 		C.uint64_t(bufferOffset),
 		unsafe.Pointer(&data[0]),
 		C.size_t(size),
@@ -117,7 +119,7 @@ func (p *Queue) WriteBuffer(buffer *Buffer, bufferOffset uint64, data []byte) (e
 	return
 }
 
-func (p *Queue) WriteTexture(destination *ImageCopyTexture, data []byte, dataLayout *TextureDataLayout, writeSize *Extent3D) (err error) {
+func (p *Queue) WriteTexture(destination *wgpu.ImageCopyTexture, data []byte, dataLayout *wgpu.TextureDataLayout, writeSize *wgpu.Extent3D) (err error) {
 	var dst C.WGPUImageCopyTexture
 	if destination != nil {
 		dst = C.WGPUImageCopyTexture{
@@ -130,7 +132,8 @@ func (p *Queue) WriteTexture(destination *ImageCopyTexture, data []byte, dataLay
 			aspect: C.WGPUTextureAspect(destination.Aspect),
 		}
 		if destination.Texture != nil {
-			dst.texture = destination.Texture.ref
+			t := destination.Texture.(any).(*Texture)
+			dst.texture = t.ref
 		}
 	}
 

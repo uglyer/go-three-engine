@@ -550,14 +550,7 @@ func (p *Device) CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (*Pi
 	return &PipelineLayout{ref}, nil
 }
 
-type QuerySetDescriptor struct {
-	Label              string
-	Type               QueryType
-	Count              uint32
-	PipelineStatistics []PipelineStatisticName
-}
-
-func (p *Device) CreateQuerySet(descriptor *QuerySetDescriptor) (*QuerySet, error) {
+func (p *Device) CreateQuerySet(descriptor *wgpu.QuerySetDescriptor) (wgpu.IQuerySet, error) {
 	var desc C.WGPUQuerySetDescriptor
 
 	if descriptor != nil {
@@ -575,7 +568,7 @@ func (p *Device) CreateQuerySet(descriptor *QuerySetDescriptor) (*QuerySet, erro
 			pipelineStatistics := C.malloc(C.size_t(pipelineStatisticsCount) * C.size_t(unsafe.Sizeof(C.WGPUPipelineStatisticName(0))))
 			defer C.free(pipelineStatistics)
 
-			pipelineStatisticsSlice := unsafe.Slice((*PipelineStatisticName)(pipelineStatistics), pipelineStatisticsCount)
+			pipelineStatisticsSlice := unsafe.Slice((*wgpu.PipelineStatisticName)(pipelineStatistics), pipelineStatisticsCount)
 			copy(pipelineStatisticsSlice, descriptor.PipelineStatistics)
 
 			desc.pipelineStatisticsCount = C.size_t(pipelineStatisticsCount)
@@ -657,7 +650,7 @@ type BlendState struct {
 }
 
 type ColorTargetState struct {
-	Format    TextureFormat
+	Format    wgpu.TextureFormat
 	Blend     *BlendState
 	WriteMask ColorWriteMask
 }
@@ -707,7 +700,7 @@ type StencilFaceState struct {
 }
 
 type DepthStencilState struct {
-	Format              TextureFormat
+	Format              wgpu.TextureFormat
 	DepthWriteEnabled   bool
 	DepthCompare        CompareFunction
 	StencilFront        StencilFaceState
@@ -1171,7 +1164,7 @@ func (p *Device) CreateSwapChain(surface *Surface, descriptor *SwapChainDescript
 			viewFormats := C.malloc(C.size_t(unsafe.Sizeof(C.WGPUTextureFormat(0))) * C.size_t(viewFormatCount))
 			defer C.free(viewFormats)
 
-			viewFormatsSlice := unsafe.Slice((*TextureFormat)(viewFormats), viewFormatCount)
+			viewFormatsSlice := unsafe.Slice((*wgpu.TextureFormat)(viewFormats), viewFormatCount)
 			copy(viewFormatsSlice, descriptor.ViewFormats)
 
 			extras.viewFormatCount = C.size_t(viewFormatCount)
@@ -1191,10 +1184,10 @@ func (p *Device) CreateSwapChain(surface *Surface, descriptor *SwapChainDescript
 
 type TextureDescriptor struct {
 	Label         string
-	Usage         TextureUsage
-	Dimension     TextureDimension
-	Size          Extent3D
-	Format        TextureFormat
+	Usage         wgpu.TextureUsage
+	Dimension     wgpu.TextureDimension
+	Size          wgpu.Extent3D
+	Format        wgpu.TextureFormat
 	MipLevelCount uint32
 	SampleCount   uint32
 }
@@ -1304,7 +1297,7 @@ func (p *Device) GetLimits() SupportedLimits {
 	}
 }
 
-func (p *Device) GetQueue() *Queue {
+func (p *Device) GetQueue() wgpu.IQueue {
 	ref := C.wgpuDeviceGetQueue(p.ref)
 	C.wgpuDeviceReference(p.ref)
 	return &Queue{deviceRef: p.ref, ref: ref}

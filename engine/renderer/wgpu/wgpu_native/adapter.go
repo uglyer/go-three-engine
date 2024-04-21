@@ -14,6 +14,7 @@ extern void gowebgpu_device_lost_callback_c(WGPUDeviceLostReason reason, char co
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -157,7 +158,7 @@ type DeviceDescriptor struct {
 	TracePath          string
 }
 
-func (p *Adapter) RequestDevice(descriptor *DeviceDescriptor) (*Device, error) {
+func (p *Adapter) RequestDevice(descriptor *DeviceDescriptor) (wgpu.IDevice, error) {
 	var desc *C.WGPUDeviceDescriptor = nil
 
 	if descriptor != nil {

@@ -26,6 +26,7 @@ static inline void gowebgpu_texture_release(WGPUTexture texture, WGPUDevice devi
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -37,16 +38,16 @@ type Texture struct {
 
 type TextureViewDescriptor struct {
 	Label           string
-	Format          TextureFormat
-	Dimension       TextureViewDimension
+	Format          wgpu.TextureFormat
+	Dimension       wgpu.TextureViewDimension
 	BaseMipLevel    uint32
 	MipLevelCount   uint32
 	BaseArrayLayer  uint32
 	ArrayLayerCount uint32
-	Aspect          TextureAspect
+	Aspect          wgpu.TextureAspect
 }
 
-func (p *Texture) CreateView(descriptor *TextureViewDescriptor) (*TextureView, error) {
+func (p *Texture) CreateView(descriptor *wgpu.TextureViewDescriptor) (*wgpu.ITextureView, error) {
 	var desc *C.WGPUTextureViewDescriptor
 
 	if descriptor != nil {
@@ -97,12 +98,12 @@ func (p *Texture) GetDepthOrArrayLayers() uint32 {
 	return uint32(C.wgpuTextureGetDepthOrArrayLayers(p.ref))
 }
 
-func (p *Texture) GetDimension() TextureDimension {
-	return TextureDimension(C.wgpuTextureGetDimension(p.ref))
+func (p *Texture) GetDimension() wgpu.TextureDimension {
+	return wgpu.TextureDimension(C.wgpuTextureGetDimension(p.ref))
 }
 
-func (p *Texture) GetFormat() TextureFormat {
-	return TextureFormat(C.wgpuTextureGetFormat(p.ref))
+func (p *Texture) GetFormat() wgpu.TextureFormat {
+	return wgpu.TextureFormat(C.wgpuTextureGetFormat(p.ref))
 }
 
 func (p *Texture) GetHeight() uint32 {

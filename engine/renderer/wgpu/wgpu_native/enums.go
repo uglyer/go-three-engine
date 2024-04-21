@@ -847,54 +847,6 @@ func (v MipmapFilterMode) String() string {
 	}
 }
 
-type PipelineStatisticName uint32
-
-const (
-	PipelineStatisticName_VertexShaderInvocations   PipelineStatisticName = 0x00000000
-	PipelineStatisticName_ClipperInvocations        PipelineStatisticName = 0x00000001
-	PipelineStatisticName_ClipperPrimitivesOut      PipelineStatisticName = 0x00000002
-	PipelineStatisticName_FragmentShaderInvocations PipelineStatisticName = 0x00000003
-	PipelineStatisticName_ComputeShaderInvocations  PipelineStatisticName = 0x00000004
-)
-
-func (v PipelineStatisticName) String() string {
-	switch v {
-	case PipelineStatisticName_VertexShaderInvocations:
-		return "VertexShaderInvocations"
-	case PipelineStatisticName_ClipperInvocations:
-		return "ClipperInvocations"
-	case PipelineStatisticName_ClipperPrimitivesOut:
-		return "ClipperPrimitivesOut"
-	case PipelineStatisticName_FragmentShaderInvocations:
-		return "FragmentShaderInvocations"
-	case PipelineStatisticName_ComputeShaderInvocations:
-		return "ComputeShaderInvocations"
-	default:
-		return ""
-	}
-}
-
-type PowerPreference uint32
-
-const (
-	PowerPreference_Undefined       PowerPreference = 0x00000000
-	PowerPreference_LowPower        PowerPreference = 0x00000001
-	PowerPreference_HighPerformance PowerPreference = 0x00000002
-)
-
-func (v PowerPreference) String() string {
-	switch v {
-	case PowerPreference_Undefined:
-		return "Undefined"
-	case PowerPreference_LowPower:
-		return "LowPower"
-	case PowerPreference_HighPerformance:
-		return "HighPerformance"
-	default:
-		return ""
-	}
-}
-
 type PresentMode uint32
 
 const (

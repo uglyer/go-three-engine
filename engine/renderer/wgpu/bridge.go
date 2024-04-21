@@ -75,12 +75,11 @@ type IDevice interface {
 	CreateShaderModule(descriptor *ShaderModuleDescriptor) (IShaderModule, error)
 	CreateTexture(descriptor *TextureDescriptor) (ITexture, error)
 	CreateRenderPipeline(descriptor *RenderPipelineDescriptor) (IRenderPipeLine, error)
-	GetErr() (err error)
-	StoreErr(typ ErrorType, message string)
 	CreateComputePipeline(descriptor *ComputePipelineDescriptor) (IComputePipeline, error)
 	CreatePipelineLayout(descriptor *PipelineLayoutDescriptor) (IPipelineLayout, error)
 	CreateRenderBundleEncoder(descriptor *RenderBundleEncoderDescriptor) (IRenderBundleEncoder, error)
 	Poll(wait bool, wrappedSubmissionIndex *WrappedSubmissionIndex) (queueEmpty bool)
+	CreateQuerySet(descriptor *QuerySetDescriptor) (*IQuerySet, error)
 }
 
 type IQueue interface {
@@ -188,5 +187,8 @@ type IRenderBundle interface {
 	IRelease
 }
 type ICommandBuffer interface {
+	IRelease
+}
+type IQuerySet interface {
 	IRelease
 }

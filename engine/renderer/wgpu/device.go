@@ -250,3 +250,10 @@ type TextureDescriptor struct {
 	MipLevelCount uint32
 	SampleCount   uint32
 }
+
+type QuerySetDescriptor struct {
+	Label              string
+	Type               QueryType
+	Count              uint32
+	PipelineStatistics []PipelineStatisticName
+}
