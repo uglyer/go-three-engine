@@ -200,7 +200,7 @@ func (p *Device) CreateBindGroup(descriptor *wgpu.BindGroupDescriptor) (wgpu.IGP
 	return &BindGroup{ref}, nil
 }
 
-func (p *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (*BindGroupLayout, error) {
+func (p *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (wgpu.IGPUBindGroupLayout, error) {
 	var desc C.WGPUBindGroupLayoutDescriptor
 
 	if descriptor != nil {
