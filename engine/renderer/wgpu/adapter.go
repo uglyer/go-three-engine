@@ -5,12 +5,14 @@ type AdapterDescriptor struct {
 }
 
 type SupportedLimits struct {
-	Limits *Limits
+	Limits Limits
 }
 
 type AdapterProperties struct {
-	VendorID          uint32
-	DeviceID          uint32
+	VendorId          uint32
+	VendorName        string
+	Architecture      string
+	DeviceId          uint32
 	Name              string
 	DriverDescription string
 	AdapterType       AdapterType

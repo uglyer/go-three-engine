@@ -4,30 +4,6 @@
 
 package wgpu_native
 
-type AdapterType uint32
-
-const (
-	AdapterType_DiscreteGPU   AdapterType = 0x00000000
-	AdapterType_IntegratedGPU AdapterType = 0x00000001
-	AdapterType_CPU           AdapterType = 0x00000002
-	AdapterType_Unknown       AdapterType = 0x00000003
-)
-
-func (v AdapterType) String() string {
-	switch v {
-	case AdapterType_DiscreteGPU:
-		return "DiscreteGPU"
-	case AdapterType_IntegratedGPU:
-		return "IntegratedGPU"
-	case AdapterType_CPU:
-		return "CPU"
-	case AdapterType_Unknown:
-		return "Unknown"
-	default:
-		return ""
-	}
-}
-
 type AddressMode uint32
 
 const (
@@ -44,45 +20,6 @@ func (v AddressMode) String() string {
 		return "MirrorRepeat"
 	case AddressMode_ClampToEdge:
 		return "ClampToEdge"
-	default:
-		return ""
-	}
-}
-
-type BackendType uint32
-
-const (
-	BackendType_Undefined BackendType = 0x00000000
-	BackendType_Null      BackendType = 0x00000001
-	BackendType_WebGPU    BackendType = 0x00000002
-	BackendType_D3D11     BackendType = 0x00000003
-	BackendType_D3D12     BackendType = 0x00000004
-	BackendType_Metal     BackendType = 0x00000005
-	BackendType_Vulkan    BackendType = 0x00000006
-	BackendType_OpenGL    BackendType = 0x00000007
-	BackendType_OpenGLES  BackendType = 0x00000008
-)
-
-func (v BackendType) String() string {
-	switch v {
-	case BackendType_Undefined:
-		return "Undefined"
-	case BackendType_Null:
-		return "Null"
-	case BackendType_WebGPU:
-		return "WebGPU"
-	case BackendType_D3D11:
-		return "D3D11"
-	case BackendType_D3D12:
-		return "D3D12"
-	case BackendType_Metal:
-		return "Metal"
-	case BackendType_Vulkan:
-		return "Vulkan"
-	case BackendType_OpenGL:
-		return "OpenGL"
-	case BackendType_OpenGLES:
-		return "OpenGLES"
 	default:
 		return ""
 	}

@@ -76,8 +76,16 @@ type DeviceDescriptor struct {
 	// RequiredFeatures 需要支持的扩展
 	RequiredFeatures []FeatureName
 	// RequiredLimits 资源限制
-	RequiredLimits Limits
+	RequiredLimits     *RequiredLimits
+	DeviceLostCallback DeviceLostCallback
+	TracePath          string
 }
+
+type RequiredLimits struct {
+	Limits Limits
+}
+
+type DeviceLostCallback func(reason DeviceLostReason, message string)
 
 type BufferDescriptor struct {
 	Label            string

@@ -1238,18 +1238,18 @@ func (p *Device) CreateTexture(descriptor *TextureDescriptor) (*Texture, error) 
 	return &Texture{deviceRef: p.ref, ref: ref}, nil
 }
 
-func (p *Device) EnumerateFeatures() []FeatureName {
+func (p *Device) EnumerateFeatures() []wgpu.FeatureName {
 	size := C.wgpuDeviceEnumerateFeatures(p.ref, nil)
 	if size == 0 {
 		return nil
 	}
 
-	features := make([]FeatureName, size)
+	features := make([]wgpu.FeatureName, size)
 	C.wgpuDeviceEnumerateFeatures(p.ref, (*C.WGPUFeatureName)(unsafe.Pointer(&features[0])))
 	return features
 }
 
-func (p *Device) GetLimits() SupportedLimits {
+func (p *Device) GetLimits() wgpu.SupportedLimits {
 	var supportedLimits C.WGPUSupportedLimits
 
 	extras := (*C.WGPUSupportedLimitsExtras)(C.malloc(C.size_t(unsafe.Sizeof(C.WGPUSupportedLimitsExtras{}))))
@@ -1259,8 +1259,8 @@ func (p *Device) GetLimits() SupportedLimits {
 	C.wgpuDeviceGetLimits(p.ref, &supportedLimits)
 
 	limits := supportedLimits.limits
-	return SupportedLimits{
-		Limits{
+	return wgpu.SupportedLimits{
+		Limits: wgpu.Limits{
 			MaxTextureDimension1D:                     uint32(limits.maxTextureDimension1D),
 			MaxTextureDimension2D:                     uint32(limits.maxTextureDimension2D),
 			MaxTextureDimension3D:                     uint32(limits.maxTextureDimension3D),

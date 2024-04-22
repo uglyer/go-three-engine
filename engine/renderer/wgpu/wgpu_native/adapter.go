@@ -23,22 +23,18 @@ type Adapter struct {
 	ref C.WGPUAdapter
 }
 
-func (p *Adapter) EnumerateFeatures() []FeatureName {
+func (p *Adapter) EnumerateFeatures() []wgpu.FeatureName {
 	size := C.wgpuAdapterEnumerateFeatures(p.ref, nil)
 	if size == 0 {
 		return nil
 	}
 
-	features := make([]FeatureName, size)
+	features := make([]wgpu.FeatureName, size)
 	C.wgpuAdapterEnumerateFeatures(p.ref, (*C.WGPUFeatureName)(unsafe.Pointer(&features[0])))
 	return features
 }
 
-type SupportedLimits struct {
-	Limits Limits
-}
-
-func (p *Adapter) GetLimits() SupportedLimits {
+func (p *Adapter) GetLimits() wgpu.SupportedLimits {
 	var supportedLimits C.WGPUSupportedLimits
 
 	extras := (*C.WGPUSupportedLimitsExtras)(C.malloc(C.size_t(unsafe.Sizeof(C.WGPUSupportedLimitsExtras{}))))
@@ -48,8 +44,8 @@ func (p *Adapter) GetLimits() SupportedLimits {
 	C.wgpuAdapterGetLimits(p.ref, &supportedLimits)
 
 	limits := supportedLimits.limits
-	return SupportedLimits{
-		Limits{
+	return wgpu.SupportedLimits{
+		Limits: wgpu.Limits{
 			MaxTextureDimension1D:                     uint32(limits.maxTextureDimension1D),
 			MaxTextureDimension2D:                     uint32(limits.maxTextureDimension2D),
 			MaxTextureDimension3D:                     uint32(limits.maxTextureDimension3D),
@@ -87,35 +83,24 @@ func (p *Adapter) GetLimits() SupportedLimits {
 	}
 }
 
-type AdapterProperties struct {
-	VendorId          uint32
-	VendorName        string
-	Architecture      string
-	DeviceId          uint32
-	Name              string
-	DriverDescription string
-	AdapterType       AdapterType
-	BackendType       BackendType
-}
-
-func (p *Adapter) GetProperties() AdapterProperties {
+func (p *Adapter) GetProperties() wgpu.AdapterProperties {
 	var props C.WGPUAdapterProperties
 
 	C.wgpuAdapterGetProperties(p.ref, &props)
 
-	return AdapterProperties{
+	return wgpu.AdapterProperties{
 		VendorId:          uint32(props.vendorID),
 		VendorName:        C.GoString(props.vendorName),
 		Architecture:      C.GoString(props.architecture),
 		DeviceId:          uint32(props.deviceID),
 		Name:              C.GoString(props.name),
 		DriverDescription: C.GoString(props.driverDescription),
-		AdapterType:       AdapterType(props.adapterType),
-		BackendType:       BackendType(props.backendType),
+		AdapterType:       wgpu.AdapterType(props.adapterType),
+		BackendType:       wgpu.BackendType(props.backendType),
 	}
 }
 
-func (p *Adapter) HasFeature(feature FeatureName) bool {
+func (p *Adapter) HasFeature(feature wgpu.FeatureName) bool {
 	hasFeature := C.wgpuAdapterHasFeature(p.ref, C.WGPUFeatureName(feature))
 	return bool(hasFeature)
 }
@@ -146,19 +131,7 @@ func gowebgpu_device_lost_callback_go(reason C.WGPUDeviceLostReason, message *C.
 	}
 }
 
-type RequiredLimits struct {
-	Limits Limits
-}
-
-type DeviceDescriptor struct {
-	Label              string
-	RequiredFeatures   []FeatureName
-	RequiredLimits     *RequiredLimits
-	DeviceLostCallback DeviceLostCallback
-	TracePath          string
-}
-
-func (p *Adapter) RequestDevice(descriptor *DeviceDescriptor) (wgpu.IDevice, error) {
+func (p *Adapter) RequestDevice(descriptor *wgpu.DeviceDescriptor) (wgpu.IDevice, error) {
 	var desc *C.WGPUDeviceDescriptor = nil
 
 	if descriptor != nil {
@@ -176,7 +149,7 @@ func (p *Adapter) RequestDevice(descriptor *DeviceDescriptor) (wgpu.IDevice, err
 			requiredFeatures := C.malloc(C.size_t(requiredFeaturesCount) * C.size_t(unsafe.Sizeof(C.WGPUFeatureName(0))))
 			defer C.free(requiredFeatures)
 
-			requiredFeaturesSlice := unsafe.Slice((*FeatureName)(requiredFeatures), requiredFeaturesCount)
+			requiredFeaturesSlice := unsafe.Slice((*wgpu.FeatureName)(requiredFeatures), requiredFeaturesCount)
 			copy(requiredFeaturesSlice, descriptor.RequiredFeatures)
 
 			desc.requiredFeatures = (*C.WGPUFeatureName)(requiredFeatures)

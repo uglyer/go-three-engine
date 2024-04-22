@@ -11,7 +11,6 @@ const (
 	AdapterType_IntegratedGPU AdapterType = 0x00000001
 	AdapterType_CPU           AdapterType = 0x00000002
 	AdapterType_Unknown       AdapterType = 0x00000003
-	AdapterType_Force32       AdapterType = 0x7FFFFFFF
 )
 
 func (v AdapterType) String() string {
@@ -24,8 +23,6 @@ func (v AdapterType) String() string {
 		return "cpu"
 	case AdapterType_Unknown:
 		return "unknown"
-	case AdapterType_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -88,63 +85,39 @@ func StringToAddressMode(str string) AddressMode {
 type BackendType uint32
 
 const (
-	BackendType_Null     BackendType = 0x00000000
-	BackendType_WebGPU   BackendType = 0x00000001
-	BackendType_D3D11    BackendType = 0x00000002
-	BackendType_D3D12    BackendType = 0x00000003
-	BackendType_Metal    BackendType = 0x00000004
-	BackendType_Vulkan   BackendType = 0x00000005
-	BackendType_OpenGL   BackendType = 0x00000006
-	BackendType_OpenGLES BackendType = 0x00000007
-	BackendType_Force32  BackendType = 0x7FFFFFFF
+	BackendType_Undefined BackendType = 0x00000000
+	BackendType_Null      BackendType = 0x00000001
+	BackendType_WebGPU    BackendType = 0x00000002
+	BackendType_D3D11     BackendType = 0x00000003
+	BackendType_D3D12     BackendType = 0x00000004
+	BackendType_Metal     BackendType = 0x00000005
+	BackendType_Vulkan    BackendType = 0x00000006
+	BackendType_OpenGL    BackendType = 0x00000007
+	BackendType_OpenGLES  BackendType = 0x00000008
 )
 
 func (v BackendType) String() string {
 	switch v {
+	case BackendType_Undefined:
+		return "Undefined"
 	case BackendType_Null:
-		return "null"
+		return "Null"
 	case BackendType_WebGPU:
-		return "web-gpu"
+		return "WebGPU"
 	case BackendType_D3D11:
-		return "d3d11"
+		return "D3D11"
 	case BackendType_D3D12:
-		return "d3d12"
+		return "D3D12"
 	case BackendType_Metal:
-		return "metal"
+		return "Metal"
 	case BackendType_Vulkan:
-		return "vulkan"
+		return "Vulkan"
 	case BackendType_OpenGL:
-		return "open-gl"
+		return "OpenGL"
 	case BackendType_OpenGLES:
-		return "open-gles"
-	case BackendType_Force32:
-		return "force32"
+		return "OpenGLES"
 	default:
 		return ""
-	}
-}
-func StringToBackendType(str string) BackendType {
-	switch str {
-	case "null":
-		return BackendType_Null
-	case "web-gpu":
-		return BackendType_WebGPU
-	case "d3d11":
-		return BackendType_D3D11
-	case "d3d12":
-		return BackendType_D3D12
-	case "metal":
-		return BackendType_Metal
-	case "vulkan":
-		return BackendType_Vulkan
-	case "open-gl":
-		return BackendType_OpenGL
-	case "open-gles":
-		return BackendType_OpenGLES
-	case "force32":
-		return BackendType_Force32
-	default:
-		panic(fmt.Sprintf("%s convert to BackendType error", str))
 	}
 }
 
@@ -1035,83 +1008,66 @@ func StringToErrorType(str string) ErrorType {
 type FeatureName uint32
 
 const (
-	FeatureName_Undefined               FeatureName = 0x00000000
-	FeatureName_DepthClipControl        FeatureName = 0x00000001
-	FeatureName_Depth32FloatStencil8    FeatureName = 0x00000002
-	FeatureName_TimestampQuery          FeatureName = 0x00000003
-	FeatureName_PipelineStatisticsQuery FeatureName = 0x00000004
-	FeatureName_TextureCompressionBC    FeatureName = 0x00000005
-	FeatureName_TextureCompressionETC2  FeatureName = 0x00000006
-	FeatureName_TextureCompressionASTC  FeatureName = 0x00000007
-	FeatureName_IndirectFirstInstance   FeatureName = 0x00000008
-	FeatureName_ShaderF16               FeatureName = 0x00000009
-	FeatureName_RG11B10UfloatRenderable FeatureName = 0x0000000A
-	FeatureName_BGRA8UnormStorage       FeatureName = 0x0000000B
-	FeatureName_Force32                 FeatureName = 0x7FFFFFFF
+	FeatureName_Undefined                              FeatureName = 0x00000000
+	FeatureName_DepthClipControl                       FeatureName = 0x00000001
+	FeatureName_Depth32FloatStencil8                   FeatureName = 0x00000002
+	FeatureName_TimestampQuery                         FeatureName = 0x00000003
+	FeatureName_PipelineStatisticsQuery                FeatureName = 0x00000004
+	FeatureName_TextureCompressionBC                   FeatureName = 0x00000005
+	FeatureName_TextureCompressionETC2                 FeatureName = 0x00000006
+	FeatureName_TextureCompressionASTC                 FeatureName = 0x00000007
+	FeatureName_IndirectFirstInstance                  FeatureName = 0x00000008
+	FeatureName_ShaderF16                              FeatureName = 0x00000009
+	FeatureName_RG11B10UfloatRenderable                FeatureName = 0x0000000A
+	FeatureName_BGRA8UnormStorage                      FeatureName = 0x0000000B
+	FeatureName_Float32Filterable                      FeatureName = 0x0000000C
+	NativeFeature_PushConstants                        FeatureName = 0x60000001
+	NativeFeature_TextureAdapterSpecificFormatFeatures FeatureName = 0x60000002
+	NativeFeature_MultiDrawIndirect                    FeatureName = 0x60000003
+	NativeFeature_MultiDrawIndirectCount               FeatureName = 0x60000004
+	NativeFeature_VertexWritableStorage                FeatureName = 0x60000005
 )
 
 func (v FeatureName) String() string {
 	switch v {
 	case FeatureName_Undefined:
-		return "undefined"
+		return "Undefined"
 	case FeatureName_DepthClipControl:
-		return "depth-clip-control"
+		return "DepthClipControl"
 	case FeatureName_Depth32FloatStencil8:
-		return "depth32float-stencil8"
+		return "Depth32FloatStencil8"
 	case FeatureName_TimestampQuery:
-		return "timestamp-query"
+		return "TimestampQuery"
 	case FeatureName_PipelineStatisticsQuery:
-		return "pipeline-statistics-query"
+		return "PipelineStatisticsQuery"
 	case FeatureName_TextureCompressionBC:
-		return "texture-compression-bc"
+		return "TextureCompressionBC"
 	case FeatureName_TextureCompressionETC2:
-		return "texture-compression-etc2"
+		return "TextureCompressionETC2"
 	case FeatureName_TextureCompressionASTC:
-		return "texture-compression-astc"
+		return "TextureCompressionASTC"
 	case FeatureName_IndirectFirstInstance:
-		return "indirect-first-instance"
+		return "IndirectFirstInstance"
 	case FeatureName_ShaderF16:
-		return "shader-f16"
+		return "ShaderF16"
 	case FeatureName_RG11B10UfloatRenderable:
-		return "rg11b10ufloat-renderable"
+		return "RG11B10UfloatRenderable"
 	case FeatureName_BGRA8UnormStorage:
-		return "bgra8unorm-storage"
-	case FeatureName_Force32:
-		return "force32"
+		return "BGRA8UnormStorage"
+	case FeatureName_Float32Filterable:
+		return "Float32Filterable"
+	case NativeFeature_PushConstants:
+		return "NativeFeature_PushConstants"
+	case NativeFeature_TextureAdapterSpecificFormatFeatures:
+		return "NativeFeature_TextureAdapterSpecificFormatFeatures"
+	case NativeFeature_MultiDrawIndirect:
+		return "NativeFeature_MultiDrawIndirect"
+	case NativeFeature_MultiDrawIndirectCount:
+		return "NativeFeature_MultiDrawIndirectCount"
+	case NativeFeature_VertexWritableStorage:
+		return "NativeFeature_VertexWritableStorage"
 	default:
 		return ""
-	}
-}
-func StringToFeatureName(str string) FeatureName {
-	switch str {
-	case "undefined":
-		return FeatureName_Undefined
-	case "depth-clip-control":
-		return FeatureName_DepthClipControl
-	case "depth32float-stencil8":
-		return FeatureName_Depth32FloatStencil8
-	case "timestamp-query":
-		return FeatureName_TimestampQuery
-	case "pipeline-statistics-query":
-		return FeatureName_PipelineStatisticsQuery
-	case "texture-compression-bc":
-		return FeatureName_TextureCompressionBC
-	case "texture-compression-etc2":
-		return FeatureName_TextureCompressionETC2
-	case "texture-compression-astc":
-		return FeatureName_TextureCompressionASTC
-	case "indirect-first-instance":
-		return FeatureName_IndirectFirstInstance
-	case "shader-f16":
-		return FeatureName_ShaderF16
-	case "rg11b10ufloat-renderable":
-		return FeatureName_RG11B10UfloatRenderable
-	case "bgra8unorm-storage":
-		return FeatureName_BGRA8UnormStorage
-	case "force32":
-		return FeatureName_Force32
-	default:
-		panic(fmt.Sprintf("%s convert to FeatureName error", str))
 	}
 }
 

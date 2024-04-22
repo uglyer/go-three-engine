@@ -27,6 +27,7 @@ type Limits struct {
 	MaxInterStageShaderComponents             uint32
 	MaxInterStageShaderVariables              uint32
 	MaxColorAttachments                       uint32
+	MaxColorAttachmentBytesPerSample          uint32
 	MaxComputeWorkgroupStorageSize            uint32
 	MaxComputeInvocationsPerWorkgroup         uint32
 	MaxComputeWorkgroupSizeX                  uint32

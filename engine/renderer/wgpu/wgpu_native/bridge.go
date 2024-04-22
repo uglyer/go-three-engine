@@ -40,7 +40,6 @@ func (b *Bridge) GetPreferredCanvasFormat() wgpu.TextureFormat {
 }
 
 func (b *Bridge) RequestAdapter(descriptor *wgpu.AdapterDescriptor) (wgpu.IAdapter, error) {
-	// TODO 支持其他参数转发
 	return b.instance.RequestAdapter(&RequestAdapterOptions{
 		PowerPreference: descriptor.PowerPreference,
 	})

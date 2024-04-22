@@ -45,7 +45,7 @@ func (a *Adapter) EnumerateFeatures() []wgpu.FeatureName {
 		featuresRef := a.ref.Get("features")
 		list := make([]wgpu.FeatureName, 0)
 		featuresRef.Call("forEach", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			list = append(list, wgpu.StringToFeatureName(args[0].String()))
+			list = append(list, wgpu.FeatureName(args[0].String()))
 			return nil
 		}))
 		a.enumerateFeatures = list
