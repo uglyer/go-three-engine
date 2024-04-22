@@ -192,3 +192,7 @@ func (p *Queue) WriteTexture(destination *wgpu.ImageCopyTexture, data []byte, da
 func (p *Queue) Release() {
 	C.gowebgpu_queue_release(p.ref, p.deviceRef)
 }
+
+func (p *Queue) Ref() any {
+	return p.ref
+}

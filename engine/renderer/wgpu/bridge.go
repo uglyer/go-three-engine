@@ -1,7 +1,9 @@
 package wgpu
 
-type IRelease interface {
+type IGPUBasic interface {
 	Release()
+	// Ref 获取引用对象, 可能为空
+	Ref() any
 }
 
 type IBridge interface {
@@ -31,7 +33,7 @@ type IGPU interface {
 
 // ICanvas 暂定等同于 GPUCanvasContext
 type ICanvas interface {
-	IRelease
+	IGPUBasic
 	// Configure The configure() method of the GPUCanvasContext interface configures the context to use for
 	// rendering with a given GPUDevice. When called the canvas will initially be cleared to transparent black.
 	Configure(descriptor *ConfigureDescriptor) error
@@ -44,7 +46,7 @@ type ICanvas interface {
 }
 
 type IAdapter interface {
-	IRelease
+	IGPUBasic
 	// RequestDevice The requestDevice() method of the GPUAdapter interface returns a Promise that fulfills
 	// with a GPUDevice object, which is the primary interface for communicating with the GPU.
 	RequestDevice(descriptor *DeviceDescriptor) (IDevice, error)
@@ -55,13 +57,13 @@ type IAdapter interface {
 }
 
 type IDevice interface {
-	IRelease
+	IGPUBasic
 	// GetQueue A GPUQueue object instance.
 	GetQueue() IQueue
 	// CreateBindGroup The createBindGroup() method of the GPUDevice interface creates a GPUBindGroup based
 	// on a GPUBindGroupLayout that defines a set of resources to be bound together in a group and how those
 	// resources are used in shader stages.
-	CreateBindGroup(descriptor *GPUBindGroupDescriptor) (IGPUBindGroup, error)
+	CreateBindGroup(descriptor *BindGroupDescriptor) (IGPUBindGroup, error)
 	// CreateBindGroupLayout The createBindGroupLayout() method of the GPUDevice interface creates a GPUBindGroupLayout
 	// that defines the structure and purpose of related GPU resources such as buffers that will be used in a pipeline,
 	// and is used as a template when creating GPUBindGroups.
@@ -89,7 +91,7 @@ type IQueue interface {
 }
 
 type ICommandEncoder interface {
-	IRelease
+	IGPUBasic
 	BeginComputePass(descriptor *ComputePassDescriptor) IComputePassEncoder
 	BeginRenderPass(descriptor *RenderPassDescriptor) IRenderPassEncoder
 	ClearBuffer(buffer IBuffer, offset uint64, size uint64)
@@ -115,7 +117,7 @@ type IComputePassEncoder interface {
 }
 
 type IRenderPassEncoder interface {
-	IRelease
+	IGPUBasic
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex uint32, baseVertex int32, firstInstance uint32)
 	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
@@ -141,7 +143,7 @@ type IRenderPassEncoder interface {
 }
 
 type IRenderBundleEncoder interface {
-	IRelease
+	IGPUBasic
 	Draw(vertexCount, instanceCount, firstVertex, firstInstance uint32)
 	DrawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance uint32)
 	DrawIndexedIndirect(indirectBuffer IBuffer, indirectOffset uint64)
@@ -157,38 +159,38 @@ type IRenderBundleEncoder interface {
 }
 
 type IComputePipeline interface {
-	IRelease
+	IGPUBasic
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type IRenderPipeLine interface {
-	IRelease
+	IGPUBasic
 	GetBindGroupLayout(groupIndex uint32) IGPUBindGroupLayout
 }
 
 type ITextureView interface {
-	IRelease
+	IGPUBasic
 }
 
 type ITexture interface {
-	IRelease
+	IGPUBasic
 	CreateView(descriptor *TextureViewDescriptor) ITextureView
 }
 
 type IShaderModule interface {
-	IRelease
+	IGPUBasic
 }
 
 type IPipelineLayout interface {
-	IRelease
+	IGPUBasic
 }
 
 type IRenderBundle interface {
-	IRelease
+	IGPUBasic
 }
 type ICommandBuffer interface {
-	IRelease
+	IGPUBasic
 }
 type IQuerySet interface {
-	IRelease
+	IGPUBasic
 }

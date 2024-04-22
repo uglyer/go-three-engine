@@ -103,30 +103,6 @@ func (v BlendOperation) String() string {
 	}
 }
 
-type BufferBindingType uint32
-
-const (
-	BufferBindingType_Undefined       BufferBindingType = 0x00000000
-	BufferBindingType_Uniform         BufferBindingType = 0x00000001
-	BufferBindingType_Storage         BufferBindingType = 0x00000002
-	BufferBindingType_ReadOnlyStorage BufferBindingType = 0x00000003
-)
-
-func (v BufferBindingType) String() string {
-	switch v {
-	case BufferBindingType_Undefined:
-		return "Undefined"
-	case BufferBindingType_Uniform:
-		return "Uniform"
-	case BufferBindingType_Storage:
-		return "Storage"
-	case BufferBindingType_ReadOnlyStorage:
-		return "ReadOnlyStorage"
-	default:
-		return ""
-	}
-}
-
 type BufferMapAsyncStatus uint32
 
 const (
@@ -940,54 +916,6 @@ func (v RequestDeviceStatus) String() string {
 	}
 }
 
-type SamplerBindingType uint32
-
-const (
-	SamplerBindingType_Undefined    SamplerBindingType = 0x00000000
-	SamplerBindingType_Filtering    SamplerBindingType = 0x00000001
-	SamplerBindingType_NonFiltering SamplerBindingType = 0x00000002
-	SamplerBindingType_Comparison   SamplerBindingType = 0x00000003
-)
-
-func (v SamplerBindingType) String() string {
-	switch v {
-	case SamplerBindingType_Undefined:
-		return "Undefined"
-	case SamplerBindingType_Filtering:
-		return "Filtering"
-	case SamplerBindingType_NonFiltering:
-		return "NonFiltering"
-	case SamplerBindingType_Comparison:
-		return "Comparison"
-	default:
-		return ""
-	}
-}
-
-type ShaderStage uint32
-
-const (
-	ShaderStage_None     ShaderStage = 0x00000000
-	ShaderStage_Vertex   ShaderStage = 0x00000001
-	ShaderStage_Fragment ShaderStage = 0x00000002
-	ShaderStage_Compute  ShaderStage = 0x00000004
-)
-
-func (v ShaderStage) String() string {
-	switch v {
-	case ShaderStage_None:
-		return "None"
-	case ShaderStage_Vertex:
-		return "Vertex"
-	case ShaderStage_Fragment:
-		return "Fragment"
-	case ShaderStage_Compute:
-		return "Compute"
-	default:
-		return ""
-	}
-}
-
 type StencilOperation uint32
 
 const (
@@ -1019,24 +947,6 @@ func (v StencilOperation) String() string {
 		return "IncrementWrap"
 	case StencilOperation_DecrementWrap:
 		return "DecrementWrap"
-	default:
-		return ""
-	}
-}
-
-type StorageTextureAccess uint32
-
-const (
-	StorageTextureAccess_Undefined StorageTextureAccess = 0x00000000
-	StorageTextureAccess_WriteOnly StorageTextureAccess = 0x00000001
-)
-
-func (v StorageTextureAccess) String() string {
-	switch v {
-	case StorageTextureAccess_Undefined:
-		return "Undefined"
-	case StorageTextureAccess_WriteOnly:
-		return "WriteOnly"
 	default:
 		return ""
 	}
@@ -1105,36 +1015,6 @@ func (v TextureDimension) String() string {
 	}
 }
 
-type TextureSampleType uint32
-
-const (
-	TextureSampleType_Undefined         TextureSampleType = 0x00000000
-	TextureSampleType_Float             TextureSampleType = 0x00000001
-	TextureSampleType_UnfilterableFloat TextureSampleType = 0x00000002
-	TextureSampleType_Depth             TextureSampleType = 0x00000003
-	TextureSampleType_Sint              TextureSampleType = 0x00000004
-	TextureSampleType_Uint              TextureSampleType = 0x00000005
-)
-
-func (v TextureSampleType) String() string {
-	switch v {
-	case TextureSampleType_Undefined:
-		return "Undefined"
-	case TextureSampleType_Float:
-		return "Float"
-	case TextureSampleType_UnfilterableFloat:
-		return "UnfilterableFloat"
-	case TextureSampleType_Depth:
-		return "Depth"
-	case TextureSampleType_Sint:
-		return "Sint"
-	case TextureSampleType_Uint:
-		return "Uint"
-	default:
-		return ""
-	}
-}
-
 type TextureUsage uint32
 
 const (
@@ -1160,39 +1040,6 @@ func (v TextureUsage) String() string {
 		return "StorageBinding"
 	case TextureUsage_RenderAttachment:
 		return "RenderAttachment"
-	default:
-		return ""
-	}
-}
-
-type TextureViewDimension uint32
-
-const (
-	TextureViewDimension_Undefined TextureViewDimension = 0x00000000
-	TextureViewDimension_1D        TextureViewDimension = 0x00000001
-	TextureViewDimension_2D        TextureViewDimension = 0x00000002
-	TextureViewDimension_2DArray   TextureViewDimension = 0x00000003
-	TextureViewDimension_Cube      TextureViewDimension = 0x00000004
-	TextureViewDimension_CubeArray TextureViewDimension = 0x00000005
-	TextureViewDimension_3D        TextureViewDimension = 0x00000006
-)
-
-func (v TextureViewDimension) String() string {
-	switch v {
-	case TextureViewDimension_Undefined:
-		return "Undefined"
-	case TextureViewDimension_1D:
-		return "1D"
-	case TextureViewDimension_2D:
-		return "2D"
-	case TextureViewDimension_2DArray:
-		return "2DArray"
-	case TextureViewDimension_Cube:
-		return "Cube"
-	case TextureViewDimension_CubeArray:
-		return "CubeArray"
-	case TextureViewDimension_3D:
-		return "3D"
 	default:
 		return ""
 	}

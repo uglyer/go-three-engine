@@ -130,6 +130,16 @@ func (p *Sampler) Release()         { C.wgpuSamplerRelease(p.ref) }
 func (p *ShaderModule) Release()    { C.wgpuShaderModuleRelease(p.ref) }
 func (p *TextureView) Release()     { C.wgpuTextureViewRelease(p.ref) }
 
+func (p *BindGroup) Ref() any       { return p.ref }
+func (p *BindGroupLayout) Ref() any { return p.ref }
+func (p *CommandBuffer) Ref() any   { return p.ref }
+func (p *PipelineLayout) Ref() any  { return p.ref }
+func (p *QuerySet) Ref() any        { return p.ref }
+func (p *RenderBundle) Ref() any    { return p.ref }
+func (p *Sampler) Ref() any         { return p.ref }
+func (p *ShaderModule) Ref() any    { return p.ref }
+func (p *TextureView) Ref() any     { return p.ref }
+
 // common types
 
 type Limits struct {

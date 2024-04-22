@@ -30,7 +30,7 @@ func (d *Device) GetQueue() wgpu.IQueue {
 	return d.queue
 }
 
-func (d *Device) CreateBindGroup(descriptor *wgpu.GPUBindGroupDescriptor) (wgpu.IGPUBindGroup, error) {
+func (d *Device) CreateBindGroup(descriptor *wgpu.BindGroupDescriptor) (wgpu.IGPUBindGroup, error) {
 	layout, ok := descriptor.Layout.(*BindGroupLayout)
 	if !ok {
 		return nil, fmt.Errorf("layout type error")

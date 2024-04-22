@@ -1,15 +1,15 @@
 package wgpu
 
 type IGPUSampler interface {
-	IRelease
+	IGPUBasic
 }
 
 type IGPUBindGroup interface {
-	IRelease
+	IGPUBasic
 }
 
 type IGPUBindGroupLayout interface {
-	IRelease
+	IGPUBasic
 }
 
 type GPUBindGroupEntry struct {
@@ -18,14 +18,14 @@ type GPUBindGroupEntry struct {
 	// @binding(n) attribute in the shader (GPUShaderModule) used in the related pipeline.
 	Binding uint32
 	// Resource 开头三选一
-	ResourceBuffer      IBuffer
-	Offset              uint64
-	Size                uint64
-	ResourceSampler     IGPUSampler
-	ResourceTextureView ITextureView
+	Buffer      IBuffer
+	Offset      uint64
+	Size        uint64
+	Sampler     IGPUSampler
+	TextureView ITextureView
 }
 
-type GPUBindGroupDescriptor struct {
+type BindGroupDescriptor struct {
 	Label  string
 	Layout IGPUBindGroupLayout
 	// Entries An array of entry objects describing the resources to expose to the shader.

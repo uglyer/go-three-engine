@@ -122,6 +122,7 @@ func gowebgpu_error_callback_go(_type C.WGPUErrorType, message *C.char, userdata
 }
 
 func (p *Device) Release() { C.wgpuDeviceRelease(p.ref) }
+func (p *Device) Ref() any { return p.ref }
 
 type BindGroupEntry struct {
 	Binding     uint32
@@ -132,13 +133,7 @@ type BindGroupEntry struct {
 	TextureView *TextureView
 }
 
-type BindGroupDescriptor struct {
-	Label   string
-	Layout  *BindGroupLayout
-	Entries []BindGroupEntry
-}
-
-func (p *Device) CreateBindGroup(descriptor *BindGroupDescriptor) (*BindGroup, error) {
+func (p *Device) CreateBindGroup(descriptor *wgpu.BindGroupDescriptor) (wgpu.IGPUBindGroup, error) {
 	var desc C.WGPUBindGroupDescriptor
 
 	if descriptor != nil {
@@ -150,7 +145,7 @@ func (p *Device) CreateBindGroup(descriptor *BindGroupDescriptor) (*BindGroup, e
 		}
 
 		if descriptor.Layout != nil {
-			desc.layout = descriptor.Layout.ref
+			desc.layout = descriptor.Layout.Ref()
 		}
 
 		entryCount := len(descriptor.Entries)
@@ -168,13 +163,13 @@ func (p *Device) CreateBindGroup(descriptor *BindGroupDescriptor) (*BindGroup, e
 				}
 
 				if v.Buffer != nil {
-					entry.buffer = v.Buffer.ref
+					entry.buffer = v.Buffer.Ref()
 				}
 				if v.Sampler != nil {
-					entry.sampler = v.Sampler.ref
+					entry.sampler = v.Sampler.Ref()
 				}
 				if v.TextureView != nil {
-					entry.textureView = v.TextureView.ref
+					entry.textureView = v.TextureView.Ref()
 				}
 
 				entriesSlice[i] = entry
@@ -205,43 +200,7 @@ func (p *Device) CreateBindGroup(descriptor *BindGroupDescriptor) (*BindGroup, e
 	return &BindGroup{ref}, nil
 }
 
-type BufferBindingLayout struct {
-	Type             BufferBindingType
-	HasDynamicOffset bool
-	MinBindingSize   uint64
-}
-
-type SamplerBindingLayout struct {
-	Type SamplerBindingType
-}
-
-type TextureBindingLayout struct {
-	SampleType    TextureSampleType
-	ViewDimension TextureViewDimension
-	Multisampled  bool
-}
-
-type StorageTextureBindingLayout struct {
-	Access        StorageTextureAccess
-	Format        wgpu.TextureFormat
-	ViewDimension TextureViewDimension
-}
-
-type BindGroupLayoutEntry struct {
-	Binding        uint32
-	Visibility     ShaderStage
-	Buffer         BufferBindingLayout
-	Sampler        SamplerBindingLayout
-	Texture        TextureBindingLayout
-	StorageTexture StorageTextureBindingLayout
-}
-
-type BindGroupLayoutDescriptor struct {
-	Label   string
-	Entries []BindGroupLayoutEntry
-}
-
-func (p *Device) CreateBindGroupLayout(descriptor *BindGroupLayoutDescriptor) (*BindGroupLayout, error) {
+func (p *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescriptor) (*BindGroupLayout, error) {
 	var desc C.WGPUBindGroupLayoutDescriptor
 
 	if descriptor != nil {

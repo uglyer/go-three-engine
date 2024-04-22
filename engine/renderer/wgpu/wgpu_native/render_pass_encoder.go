@@ -24,6 +24,7 @@ static inline void gowebgpu_render_pass_encoder_release(WGPURenderPassEncoder re
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -208,7 +209,7 @@ func (p *RenderPassEncoder) SetViewport(x, y, width, height, minDepth, maxDepth 
 	)
 }
 
-func (p *RenderPassEncoder) SetPushConstants(stages ShaderStage, offset uint32, data []byte) {
+func (p *RenderPassEncoder) SetPushConstants(stages wgpu.ShaderStage, offset uint32, data []byte) {
 	size := len(data)
 	if size == 0 {
 		C.wgpuRenderPassEncoderSetPushConstants(

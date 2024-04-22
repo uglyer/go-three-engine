@@ -264,7 +264,6 @@ const (
 	BufferBindingType_Uniform         BufferBindingType = 0x00000001
 	BufferBindingType_Storage         BufferBindingType = 0x00000002
 	BufferBindingType_ReadOnlyStorage BufferBindingType = 0x00000003
-	BufferBindingType_Force32         BufferBindingType = 0x7FFFFFFF
 )
 
 func (v BufferBindingType) String() string {
@@ -277,8 +276,6 @@ func (v BufferBindingType) String() string {
 		return "storage"
 	case BufferBindingType_ReadOnlyStorage:
 		return "read-only-storage"
-	case BufferBindingType_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -293,8 +290,6 @@ func StringToBufferBindingType(str string) BufferBindingType {
 		return BufferBindingType_Storage
 	case "read-only-storage":
 		return BufferBindingType_ReadOnlyStorage
-	case "force32":
-		return BufferBindingType_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to BufferBindingType error", str))
 	}
@@ -1739,7 +1734,6 @@ const (
 	SamplerBindingType_Filtering    SamplerBindingType = 0x00000001
 	SamplerBindingType_NonFiltering SamplerBindingType = 0x00000002
 	SamplerBindingType_Comparison   SamplerBindingType = 0x00000003
-	SamplerBindingType_Force32      SamplerBindingType = 0x7FFFFFFF
 )
 
 func (v SamplerBindingType) String() string {
@@ -1752,8 +1746,6 @@ func (v SamplerBindingType) String() string {
 		return "non-filtering"
 	case SamplerBindingType_Comparison:
 		return "comparison"
-	case SamplerBindingType_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -1768,8 +1760,6 @@ func StringToSamplerBindingType(str string) SamplerBindingType {
 		return SamplerBindingType_NonFiltering
 	case "comparison":
 		return SamplerBindingType_Comparison
-	case "force32":
-		return SamplerBindingType_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to SamplerBindingType error", str))
 	}
@@ -1782,21 +1772,18 @@ const (
 	ShaderStage_Vertex   ShaderStage = 0x00000001
 	ShaderStage_Fragment ShaderStage = 0x00000002
 	ShaderStage_Compute  ShaderStage = 0x00000004
-	ShaderStage_Force32  ShaderStage = 0x7FFFFFFF
 )
 
 func (v ShaderStage) String() string {
 	switch v {
 	case ShaderStage_None:
-		return "none"
+		return "None"
 	case ShaderStage_Vertex:
-		return "vertex"
+		return "Vertex"
 	case ShaderStage_Fragment:
-		return "fragment"
+		return "Fragment"
 	case ShaderStage_Compute:
-		return "compute"
-	case ShaderStage_Force32:
-		return "force32"
+		return "Compute"
 	default:
 		return ""
 	}
@@ -1811,8 +1798,6 @@ func StringToShaderStage(str string) ShaderStage {
 		return ShaderStage_Fragment
 	case "compute":
 		return ShaderStage_Compute
-	case "force32":
-		return ShaderStage_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to ShaderStage error", str))
 	}
@@ -1886,7 +1871,6 @@ type StorageTextureAccess uint32
 const (
 	StorageTextureAccess_Undefined StorageTextureAccess = 0x00000000
 	StorageTextureAccess_WriteOnly StorageTextureAccess = 0x00000001
-	StorageTextureAccess_Force32   StorageTextureAccess = 0x7FFFFFFF
 )
 
 func (v StorageTextureAccess) String() string {
@@ -1895,8 +1879,6 @@ func (v StorageTextureAccess) String() string {
 		return "undefined"
 	case StorageTextureAccess_WriteOnly:
 		return "write-only"
-	case StorageTextureAccess_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -1907,8 +1889,6 @@ func StringToStorageTextureAccess(str string) StorageTextureAccess {
 		return StorageTextureAccess_Undefined
 	case "write-only":
 		return StorageTextureAccess_WriteOnly
-	case "force32":
-		return StorageTextureAccess_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to StorageTextureAccess error", str))
 	}
@@ -2578,7 +2558,6 @@ const (
 	TextureSampleType_Depth             TextureSampleType = 0x00000003
 	TextureSampleType_Sint              TextureSampleType = 0x00000004
 	TextureSampleType_Uint              TextureSampleType = 0x00000005
-	TextureSampleType_Force32           TextureSampleType = 0x7FFFFFFF
 )
 
 func (v TextureSampleType) String() string {
@@ -2595,8 +2574,6 @@ func (v TextureSampleType) String() string {
 		return "sint"
 	case TextureSampleType_Uint:
 		return "uint"
-	case TextureSampleType_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -2615,8 +2592,6 @@ func StringToTextureSampleType(str string) TextureSampleType {
 		return TextureSampleType_Sint
 	case "uint":
 		return TextureSampleType_Uint
-	case "force32":
-		return TextureSampleType_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to TextureSampleType error", str))
 	}
@@ -2685,7 +2660,6 @@ const (
 	TextureViewDimension_Cube      TextureViewDimension = 0x00000004
 	TextureViewDimension_CubeArray TextureViewDimension = 0x00000005
 	TextureViewDimension_3D        TextureViewDimension = 0x00000006
-	TextureViewDimension_Force32   TextureViewDimension = 0x7FFFFFFF
 )
 
 func (v TextureViewDimension) String() string {
@@ -2704,8 +2678,6 @@ func (v TextureViewDimension) String() string {
 		return "cube-array"
 	case TextureViewDimension_3D:
 		return "3d"
-	case TextureViewDimension_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -2726,8 +2698,6 @@ func StringToTextureViewDimension(str string) TextureViewDimension {
 		return TextureViewDimension_CubeArray
 	case "3d":
 		return TextureViewDimension_3D
-	case "force32":
-		return TextureViewDimension_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to TextureViewDimension error", str))
 	}
