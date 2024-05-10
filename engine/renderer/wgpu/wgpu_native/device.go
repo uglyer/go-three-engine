@@ -275,12 +275,12 @@ func (p *Device) CreateBindGroupLayout(descriptor *wgpu.BindGroupLayoutDescripto
 
 type BufferDescriptor struct {
 	Label            string
-	Usage            BufferUsage
+	Usage            wgpu.BufferUsage
 	Size             uint64
 	MappedAtCreation bool
 }
 
-func (p *Device) CreateBuffer(descriptor *BufferDescriptor) (*Buffer, error) {
+func (p *Device) CreateBuffer(descriptor *BufferDescriptor) (wgpu.IBuffer, error) {
 	var desc C.WGPUBufferDescriptor
 
 	if descriptor != nil {
@@ -422,7 +422,7 @@ func (p *Device) CreateComputePipeline(descriptor *ComputePipelineDescriptor) (*
 }
 
 type PushConstantRange struct {
-	Stages ShaderStage
+	Stages wgpu.ShaderStage
 	Start  uint32
 	End    uint32
 }
@@ -958,7 +958,7 @@ type ShaderModuleWGSLDescriptor struct {
 type ShaderModuleGLSLDescriptor struct {
 	Code        string
 	Defines     map[string]string
-	ShaderStage ShaderStage
+	ShaderStage wgpu.ShaderStage
 }
 
 type ShaderModuleDescriptor struct {

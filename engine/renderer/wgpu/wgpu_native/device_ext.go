@@ -2,10 +2,12 @@
 
 package wgpu_native
 
+import "github.com/uglyer/go-three-engine/engine/renderer/wgpu"
+
 type BufferInitDescriptor struct {
 	Label    string
 	Contents []byte
-	Usage    BufferUsage
+	Usage    wgpu.BufferUsage
 }
 
 func (p *Device) CreateBufferInit(descriptor *BufferInitDescriptor) (*Buffer, error) {

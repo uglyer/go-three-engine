@@ -37,8 +37,6 @@ func StringToAdapterType(str string) AdapterType {
 		return AdapterType_CPU
 	case "unknown":
 		return AdapterType_Unknown
-	case "force32":
-		return AdapterType_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to AdapterType error", str))
 	}
@@ -299,50 +297,61 @@ type BufferMapAsyncStatus uint32
 
 const (
 	BufferMapAsyncStatus_Success                 BufferMapAsyncStatus = 0x00000000
-	BufferMapAsyncStatus_Error                   BufferMapAsyncStatus = 0x00000001
+	BufferMapAsyncStatus_ValidationError         BufferMapAsyncStatus = 0x00000001
 	BufferMapAsyncStatus_Unknown                 BufferMapAsyncStatus = 0x00000002
 	BufferMapAsyncStatus_DeviceLost              BufferMapAsyncStatus = 0x00000003
 	BufferMapAsyncStatus_DestroyedBeforeCallback BufferMapAsyncStatus = 0x00000004
 	BufferMapAsyncStatus_UnmappedBeforeCallback  BufferMapAsyncStatus = 0x00000005
-	BufferMapAsyncStatus_Force32                 BufferMapAsyncStatus = 0x7FFFFFFF
+	BufferMapAsyncStatus_MappingAlreadyPending   BufferMapAsyncStatus = 0x00000006
+	BufferMapAsyncStatus_OffsetOutOfRange        BufferMapAsyncStatus = 0x00000007
+	BufferMapAsyncStatus_SizeOutOfRange          BufferMapAsyncStatus = 0x00000008
 )
 
 func (v BufferMapAsyncStatus) String() string {
 	switch v {
 	case BufferMapAsyncStatus_Success:
-		return "success"
-	case BufferMapAsyncStatus_Error:
-		return "error"
+		return "Success"
+	case BufferMapAsyncStatus_ValidationError:
+		return "ValidationError"
 	case BufferMapAsyncStatus_Unknown:
-		return "unknown"
+		return "Unknown"
 	case BufferMapAsyncStatus_DeviceLost:
-		return "device-lost"
+		return "DeviceLost"
 	case BufferMapAsyncStatus_DestroyedBeforeCallback:
-		return "destroyed-before-callback"
+		return "DestroyedBeforeCallback"
 	case BufferMapAsyncStatus_UnmappedBeforeCallback:
-		return "unmapped-before-callback"
-	case BufferMapAsyncStatus_Force32:
-		return "force32"
+		return "UnmappedBeforeCallback"
+	case BufferMapAsyncStatus_MappingAlreadyPending:
+		return "MappingAlreadyPending"
+	case BufferMapAsyncStatus_OffsetOutOfRange:
+		return "OffsetOutOfRange"
+	case BufferMapAsyncStatus_SizeOutOfRange:
+		return "SizeOutOfRange"
 	default:
 		return ""
 	}
 }
+
 func StringToBufferMapAsyncStatus(str string) BufferMapAsyncStatus {
 	switch str {
-	case "success":
+	case "Success":
 		return BufferMapAsyncStatus_Success
-	case "error":
-		return BufferMapAsyncStatus_Error
-	case "unknown":
+	case "ValidationError":
+		return BufferMapAsyncStatus_ValidationError
+	case "Unknown":
 		return BufferMapAsyncStatus_Unknown
-	case "device-lost":
+	case "DeviceLost":
 		return BufferMapAsyncStatus_DeviceLost
-	case "destroyed-before-callback":
+	case "DestroyedBeforeCallback":
 		return BufferMapAsyncStatus_DestroyedBeforeCallback
-	case "unmapped-before-callback":
+	case "UnmappedBeforeCallback":
 		return BufferMapAsyncStatus_UnmappedBeforeCallback
-	case "force32":
-		return BufferMapAsyncStatus_Force32
+	case "MappingAlreadyPending":
+		return BufferMapAsyncStatus_MappingAlreadyPending
+	case "OffsetOutOfRange":
+		return BufferMapAsyncStatus_OffsetOutOfRange
+	case "SizeOutOfRange":
+		return BufferMapAsyncStatus_SizeOutOfRange
 	default:
 		panic(fmt.Sprintf("%s convert to BufferMapAsyncStatus error", str))
 	}
@@ -400,7 +409,6 @@ const (
 	BufferUsage_Storage      BufferUsage = 0x00000080
 	BufferUsage_Indirect     BufferUsage = 0x00000100
 	BufferUsage_QueryResolve BufferUsage = 0x00000200
-	BufferUsage_Force32      BufferUsage = 0x7FFFFFFF
 )
 
 func (v BufferUsage) String() string {
@@ -427,8 +435,6 @@ func (v BufferUsage) String() string {
 		return "indirect"
 	case BufferUsage_QueryResolve:
 		return "query-resolve"
-	case BufferUsage_Force32:
-		return "force32"
 	default:
 		return ""
 	}
@@ -457,8 +463,6 @@ func StringToBufferUsage(str string) BufferUsage {
 		return BufferUsage_Indirect
 	case "query-resolve":
 		return BufferUsage_QueryResolve
-	case "force32":
-		return BufferUsage_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to BufferUsage error", str))
 	}
@@ -1292,26 +1296,24 @@ func StringToLogLevel(str string) LogLevel {
 type MapMode uint32
 
 const (
-	MapMode_None    MapMode = 0x00000000
-	MapMode_Read    MapMode = 0x00000001
-	MapMode_Write   MapMode = 0x00000002
-	MapMode_Force32 MapMode = 0x7FFFFFFF
+	MapMode_None  MapMode = 0x00000000
+	MapMode_Read  MapMode = 0x00000001
+	MapMode_Write MapMode = 0x00000002
 )
 
 func (v MapMode) String() string {
 	switch v {
 	case MapMode_None:
-		return "none"
+		return "None"
 	case MapMode_Read:
-		return "read"
+		return "Read"
 	case MapMode_Write:
-		return "write"
-	case MapMode_Force32:
-		return "force32"
+		return "Write"
 	default:
 		return ""
 	}
 }
+
 func StringToMapMode(str string) MapMode {
 	switch str {
 	case "none":
@@ -1320,8 +1322,6 @@ func StringToMapMode(str string) MapMode {
 		return MapMode_Read
 	case "write":
 		return MapMode_Write
-	case "force32":
-		return MapMode_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to MapMode error", str))
 	}

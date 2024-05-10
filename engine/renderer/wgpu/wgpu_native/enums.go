@@ -163,50 +163,6 @@ func (v BufferMapState) String() string {
 	}
 }
 
-type BufferUsage uint32
-
-const (
-	BufferUsage_None         BufferUsage = 0x00000000
-	BufferUsage_MapRead      BufferUsage = 0x00000001
-	BufferUsage_MapWrite     BufferUsage = 0x00000002
-	BufferUsage_CopySrc      BufferUsage = 0x00000004
-	BufferUsage_CopyDst      BufferUsage = 0x00000008
-	BufferUsage_Index        BufferUsage = 0x00000010
-	BufferUsage_Vertex       BufferUsage = 0x00000020
-	BufferUsage_Uniform      BufferUsage = 0x00000040
-	BufferUsage_Storage      BufferUsage = 0x00000080
-	BufferUsage_Indirect     BufferUsage = 0x00000100
-	BufferUsage_QueryResolve BufferUsage = 0x00000200
-)
-
-func (v BufferUsage) String() string {
-	switch v {
-	case BufferUsage_None:
-		return "None"
-	case BufferUsage_MapRead:
-		return "MapRead"
-	case BufferUsage_MapWrite:
-		return "MapWrite"
-	case BufferUsage_CopySrc:
-		return "CopySrc"
-	case BufferUsage_CopyDst:
-		return "CopyDst"
-	case BufferUsage_Index:
-		return "Index"
-	case BufferUsage_Vertex:
-		return "Vertex"
-	case BufferUsage_Uniform:
-		return "Uniform"
-	case BufferUsage_Storage:
-		return "Storage"
-	case BufferUsage_Indirect:
-		return "Indirect"
-	case BufferUsage_QueryResolve:
-		return "QueryResolve"
-	default:
-		return ""
-	}
-}
 
 type ColorWriteMask uint32
 
@@ -716,27 +672,6 @@ func (v LogLevel) String() string {
 		return "Debug"
 	case LogLevel_Trace:
 		return "Trace"
-	default:
-		return ""
-	}
-}
-
-type MapMode uint32
-
-const (
-	MapMode_None  MapMode = 0x00000000
-	MapMode_Read  MapMode = 0x00000001
-	MapMode_Write MapMode = 0x00000002
-)
-
-func (v MapMode) String() string {
-	switch v {
-	case MapMode_None:
-		return "None"
-	case MapMode_Read:
-		return "Read"
-	case MapMode_Write:
-		return "Write"
 	default:
 		return ""
 	}

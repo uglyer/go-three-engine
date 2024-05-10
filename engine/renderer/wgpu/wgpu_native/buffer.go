@@ -31,6 +31,7 @@ static inline void gowebgpu_buffer_release(WGPUBuffer buffer, WGPUDevice device)
 import "C"
 import (
 	"errors"
+	"github.com/uglyer/go-three-engine/engine/renderer/wgpu"
 	"runtime/cgo"
 	"unsafe"
 )
@@ -38,6 +39,10 @@ import (
 type Buffer struct {
 	deviceRef C.WGPUDevice
 	ref       C.WGPUBuffer
+}
+
+func (p *Buffer) Ref() any {
+	return p.ref
 }
 
 func (p *Buffer) Destroy() {
@@ -53,24 +58,22 @@ func (p *Buffer) GetSize() uint64 {
 	return uint64(C.wgpuBufferGetSize(p.ref))
 }
 
-func (p *Buffer) GetUsage() BufferUsage {
-	return BufferUsage(C.wgpuBufferGetUsage(p.ref))
+func (p *Buffer) GetUsage() wgpu.BufferUsage {
+	return wgpu.BufferUsage(C.wgpuBufferGetUsage(p.ref))
 }
-
-type BufferMapCallback func(BufferMapAsyncStatus)
 
 //export gowebgpu_buffer_map_callback_go
 func gowebgpu_buffer_map_callback_go(status C.WGPUBufferMapAsyncStatus, userdata unsafe.Pointer) {
 	handle := *(*cgo.Handle)(userdata)
 	defer handle.Delete()
 
-	cb, ok := handle.Value().(BufferMapCallback)
+	cb, ok := handle.Value().(wgpu.BufferMapCallback)
 	if ok {
-		cb(BufferMapAsyncStatus(status))
+		cb(wgpu.BufferMapAsyncStatus(status))
 	}
 }
 
-func (p *Buffer) MapAsync(mode MapMode, offset uint64, size uint64, callback BufferMapCallback) (err error) {
+func (p *Buffer) MapAsync(mode wgpu.MapMode, offset uint64, size uint64, callback wgpu.BufferMapCallback) (err error) {
 	callbackHandle := cgo.NewHandle(callback)
 
 	var cb errorCallback = func(_ ErrorType, message string) {
