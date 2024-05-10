@@ -84,10 +84,13 @@ type IDevice interface {
 	CreateQuerySet(descriptor *QuerySetDescriptor) (*IQuerySet, error)
 }
 
+type QueueWorkDoneCallback func(QueueWorkDoneStatus)
+
 type IQueue interface {
-	WriteTexture(destination *ImageCopyTexture, data []byte, dataLayout *TextureDataLayout, writeSize *Extent3D)
-	WriteBuffer(buffer IBuffer, bufferOffset uint64, data []byte)
+	WriteTexture(destination *ImageCopyTexture, data []byte, dataLayout *TextureDataLayout, writeSize *Extent3D) error
+	WriteBuffer(buffer IBuffer, bufferOffset uint64, data []byte) error
 	Submit(commands ...ICommandBuffer) (submissionIndex SubmissionIndex)
+	OnSubmittedWorkDone(callback QueueWorkDoneCallback)
 }
 
 type ICommandEncoder interface {

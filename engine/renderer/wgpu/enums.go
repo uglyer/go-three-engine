@@ -1577,37 +1577,33 @@ const (
 	QueueWorkDoneStatus_Error      QueueWorkDoneStatus = 0x00000001
 	QueueWorkDoneStatus_Unknown    QueueWorkDoneStatus = 0x00000002
 	QueueWorkDoneStatus_DeviceLost QueueWorkDoneStatus = 0x00000003
-	QueueWorkDoneStatus_Force32    QueueWorkDoneStatus = 0x7FFFFFFF
 )
 
 func (v QueueWorkDoneStatus) String() string {
 	switch v {
 	case QueueWorkDoneStatus_Success:
-		return "success"
+		return "Success"
 	case QueueWorkDoneStatus_Error:
-		return "error"
+		return "Error"
 	case QueueWorkDoneStatus_Unknown:
-		return "unknown"
+		return "Unknown"
 	case QueueWorkDoneStatus_DeviceLost:
-		return "device-lost"
-	case QueueWorkDoneStatus_Force32:
-		return "force32"
+		return "DeviceLost"
 	default:
 		return ""
 	}
 }
+
 func StringToQueueWorkDoneStatus(str string) QueueWorkDoneStatus {
 	switch str {
-	case "success":
+	case "Success":
 		return QueueWorkDoneStatus_Success
-	case "error":
+	case "Error":
 		return QueueWorkDoneStatus_Error
-	case "unknown":
+	case "Unknown":
 		return QueueWorkDoneStatus_Unknown
-	case "device-lost":
+	case "DeviceLost":
 		return QueueWorkDoneStatus_DeviceLost
-	case "force32":
-		return QueueWorkDoneStatus_Force32
 	default:
 		panic(fmt.Sprintf("%s convert to QueueWorkDoneStatus error", str))
 	}

@@ -41,32 +41,28 @@ type Queue struct {
 	ref       C.WGPUQueue
 }
 
-type QueueWorkDoneCallback func(QueueWorkDoneStatus)
-
 //export gowebgpu_queue_work_done_callback_go
 func gowebgpu_queue_work_done_callback_go(status C.WGPUQueueWorkDoneStatus, userdata unsafe.Pointer) {
 	handle := *(*cgo.Handle)(userdata)
 	defer handle.Delete()
 
-	cb, ok := handle.Value().(QueueWorkDoneCallback)
+	cb, ok := handle.Value().(wgpu.QueueWorkDoneCallback)
 	if ok {
-		cb(QueueWorkDoneStatus(status))
+		cb(wgpu.QueueWorkDoneStatus(status))
 	}
 }
 
-func (p *Queue) OnSubmittedWorkDone(callback QueueWorkDoneCallback) {
+func (p *Queue) OnSubmittedWorkDone(callback wgpu.QueueWorkDoneCallback) {
 	handle := cgo.NewHandle(callback)
 
 	C.wgpuQueueOnSubmittedWorkDone(p.ref, C.WGPUQueueWorkDoneCallback(C.gowebgpu_queue_work_done_callback_c), unsafe.Pointer(&handle))
 }
 
-type SubmissionIndex uint64
-
-func (p *Queue) Submit(commands ...*CommandBuffer) (submissionIndex SubmissionIndex) {
+func (p *Queue) Submit(commands ...wgpu.ICommandBuffer) (submissionIndex wgpu.SubmissionIndex) {
 	commandCount := len(commands)
 	if commandCount == 0 {
 		r := C.wgpuQueueSubmitForIndex(p.ref, 0, nil)
-		return SubmissionIndex(r)
+		return wgpu.SubmissionIndex(r)
 	}
 
 	commandRefs := C.malloc(C.size_t(commandCount) * C.size_t(unsafe.Sizeof(C.WGPUCommandBuffer(nil))))
@@ -74,7 +70,7 @@ func (p *Queue) Submit(commands ...*CommandBuffer) (submissionIndex SubmissionIn
 
 	commandRefsSlice := unsafe.Slice((*C.WGPUCommandBuffer)(commandRefs), commandCount)
 	for i, v := range commands {
-		commandRefsSlice[i] = v.ref
+		commandRefsSlice[i] = v.Ref()
 	}
 
 	r := C.wgpuQueueSubmitForIndex(
@@ -82,7 +78,7 @@ func (p *Queue) Submit(commands ...*CommandBuffer) (submissionIndex SubmissionIn
 		C.size_t(commandCount),
 		(*C.WGPUCommandBuffer)(commandRefs),
 	)
-	return SubmissionIndex(r)
+	return wgpu.SubmissionIndex(r)
 }
 
 func (p *Queue) WriteBuffer(buffer wgpu.IBuffer, bufferOffset uint64, data []byte) (err error) {

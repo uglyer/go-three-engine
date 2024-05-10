@@ -1269,7 +1269,7 @@ func (p *Device) HasFeature(feature FeatureName) bool {
 
 type WrappedSubmissionIndex struct {
 	Queue           *Queue
-	SubmissionIndex SubmissionIndex
+	SubmissionIndex wgpu.SubmissionIndex
 }
 
 func (p *Device) Poll(wait bool, wrappedSubmissionIndex *WrappedSubmissionIndex) (queueEmpty bool) {
