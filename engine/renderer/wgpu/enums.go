@@ -2145,403 +2145,202 @@ const (
 	TextureFormat_ASTC12x10UnormSrgb   TextureFormat = 0x0000005C
 	TextureFormat_ASTC12x12Unorm       TextureFormat = 0x0000005D
 	TextureFormat_ASTC12x12UnormSrgb   TextureFormat = 0x0000005E
-	TextureFormat_Force32              TextureFormat = 0x7FFFFFFF
 )
 
 func (v TextureFormat) String() string {
 	switch v {
 	case TextureFormat_Undefined:
-		return "undefined"
+		return "Undefined"
 	case TextureFormat_R8Unorm:
-		return "r8unorm"
+		return "R8Unorm"
 	case TextureFormat_R8Snorm:
-		return "r8snorm"
+		return "R8Snorm"
 	case TextureFormat_R8Uint:
-		return "r8uint"
+		return "R8Uint"
 	case TextureFormat_R8Sint:
-		return "r8sint"
+		return "R8Sint"
 	case TextureFormat_R16Uint:
-		return "r16uint"
+		return "R16Uint"
 	case TextureFormat_R16Sint:
-		return "r16sint"
+		return "R16Sint"
 	case TextureFormat_R16Float:
-		return "r16float"
+		return "R16Float"
 	case TextureFormat_RG8Unorm:
-		return "rg8unorm"
+		return "RG8Unorm"
 	case TextureFormat_RG8Snorm:
-		return "rg8snorm"
+		return "RG8Snorm"
 	case TextureFormat_RG8Uint:
-		return "rg8uint"
+		return "RG8Uint"
 	case TextureFormat_RG8Sint:
-		return "rg8sint"
+		return "RG8Sint"
 	case TextureFormat_R32Float:
-		return "r32float"
+		return "R32Float"
 	case TextureFormat_R32Uint:
-		return "r32uint"
+		return "R32Uint"
 	case TextureFormat_R32Sint:
-		return "r32sint"
+		return "R32Sint"
 	case TextureFormat_RG16Uint:
-		return "rg16uint"
+		return "RG16Uint"
 	case TextureFormat_RG16Sint:
-		return "rg16sint"
+		return "RG16Sint"
 	case TextureFormat_RG16Float:
-		return "rg16float"
+		return "RG16Float"
 	case TextureFormat_RGBA8Unorm:
-		return "rgba8unorm"
+		return "RGBA8Unorm"
 	case TextureFormat_RGBA8UnormSrgb:
-		return "rgba8unorm-srgb"
+		return "RGBA8UnormSrgb"
 	case TextureFormat_RGBA8Snorm:
-		return "rgba8snorm"
+		return "RGBA8Snorm"
 	case TextureFormat_RGBA8Uint:
-		return "rgba8uint"
+		return "RGBA8Uint"
 	case TextureFormat_RGBA8Sint:
-		return "rgba8sint"
+		return "RGBA8Sint"
 	case TextureFormat_BGRA8Unorm:
-		return "bgra8unorm"
+		return "BGRA8Unorm"
 	case TextureFormat_BGRA8UnormSrgb:
-		return "bgra8unorm-srgb"
+		return "BGRA8UnormSrgb"
 	case TextureFormat_RGB10A2Unorm:
-		return "rgb10a2unorm"
+		return "RGB10A2Unorm"
 	case TextureFormat_RG11B10Ufloat:
-		return "rg11b10ufloat"
+		return "RG11B10Ufloat"
 	case TextureFormat_RGB9E5Ufloat:
-		return "rgb9e5ufloat"
+		return "RGB9E5Ufloat"
 	case TextureFormat_RG32Float:
-		return "rg32float"
+		return "RG32Float"
 	case TextureFormat_RG32Uint:
-		return "rg32uint"
+		return "RG32Uint"
 	case TextureFormat_RG32Sint:
-		return "rg32sint"
+		return "RG32Sint"
 	case TextureFormat_RGBA16Uint:
-		return "rgba16uint"
+		return "RGBA16Uint"
 	case TextureFormat_RGBA16Sint:
-		return "rgba16sint"
+		return "RGBA16Sint"
 	case TextureFormat_RGBA16Float:
-		return "rgba16float"
+		return "RGBA16Float"
 	case TextureFormat_RGBA32Float:
-		return "rgba32float"
+		return "RGBA32Float"
 	case TextureFormat_RGBA32Uint:
-		return "rgba32uint"
+		return "RGBA32Uint"
 	case TextureFormat_RGBA32Sint:
-		return "rgba32sint"
+		return "RGBA32Sint"
 	case TextureFormat_Stencil8:
-		return "stencil8"
+		return "Stencil8"
 	case TextureFormat_Depth16Unorm:
-		return "depth16unorm"
+		return "Depth16Unorm"
 	case TextureFormat_Depth24Plus:
-		return "depth24plus"
+		return "Depth24Plus"
 	case TextureFormat_Depth24PlusStencil8:
-		return "depth24plus-stencil8"
+		return "Depth24PlusStencil8"
 	case TextureFormat_Depth32Float:
-		return "depth32float"
+		return "Depth32Float"
 	case TextureFormat_Depth32FloatStencil8:
-		return "depth32float-stencil8"
+		return "Depth32FloatStencil8"
 	case TextureFormat_BC1RGBAUnorm:
-		return "bc1rgbaunorm"
+		return "BC1RGBAUnorm"
 	case TextureFormat_BC1RGBAUnormSrgb:
-		return "bc1rgbaunorm-srgb"
+		return "BC1RGBAUnormSrgb"
 	case TextureFormat_BC2RGBAUnorm:
-		return "bc2rgbaunorm"
+		return "BC2RGBAUnorm"
 	case TextureFormat_BC2RGBAUnormSrgb:
-		return "bc2rgbaunorm-srgb"
+		return "BC2RGBAUnormSrgb"
 	case TextureFormat_BC3RGBAUnorm:
-		return "bc3rgbaunorm"
+		return "BC3RGBAUnorm"
 	case TextureFormat_BC3RGBAUnormSrgb:
-		return "bc3rgbaunorm-srgb"
+		return "BC3RGBAUnormSrgb"
 	case TextureFormat_BC4RUnorm:
-		return "bc4runorm"
+		return "BC4RUnorm"
 	case TextureFormat_BC4RSnorm:
-		return "bc4rsnorm"
+		return "BC4RSnorm"
 	case TextureFormat_BC5RGUnorm:
-		return "bc5rgunorm"
+		return "BC5RGUnorm"
 	case TextureFormat_BC5RGSnorm:
-		return "bc5rgsnorm"
+		return "BC5RGSnorm"
 	case TextureFormat_BC6HRGBUfloat:
-		return "bc6hrgbufloat"
+		return "BC6HRGBUfloat"
 	case TextureFormat_BC6HRGBFloat:
-		return "bc6hrgbfloat"
+		return "BC6HRGBFloat"
 	case TextureFormat_BC7RGBAUnorm:
-		return "bc7rgbaunorm"
+		return "BC7RGBAUnorm"
 	case TextureFormat_BC7RGBAUnormSrgb:
-		return "bc7rgbaunorm-srgb"
+		return "BC7RGBAUnormSrgb"
 	case TextureFormat_ETC2RGB8Unorm:
-		return "etc2rgb8unorm"
+		return "ETC2RGB8Unorm"
 	case TextureFormat_ETC2RGB8UnormSrgb:
-		return "etc2rgb8unorm-srgb"
+		return "ETC2RGB8UnormSrgb"
 	case TextureFormat_ETC2RGB8A1Unorm:
-		return "etc2rgb8a1unorm"
+		return "ETC2RGB8A1Unorm"
 	case TextureFormat_ETC2RGB8A1UnormSrgb:
-		return "etc2rgb8a1unorm-srgb"
+		return "ETC2RGB8A1UnormSrgb"
 	case TextureFormat_ETC2RGBA8Unorm:
-		return "etc2rgba8unorm"
+		return "ETC2RGBA8Unorm"
 	case TextureFormat_ETC2RGBA8UnormSrgb:
-		return "etc2rgba8unorm-srgb"
+		return "ETC2RGBA8UnormSrgb"
 	case TextureFormat_EACR11Unorm:
-		return "eacr11unorm"
+		return "EACR11Unorm"
 	case TextureFormat_EACR11Snorm:
-		return "eacr11snorm"
+		return "EACR11Snorm"
 	case TextureFormat_EACRG11Unorm:
-		return "eacrg11unorm"
+		return "EACRG11Unorm"
 	case TextureFormat_EACRG11Snorm:
-		return "eacrg11snorm"
+		return "EACRG11Snorm"
 	case TextureFormat_ASTC4x4Unorm:
-		return "astc4x4unorm"
+		return "ASTC4x4Unorm"
 	case TextureFormat_ASTC4x4UnormSrgb:
-		return "astc4x4unorm-srgb"
+		return "ASTC4x4UnormSrgb"
 	case TextureFormat_ASTC5x4Unorm:
-		return "astc5x4unorm"
+		return "ASTC5x4Unorm"
 	case TextureFormat_ASTC5x4UnormSrgb:
-		return "astc5x4unorm-srgb"
+		return "ASTC5x4UnormSrgb"
 	case TextureFormat_ASTC5x5Unorm:
-		return "astc5x5unorm"
+		return "ASTC5x5Unorm"
 	case TextureFormat_ASTC5x5UnormSrgb:
-		return "astc5x5unorm-srgb"
+		return "ASTC5x5UnormSrgb"
 	case TextureFormat_ASTC6x5Unorm:
-		return "astc6x5unorm"
+		return "ASTC6x5Unorm"
 	case TextureFormat_ASTC6x5UnormSrgb:
-		return "astc6x5unorm-srgb"
+		return "ASTC6x5UnormSrgb"
 	case TextureFormat_ASTC6x6Unorm:
-		return "astc6x6unorm"
+		return "ASTC6x6Unorm"
 	case TextureFormat_ASTC6x6UnormSrgb:
-		return "astc6x6unorm-srgb"
+		return "ASTC6x6UnormSrgb"
 	case TextureFormat_ASTC8x5Unorm:
-		return "astc8x5unorm"
+		return "ASTC8x5Unorm"
 	case TextureFormat_ASTC8x5UnormSrgb:
-		return "astc8x5unorm-srgb"
+		return "ASTC8x5UnormSrgb"
 	case TextureFormat_ASTC8x6Unorm:
-		return "astc8x6unorm"
+		return "ASTC8x6Unorm"
 	case TextureFormat_ASTC8x6UnormSrgb:
-		return "astc8x6unorm-srgb"
+		return "ASTC8x6UnormSrgb"
 	case TextureFormat_ASTC8x8Unorm:
-		return "astc8x8unorm"
+		return "ASTC8x8Unorm"
 	case TextureFormat_ASTC8x8UnormSrgb:
-		return "astc8x8unorm-srgb"
+		return "ASTC8x8UnormSrgb"
 	case TextureFormat_ASTC10x5Unorm:
-		return "astc10x5unorm"
+		return "ASTC10x5Unorm"
 	case TextureFormat_ASTC10x5UnormSrgb:
-		return "astc10x5unorm-srgb"
+		return "ASTC10x5UnormSrgb"
 	case TextureFormat_ASTC10x6Unorm:
-		return "astc10x6unorm"
+		return "ASTC10x6Unorm"
 	case TextureFormat_ASTC10x6UnormSrgb:
-		return "astc10x6unorm-srgb"
+		return "ASTC10x6UnormSrgb"
 	case TextureFormat_ASTC10x8Unorm:
-		return "astc10x8unorm"
+		return "ASTC10x8Unorm"
 	case TextureFormat_ASTC10x8UnormSrgb:
-		return "astc10x8unorm-srgb"
+		return "ASTC10x8UnormSrgb"
 	case TextureFormat_ASTC10x10Unorm:
-		return "astc10x10unorm"
+		return "ASTC10x10Unorm"
 	case TextureFormat_ASTC10x10UnormSrgb:
-		return "astc10x10unorm-srgb"
+		return "ASTC10x10UnormSrgb"
 	case TextureFormat_ASTC12x10Unorm:
-		return "astc12x10unorm"
+		return "ASTC12x10Unorm"
 	case TextureFormat_ASTC12x10UnormSrgb:
-		return "astc12x10unorm-srgb"
+		return "ASTC12x10UnormSrgb"
 	case TextureFormat_ASTC12x12Unorm:
-		return "astc12x12unorm"
+		return "ASTC12x12Unorm"
 	case TextureFormat_ASTC12x12UnormSrgb:
-		return "astc12x12unorm-srgb"
-	case TextureFormat_Force32:
-		return "force32"
+		return "ASTC12x12UnormSrgb"
 	default:
 		return ""
-	}
-}
-func StringToTextureFormat(str string) TextureFormat {
-	switch str {
-	case "undefined":
-		return TextureFormat_Undefined
-	case "r8unorm":
-		return TextureFormat_R8Unorm
-	case "r8snorm":
-		return TextureFormat_R8Snorm
-	case "r8uint":
-		return TextureFormat_R8Uint
-	case "r8sint":
-		return TextureFormat_R8Sint
-	case "r16uint":
-		return TextureFormat_R16Uint
-	case "r16sint":
-		return TextureFormat_R16Sint
-	case "r16float":
-		return TextureFormat_R16Float
-	case "rg8unorm":
-		return TextureFormat_RG8Unorm
-	case "rg8snorm":
-		return TextureFormat_RG8Snorm
-	case "rg8uint":
-		return TextureFormat_RG8Uint
-	case "rg8sint":
-		return TextureFormat_RG8Sint
-	case "r32float":
-		return TextureFormat_R32Float
-	case "r32uint":
-		return TextureFormat_R32Uint
-	case "r32sint":
-		return TextureFormat_R32Sint
-	case "rg16uint":
-		return TextureFormat_RG16Uint
-	case "rg16sint":
-		return TextureFormat_RG16Sint
-	case "rg16float":
-		return TextureFormat_RG16Float
-	case "rgba8unorm":
-		return TextureFormat_RGBA8Unorm
-	case "rgba8unorm-srgb":
-		return TextureFormat_RGBA8UnormSrgb
-	case "rgba8snorm":
-		return TextureFormat_RGBA8Snorm
-	case "rgba8uint":
-		return TextureFormat_RGBA8Uint
-	case "rgba8sint":
-		return TextureFormat_RGBA8Sint
-	case "bgra8unorm":
-		return TextureFormat_BGRA8Unorm
-	case "bgra8unorm-srgb":
-		return TextureFormat_BGRA8UnormSrgb
-	case "rgb10a2unorm":
-		return TextureFormat_RGB10A2Unorm
-	case "rg11b10ufloat":
-		return TextureFormat_RG11B10Ufloat
-	case "rgb9e5ufloat":
-		return TextureFormat_RGB9E5Ufloat
-	case "rg32float":
-		return TextureFormat_RG32Float
-	case "rg32uint":
-		return TextureFormat_RG32Uint
-	case "rg32sint":
-		return TextureFormat_RG32Sint
-	case "rgba16uint":
-		return TextureFormat_RGBA16Uint
-	case "rgba16sint":
-		return TextureFormat_RGBA16Sint
-	case "rgba16float":
-		return TextureFormat_RGBA16Float
-	case "rgba32float":
-		return TextureFormat_RGBA32Float
-	case "rgba32uint":
-		return TextureFormat_RGBA32Uint
-	case "rgba32sint":
-		return TextureFormat_RGBA32Sint
-	case "stencil8":
-		return TextureFormat_Stencil8
-	case "depth16unorm":
-		return TextureFormat_Depth16Unorm
-	case "depth24plus":
-		return TextureFormat_Depth24Plus
-	case "depth24plus-stencil8":
-		return TextureFormat_Depth24PlusStencil8
-	case "depth32float":
-		return TextureFormat_Depth32Float
-	case "depth32float-stencil8":
-		return TextureFormat_Depth32FloatStencil8
-	case "bc1rgbaunorm":
-		return TextureFormat_BC1RGBAUnorm
-	case "bc1rgbaunorm-srgb":
-		return TextureFormat_BC1RGBAUnormSrgb
-	case "bc2rgbaunorm":
-		return TextureFormat_BC2RGBAUnorm
-	case "bc2rgbaunorm-srgb":
-		return TextureFormat_BC2RGBAUnormSrgb
-	case "bc3rgbaunorm":
-		return TextureFormat_BC3RGBAUnorm
-	case "bc3rgbaunorm-srgb":
-		return TextureFormat_BC3RGBAUnormSrgb
-	case "bc4runorm":
-		return TextureFormat_BC4RUnorm
-	case "bc4rsnorm":
-		return TextureFormat_BC4RSnorm
-	case "bc5rgunorm":
-		return TextureFormat_BC5RGUnorm
-	case "bc5rgsnorm":
-		return TextureFormat_BC5RGSnorm
-	case "bc6hrgbufloat":
-		return TextureFormat_BC6HRGBUfloat
-	case "bc6hrgbfloat":
-		return TextureFormat_BC6HRGBFloat
-	case "bc7rgbaunorm":
-		return TextureFormat_BC7RGBAUnorm
-	case "bc7rgbaunorm-srgb":
-		return TextureFormat_BC7RGBAUnormSrgb
-	case "etc2rgb8unorm":
-		return TextureFormat_ETC2RGB8Unorm
-	case "etc2rgb8unorm-srgb":
-		return TextureFormat_ETC2RGB8UnormSrgb
-	case "etc2rgb8a1unorm":
-		return TextureFormat_ETC2RGB8A1Unorm
-	case "etc2rgb8a1unorm-srgb":
-		return TextureFormat_ETC2RGB8A1UnormSrgb
-	case "etc2rgba8unorm":
-		return TextureFormat_ETC2RGBA8Unorm
-	case "etc2rgba8unorm-srgb":
-		return TextureFormat_ETC2RGBA8UnormSrgb
-	case "eacr11unorm":
-		return TextureFormat_EACR11Unorm
-	case "eacr11snorm":
-		return TextureFormat_EACR11Snorm
-	case "eacrg11unorm":
-		return TextureFormat_EACRG11Unorm
-	case "eacrg11snorm":
-		return TextureFormat_EACRG11Snorm
-	case "astc4x4unorm":
-		return TextureFormat_ASTC4x4Unorm
-	case "astc4x4unorm-srgb":
-		return TextureFormat_ASTC4x4UnormSrgb
-	case "astc5x4unorm":
-		return TextureFormat_ASTC5x4Unorm
-	case "astc5x4unorm-srgb":
-		return TextureFormat_ASTC5x4UnormSrgb
-	case "astc5x5unorm":
-		return TextureFormat_ASTC5x5Unorm
-	case "astc5x5unorm-srgb":
-		return TextureFormat_ASTC5x5UnormSrgb
-	case "astc6x5unorm":
-		return TextureFormat_ASTC6x5Unorm
-	case "astc6x5unorm-srgb":
-		return TextureFormat_ASTC6x5UnormSrgb
-	case "astc6x6unorm":
-		return TextureFormat_ASTC6x6Unorm
-	case "astc6x6unorm-srgb":
-		return TextureFormat_ASTC6x6UnormSrgb
-	case "astc8x5unorm":
-		return TextureFormat_ASTC8x5Unorm
-	case "astc8x5unorm-srgb":
-		return TextureFormat_ASTC8x5UnormSrgb
-	case "astc8x6unorm":
-		return TextureFormat_ASTC8x6Unorm
-	case "astc8x6unorm-srgb":
-		return TextureFormat_ASTC8x6UnormSrgb
-	case "astc8x8unorm":
-		return TextureFormat_ASTC8x8Unorm
-	case "astc8x8unorm-srgb":
-		return TextureFormat_ASTC8x8UnormSrgb
-	case "astc10x5unorm":
-		return TextureFormat_ASTC10x5Unorm
-	case "astc10x5unorm-srgb":
-		return TextureFormat_ASTC10x5UnormSrgb
-	case "astc10x6unorm":
-		return TextureFormat_ASTC10x6Unorm
-	case "astc10x6unorm-srgb":
-		return TextureFormat_ASTC10x6UnormSrgb
-	case "astc10x8unorm":
-		return TextureFormat_ASTC10x8Unorm
-	case "astc10x8unorm-srgb":
-		return TextureFormat_ASTC10x8UnormSrgb
-	case "astc10x10unorm":
-		return TextureFormat_ASTC10x10Unorm
-	case "astc10x10unorm-srgb":
-		return TextureFormat_ASTC10x10UnormSrgb
-	case "astc12x10unorm":
-		return TextureFormat_ASTC12x10Unorm
-	case "astc12x10unorm-srgb":
-		return TextureFormat_ASTC12x10UnormSrgb
-	case "astc12x12unorm":
-		return TextureFormat_ASTC12x12Unorm
-	case "astc12x12unorm-srgb":
-		return TextureFormat_ASTC12x12UnormSrgb
-	case "force32":
-		return TextureFormat_Force32
-	default:
-		panic(fmt.Sprintf("%s convert to TextureFormat error", str))
 	}
 }
 

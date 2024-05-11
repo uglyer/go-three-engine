@@ -36,7 +36,7 @@ func NewCanvas(instance *Instance, descriptor *wgpu.CanvasDescriptor) (*Canvas, 
 	if err != nil {
 		return nil, err
 	}
-	swapChain, err := device.CreateSwapChain(surface, config)
+	swapChain, err := device.(*Device).CreateSwapChain(surface, config)
 	if err != nil {
 		return nil, err
 	}

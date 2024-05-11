@@ -18,9 +18,9 @@ type Surface struct {
 	ref C.WGPUSurface
 }
 
-func (p *Surface) GetPreferredFormat(adapter *Adapter) TextureFormat {
+func (p *Surface) GetPreferredFormat(adapter *Adapter) wgpu.TextureFormat {
 	format := C.wgpuSurfaceGetPreferredFormat(p.ref, adapter.ref)
-	return TextureFormat(format)
+	return wgpu.TextureFormat(format)
 }
 
 type SurfaceCapabilities struct {

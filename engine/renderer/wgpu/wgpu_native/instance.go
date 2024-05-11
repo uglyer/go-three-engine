@@ -209,7 +209,7 @@ type RequestAdapterOptions struct {
 	CompatibleSurface    *Surface
 	PowerPreference      wgpu.PowerPreference
 	ForceFallbackAdapter bool
-	BackendType          BackendType
+	BackendType          wgpu.BackendType
 }
 
 func (p *Instance) RequestAdapter(options *RequestAdapterOptions) (*Adapter, error) {
