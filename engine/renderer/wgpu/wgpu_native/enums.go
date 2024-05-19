@@ -434,7 +434,7 @@ func (v ErrorFilter) String() string {
 	}
 }
 
-type ErrorType uint32
+type CreateCommandEncoderErrorType uint32
 
 const (
 	ErrorType_NoError     ErrorType = 0x00000000

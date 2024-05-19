@@ -310,11 +310,7 @@ func (p *Device) CreateBuffer(descriptor *wgpu.BufferDescriptor) (wgpu.IBuffer, 
 	return &Buffer{deviceRef: p.ref, ref: ref}, nil
 }
 
-type CommandEncoderDescriptor struct {
-	Label string
-}
-
-func (p *Device) CreateCommandEncoder(descriptor *CommandEncoderDescriptor) (*CommandEncoder, error) {
+func (p *Device) CreateCommandEncoder(descriptor *wgpu.CommandEncoderDescriptor) (wgpu.ICommandEncoder, error) {
 	var desc *C.WGPUCommandEncoderDescriptor
 
 	if descriptor != nil && descriptor.Label != "" {
@@ -327,7 +323,7 @@ func (p *Device) CreateCommandEncoder(descriptor *CommandEncoderDescriptor) (*Co
 	}
 
 	var err error = nil
-	var cb errorCallback = func(_ ErrorType, message string) {
+	var cb errorCallback = func(_ wgpu.ErrorType, message string) {
 		err = errors.New("wgpu.(*Device).CreateCommandEncoder(): " + message)
 	}
 	errorCallbackHandle := cgo.NewHandle(cb)
