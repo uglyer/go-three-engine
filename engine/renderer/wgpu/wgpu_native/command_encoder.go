@@ -102,6 +102,10 @@ type ComputePassDescriptor struct {
 	// TimestampWrites []ComputePassTimestampWrite
 }
 
+func (p *CommandEncoder) Ref() any {
+	return p.ref
+}
+
 func (p *CommandEncoder) BeginComputePass(descriptor *ComputePassDescriptor) *ComputePassEncoder {
 	var desc *C.WGPUComputePassDescriptor
 
